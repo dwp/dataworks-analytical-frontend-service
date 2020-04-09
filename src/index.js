@@ -19,11 +19,8 @@ ReactDOM.render(
                 <div className="content">
                     <a href="#" className="js-header-toggle menu">Menu</a>
                     <nav id="proposition-menu">
-                        <a  href="#" id="proposition-name">DWP UC Dataworks: Management Access Portal</a>
-                        <ul id="proposition-links">
-                            <li><a href="#">Home</a></li>
-                            <li><a href="#">Sign in</a></li>
-                        </ul>
+                        <a  href="#" id="proposition-name">DWP UC Dataworks: Analytical Environment</a>
+                        
                     </nav>
                 </div>
             </div>

@@ -1,0 +1,53 @@
+/*========================================================================== 
+                    LOGIN BOX
+  ========================================================================== */
+body{
+    padding: 0px 0px 90px;
+}
+
+#global-header, #footer {
+    width: 100% !important;
+}
+
+h1{
+    margin: 30px 0 60px;
+    font-size: 48px;
+}
+
+.login-box-div{
+    width: 100%;
+    font-family: 'nta', Arial,sans-serif ;
+    src:local('nta'),url('./fonts/fonts.css');
+    font-size:24px;
+    text-align:left;
+    max-width: 960px;
+    margin: 0 241.5px;
+    margin-left: 23%;
+}
+
+button{
+    background-color: #007535;
+    border: none;
+    color:white;
+    margin:0 15px 15px 0;
+    padding: 10px 15px 5px;
+    display: inline-block;
+    font-size: 1em;
+    line-height: 1.25;
+    box-shadow: 0 2px 0 #003618;
+}
+
+label{
+    font-weight: bold;
+}
+
+input{
+    width:46%;
+    padding:8px;
+}
+
+.user-input-div{
+    margin:0 0 30px;
+    display: flex;
+    flex-direction: column;
+}

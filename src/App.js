@@ -1,13 +1,10 @@
 import React from 'react';
 import './App.css';
+import Login from './components/loginBox';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <p>Initial Commit</p>
-      </header>
-    </div>
+    <Login/>
   );
 }
 
