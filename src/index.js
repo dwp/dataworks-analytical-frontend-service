@@ -19,8 +19,7 @@ ReactDOM.render(
                 <div className="content">
                     <a href="#" className="js-header-toggle menu">Menu</a>
                     <nav id="proposition-menu">
-                        <a  href="#" id="proposition-name">DWP UC Dataworks: Analytical Environment</a>
-                        
+                        <a  href='./' id="proposition-name">DWP UC Dataworks: Analytical Environment</a>
                     </nav>
                 </div>
             </div>
