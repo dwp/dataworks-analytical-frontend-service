@@ -18,10 +18,10 @@ class WaitingPage extends Component {
         return(
             <div>
                 <p>Your access_token is:</p>
-                {/* {vars.access_token.toString()} */}
+                {vars.access_token.toString()}
              <p>Call Back page</p>   
              <button id="spinUp">
-                  <a onClick={this.sendData()} id="spinUpLink" href="" >Spin up your Clusters</a>
+                  <a id="spinUpLink" href="" >Spin up your Clusters</a>
                </button> 
             </div>
         )
