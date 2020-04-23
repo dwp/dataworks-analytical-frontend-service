@@ -2,8 +2,9 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import App from './App';
 
-test('renders learn react link', () => {
-  const { getByText } = render(<App />);
-  const linkElement = getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+test('Displays signin button', () => {
+  const { getByRole } = render(<App />);
+  const btnElement = getByRole('button');
+  expect(btnElement).toBeInTheDocument();
+  expect(btnElement).toHaveTextContent('Sign In');
 });
