@@ -1,0 +1,31 @@
+/*========================================================================== 
+                    LOGIN BOX
+  ========================================================================== */
+body{
+    padding: 0px 0px 90px;
+}
+
+#global-header, #footer {
+    width: 100% !important;
+}
+
+h1{
+    margin: 30px 0 60px;
+    font-size: 48px;
+}
+
+#signIn,#spinUp{
+    background-color: #007535;
+    border: none;
+    margin:20px 15px 15px 20px;
+    display: inline-block;
+    line-height: 1.25;
+    box-shadow: 0 2px 0 #003618;
+}
+#proposition-name,#spinUp{
+    color:white;
+    text-decoration: none;
+    font-size: 2em;
+}
+
+
