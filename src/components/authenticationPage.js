@@ -3,8 +3,7 @@ import React, {Component} from 'react';
 class WaitingPage extends Component {
     
 async postData(url = '', data = {},token) {
-    // Default options are marked with *
-    
+
     const response = await fetch(url, {
       method: 'POST', 
       headers: {
@@ -22,6 +21,7 @@ async postData(url = '', data = {},token) {
         window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
         vars[key] = value;
     });
+    
     }
     render() {
         let vars = {};
@@ -33,10 +33,10 @@ async postData(url = '', data = {},token) {
 
         return(
             <div>
+                <h1>Authenticating your token</h1>
                 <p>Your access_token is:</p>
-                {vars.access_token.toString()}
-             <p>Call Back page</p>   
-             <button id="spinUp">Spin up your Clusters</button> 
+                {vars.access_token.toString()}                
+             <button href='/ClusterSpinUp' id="spinUp">Spin up your Clusters</button> 
             </div>
         )
     }

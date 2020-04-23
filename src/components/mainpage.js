@@ -7,7 +7,8 @@ class MainPage extends Component {
         return(
             <div>
                <button id="signIn">
-                  <a href="{link} "id="proposition-name">Sign in</a>
+                  <a href={process.env.REACT_APP_LOGIN_URL} id="proposition-name">Sign in</a>
+                    
                </button>
             <p>Main page</p>    
             </div>
