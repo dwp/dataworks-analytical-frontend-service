@@ -20,7 +20,7 @@ async postData(url = '', data = {},token) {
         vars[key] = value;
     });
     }
-    
+
     render() {
         let vars = {};
         this.getUrlVars(vars)
@@ -32,7 +32,8 @@ async postData(url = '', data = {},token) {
             <div>
                 <h1>Authenticating your token</h1>
                 <p>Your access_token is:</p>
-                {vars.access_token.toString()}                
+                {vars.access_token.toString()}   
+                <br/>             
              <button href='/ClusterSpinUp' id="spinUp">Spin up your Clusters</button> 
             </div>
         )

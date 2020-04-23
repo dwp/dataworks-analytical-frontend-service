@@ -2,8 +2,8 @@ import React from 'react';
 import { BrowserRouter,Switch,Route } from 'react-router-dom';
 import MainPage from './components/mainpage';
 import AutenticationPage from './components/authenticationPage';
-import '/Users/hamad.ali/DWPWork/dataworks-analytical-frontend-service/src/App.css'
 import ClusterSpinUp from './components/ClusterSpinUp';
+import './App.css';
 
 function App() {
   return (
