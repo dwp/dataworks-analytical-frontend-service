@@ -10,7 +10,7 @@ help:
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
 .PHONY: bootstrap
-bootstrap: ## Bootstrap local environment for first use
+bootstrap: 
 	make git-hooks
 	pip3 install --user Jinja2 PyYAML boto3
 	@{ \
@@ -20,7 +20,7 @@ bootstrap: ## Bootstrap local environment for first use
 	terraform fmt -recursive
 
 .PHONY: git-hooks
-git-hooks: ## Set up hooks in .git/hooks
+git-hooks: 
 	@{ \
 		HOOK_DIR=.git/hooks; \
 		for hook in $(shell ls .githooks); do \
@@ -31,3 +31,4 @@ git-hooks: ## Set up hooks in .git/hooks
 			ln -s -f ../../.githooks/$${hook} $${HOOK_DIR}/$${hook}; \
 		done \
 	}
+	

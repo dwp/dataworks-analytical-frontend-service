@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "frontend-service",
+  "name": "DWP Dataworks analytical frontend service",
   "icons": [
     {
       "src": "favicon.ico",

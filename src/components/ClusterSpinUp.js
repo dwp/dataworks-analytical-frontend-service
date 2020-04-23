@@ -6,8 +6,6 @@ class ClusterSpinUp extends Component {
         url[key] = value;
     });
     }
-    
-
     render() {
         let url = { }
         this.getUrlVars(url)
