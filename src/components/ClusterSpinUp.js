@@ -1,19 +1,15 @@
 import React, {Component} from 'react';
 
-class ClusterSpinUp extends Component {  
-    getUrlVars = (vars) => {
-        window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
-        vars[key] = value;
-      });
-    }
+var qs = require('qs');
 
+class ClusterSpinUp extends Component {  
     
     render() {
-        let vars = {}
-        this.getUrlVars(vars)
+        var params = qs.parse(window.location.search, { ignoreQueryPrefix: true });
+
         return(
             <div>
-              <iframe src = {vars.redirectUrl} title='Remote Desktop' height="1080" width="1920"/>
+              <iframe src = {params.redirectUrl} title='Remote Desktop' height="1080" width="1920"/>
             </div>
         )
     }

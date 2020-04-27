@@ -1,21 +1,25 @@
 import React, {Component, Redirect} from 'react';
 import {connect} from '../api.js'
 
+var qs = require('qs')
+
 class WaitingPage extends Component {
     
-    getUrlVars = (vars) =>   {
-        window.location.href.replace(/[?&#]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
-        vars[key] = value;
-        });
-    }
-
     render() {
-        let vars = {};
-        this.getUrlVars(vars)
-        
-        let redirectUrl = ''
+        var access_token = window.location.href.match(/.*access_token=([^&]*).*/);
+
+        if (access_token == null) {
+           access_token = window.location.href.match(/.*id_token=([^&]*).*/);
+        }
+
+        if (access_token == null) {
+            return ( <Redirect to='/loginFailure' />);
+        }
+
+        var redirectUrl = '';
+
         try {
-            connect(vars.access_token)
+            connect(access_token[1])
             .then((data) => {
                 redirectUrl = data;
         });
