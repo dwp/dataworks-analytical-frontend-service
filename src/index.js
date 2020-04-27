@@ -28,7 +28,7 @@ ReactDOM.render(
     <main id="content" role="main" className="">
         <div className="article-container group">
             <div className="content-block">
-                <div className="inner">
+                <div id="desktop" className="inner">
                   <App />
                 </div>
             </div>
