@@ -6,7 +6,7 @@ var qs = require('qs')
 class WaitingPage extends Component {
     
     render() {
-        var access_token = window.location.href.match(/.*access_token=([^&]*).*/);
+        let access_token = window.location.href.match(/.*access_token=([^&]*).*/);
 
         if (access_token == null) {
            access_token = window.location.href.match(/.*id_token=([^&]*).*/);
@@ -16,7 +16,7 @@ class WaitingPage extends Component {
             return ( <Redirect to='/loginFailure' />);
         }
 
-        var redirectUrl = '';
+        let redirectUrl = '';
 
         try {
             connect(access_token[1])
