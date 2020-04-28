@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 
-ReactDOM.render(
+ReactDOM.hydrate(
   <React.StrictMode>
     <header role="banner" id="global-header" className="with-proposition">
         <div className="header-wrapper">
@@ -18,7 +18,7 @@ ReactDOM.render(
                 <div className="content">
                     <a href="#" className="js-header-toggle menu">Menu</a>
                     <nav id="proposition-menu">
-                        <a  href='./' id="proposition-name">DWP UC Dataworks: Analytical Environment</a>
+                        <a  href='/' id="proposition-name">Dataworks Analytical Environment</a>
                     </nav>
                 </div>
             </div>
