@@ -18,7 +18,7 @@
     "dev:start": "nodemon ./server-build/index.js",
     "dev": "npm-run-all --parallel build dev:*",
     "build-server": "NODE_ENV=production webpack --config webpack.server.js --mode=production",
-    "build": "npm run build-server && react-scripts build",
+    "build": "react-scripts build && npm run build-server",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

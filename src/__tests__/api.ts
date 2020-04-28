@@ -1,5 +1,5 @@
 import {connect} from '../utils/api.js'
-import appConfig from "../utils/appConfig";
+import getConfig from "../utils/appConfig";
 
 describe ("canConnect",() => {
   afterEach(() => {
@@ -14,7 +14,7 @@ describe ("canConnect",() => {
     expect( await connect('mytoken')).toBe('myurl');
 
     expect(fetch.mock.calls.length).toEqual(1)
-    expect(fetch.mock.calls[0][0]).toEqual(appConfig.REACT_APP_API_CONNECT_ENDPOINT)
+    expect(fetch.mock.calls[0][0]).toEqual(getConfig("REACT_APP_API_CONNECT_ENDPOINT"))
 
   });
 })
