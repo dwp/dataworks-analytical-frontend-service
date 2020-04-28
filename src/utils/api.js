@@ -1,3 +1,5 @@
+import getConfig from "./appConfig";
+
 function HttpApiException(message, status) {
    this.message = message;
    this.status = status;
@@ -6,7 +8,7 @@ function HttpApiException(message, status) {
 
 export async function connect(token) {
 
-    const url = process.env.REACT_APP_API_CONNECT_ENDPOINT;
+    const url = getConfig("REACT_APP_API_CONNECT_ENDPOINT");
 
     const requestConfig = {
       method: 'POST', 
