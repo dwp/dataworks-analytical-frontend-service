@@ -1,5 +1,5 @@
 import React, {Component, Redirect} from 'react';
-import {connect} from '../api.js'
+import {connect} from '../utils/api.js'
 
 var qs = require('qs')
 
