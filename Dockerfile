@@ -17,4 +17,4 @@ RUN npm run build
 
 EXPOSE 8443
 
-ENTRYPOINT ["node","server-build/index.js"]
+CMD ["node","server-build/index.js"]
