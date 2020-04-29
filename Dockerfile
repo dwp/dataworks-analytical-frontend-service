@@ -9,6 +9,8 @@ WORKDIR ${APP_HOME}
 COPY package*.json ./ 
 COPY src/ ./src/
 COPY public/ ./public/
+COPY webpack.server.js ./
+COPY .babelrc ./
 
 RUN npm install
 RUN npm run build
