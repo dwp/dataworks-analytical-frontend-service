@@ -77,7 +77,7 @@ provider "aws" {
 locals {
   name = "analytical-frontend-service"
   environment = terraform.workspace == "default" ? "development" : terraform.workspace
-  container_image = "${local.account[local.management_account[local.environment]]}.dkr.ecr.${var.region}.amazonaws.com/analytical-frontend-service:latest"
+  container_image = "${local.account[local.management_account[local.environment]]}.dkr.ecr.${var.region}.amazonaws.com/aws-analytical-env/analytical-frontend-service:latest"
 
   root_dns_prefix = {
     development = "dev"
