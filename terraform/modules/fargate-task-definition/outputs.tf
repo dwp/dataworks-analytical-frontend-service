@@ -13,11 +13,3 @@ output "aws_ecs_task_definition_td" {
   description = "Full ARN of the Task Definition (including both family and revision)."
   value       = aws_ecs_task_definition.td
 }
-output "container_port" {
-  description = "Port on which the container is listening"
-  value       = module.container_definition.container_port
-}
-output "container_name" {
-  description = "Name of the container"
-  value       = module.container_definition.container_name
-}

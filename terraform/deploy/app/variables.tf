@@ -21,7 +21,7 @@ variable "region" {
 variable "name_prefix" {
   type        = string
   description = "(Optional) Name prefix for resources we create, defaults to repository name"
-  default     = "analytical-analytical-frontend-service"
+  default     = "analytical-frontend-svc"
 }
 
 # ---------------------------------------------------------------------------------------------------------------------
