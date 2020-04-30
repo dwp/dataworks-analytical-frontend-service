@@ -36,10 +36,6 @@ module "ecs-fargate-task-definition" {
       value = var.region
     },
     {
-      name  = "frontendService.ecs_cluster_name"
-      value = "${var.name_prefix}-user-host"
-    },
-    {
       name  = "frontendService.user_container_url"
       value = "aws-analytical-env.${local.root_dns_prefix[local.environment]}.${local.parent_domain_name[local.environment]}"
     },
@@ -57,7 +53,7 @@ module "ecs-fargate-service" {
   source          = "../../modules/fargate-service"
   name_prefix     = var.name_prefix
   region          = var.region
-  vpc_id          = data.terraform_remote_state.aws_analytical_env_infra.outputs.vpc.aws_vpc.id
+  vpc_id          = data.terraform_remote_state.aws_analytical_env_infra.outputs.vpc.aws_vpc
   private_subnets = data.terraform_remote_state.aws_analytical_env_infra.outputs.vpc.aws_subnets_private.*.id
 
   ecs_cluster_name        = data.aws_ecs_cluster.ecs_main_cluster.cluster_name
@@ -78,5 +74,4 @@ module "ecs-fargate-service" {
   parent_domain_name        = local.parent_domain_name[local.environment]
   root_dns_prefix           = local.root_dns_prefix[local.environment]
   cert_authority_arn        = data.terraform_remote_state.aws_certificate_authority.outputs.root_ca.arn
-  internet_proxy_vpce_sg_id = data.terraform_remote_state.aws_analytical_env_infra.outputs.vpc.internet_proxy_vpce_sg_id
 }

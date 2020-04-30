@@ -126,7 +126,7 @@ variable "assign_public_ip" {
 variable "lb_health_check_path" {
   type        = string
   description = "(Optional) Health check path for the Load Balancer"
-  default     = "/metrics"
+  default     = "/"
 }
 
 variable "role_arn" {
@@ -137,11 +137,6 @@ variable "role_arn" {
 variable "interface_vpce_sg_id" {
   type        = string
   description = "(Required) The VPCe Security group ID"
-}
-
-variable "internet_proxy_vpce_sg_id" {
-  type        = string
-  description = "(Required) Internet Proxy VPCe Security group ID "
 }
 
 variable "s3_prefixlist_id" {

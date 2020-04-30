@@ -72,23 +72,3 @@ resource aws_security_group_rule egress_to_s3_pl {
   type              = "egress"
   prefix_list_ids   = [var.s3_prefixlist_id]
 }
-
-resource "aws_security_group_rule" "internet_proxy_endpoint_from_ecs_task" {
-  description              = "Accept requests to Internet Proxy endpoint from Concourse Web nodes"
-  type                     = "ingress"
-  protocol                 = "tcp"
-  from_port                = 3128
-  to_port                  = 3128
-  security_group_id        = var.internet_proxy_vpce_sg_id
-  source_security_group_id = aws_security_group.ecs_tasks_sg.id
-}
-
-resource "aws_security_group_rule" "ecs_tasks_to_internet_proxy_endpoint" {
-  description              = "Allow Concourse Web nodes to reach Internet Proxy endpoint"
-  type                     = "egress"
-  protocol                 = "tcp"
-  from_port                = 3128
-  to_port                  = 3128
-  security_group_id        = aws_security_group.ecs_tasks_sg.id
-  source_security_group_id = var.internet_proxy_vpce_sg_id
-}
