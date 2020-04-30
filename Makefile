@@ -32,4 +32,13 @@ git-hooks:
 			ln -s -f ../../.githooks/$${hook} $${HOOK_DIR}/$${hook}; \
 		done \
 	}
-	
+
+.PHONY: terraform
+terraform:
+		pip3 install --user Jinja2 PyYAML boto3
+	@{ \
+		export AWS_PROFILE=$(aws_profile); \
+		export AWS_REGION=$(aws_region); \
+		python3 bootstrap_terraform.py; \
+	}
+	terraform fmt -recursive

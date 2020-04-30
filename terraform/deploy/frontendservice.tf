@@ -80,19 +80,3 @@ module "ecs-fargate-service" {
   cert_authority_arn        = data.terraform_remote_state.aws_certificate_authority.outputs.root_ca.arn
   internet_proxy_vpce_sg_id = data.terraform_remote_state.emr_cluster_broker_infra.outputs.vpc.internet_proxy_vpce_sg_id
 }
-
-#
-## ---------------------------------------------------------------------------------------------------------------------
-## ECS UserService
-## ---------------------------------------------------------------------------------------------------------------------
-module "ec2_task_definition" {
-  source      = "../../modules/ec2-task-definition"
-  name_prefix = "${var.name_prefix}-task-definition"
-
-  chrome_image           = "${local.ecr_endpoint}/aws-analytical-env/headless-chrome"
-  guacd_image            = "${local.ecr_endpoint}/aws-analytical-env/guacd"
-  jupyterhub_image       = "${local.ecr_endpoint}/aws-analytical-env/jupyterhub"
-  guacamole_client_image = "${local.ecr_endpoint}/aws-analytical-env/guacamole"
-
-  cognito_user_pool_id = data.terraform_remote_state.aws_analytical_env_cognito.outputs.cognito.user_pool_id
-}
