@@ -21,7 +21,7 @@ variable "region" {
 variable "name_prefix" {
   type        = string
   description = "(Optional) Name prefix for resources we create, defaults to repository name"
-  default     = "frontend-service"
+  default     = "analytical-analytical-frontend-service"
 }
 
 # ---------------------------------------------------------------------------------------------------------------------
@@ -40,7 +40,7 @@ variable "container_port" {
 variable "container_name" {
   type        = string
   description = "(Optional) The name of the container. Up to 255 characters ([a-z], [A-Z], [0-9], -, _ allowed)"
-  default     = "frontend-service"
+  default     = "analytical-frontend-service"
 }
 variable "container_cpu" {
   # https://docs.aws.amazon.com/AmazonECS/latest/developerguide/AWS_Fargate.html#fargate-task-defs

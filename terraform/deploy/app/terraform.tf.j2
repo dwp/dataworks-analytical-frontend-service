@@ -3,7 +3,7 @@ terraform {
 
   backend "s3" {
     bucket         = "{{state_file_bucket}}"
-    key            = "terraform/dataworks/frontend-service.tfstate"
+    key            = "terraform/dataworks/analytical-frontend-service.tfstate"
     region         = "{{state_file_region}}"
     encrypt        = true
     kms_key_id     = "arn:aws:kms:{{state_file_region}}:{{state_file_account}}:key/{{state_file_kms_key}}"
@@ -75,9 +75,9 @@ provider "aws" {
 }
 
 locals {
-  name = "frontend-service"
+  name = "analytical-frontend-service"
   environment = terraform.workspace == "default" ? "development" : terraform.workspace
-  container_image = "${local.account[local.management_account[local.environment]]}.dkr.ecr.${var.region}.amazonaws.com/frontend-service:latest"
+  container_image = "${local.account[local.management_account[local.environment]]}.dkr.ecr.${var.region}.amazonaws.com/analytical-frontend-service:latest"
 
   root_dns_prefix = {
     development = "dev"
