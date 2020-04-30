@@ -15,9 +15,9 @@ output "aws_ecs_task_definition_td" {
 }
 output "container_port" {
   description = "Port on which the container is listening"
-  value       = var.container_port
+  value       = module.container_definition.container_port
 }
 output "container_name" {
   description = "Name of the container"
-  value       = var.container_name
+  value       = module.container_definition.container_name
 }

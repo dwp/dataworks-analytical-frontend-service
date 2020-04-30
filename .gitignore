@@ -14,3 +14,5 @@ yarn-error.log*xs
 
 .idea
 .env
+
+.terraform
