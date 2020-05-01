@@ -44,6 +44,7 @@ module "ecs-fargate-service" {
   vpc_id          = data.terraform_remote_state.aws_analytical_env_infra.outputs.vpc.aws_vpc
   service_subnets = data.terraform_remote_state.aws_analytical_env_infra.outputs.vpc.aws_subnets_private.*.id
   alb_subnets     = data.terraform_remote_state.aws_analytical_env_infra.outputs.vpc.aws_subnets_public.*.id
+  internal        = false
 
   ecs_cluster_name        = data.aws_ecs_cluster.ecs_main_cluster.cluster_name
   ecs_cluster_arn         = data.aws_ecs_cluster.ecs_main_cluster.arn

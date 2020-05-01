@@ -14,7 +14,6 @@ data "aws_iam_policy_document" "ecs-tasks" {
 data "aws_iam_policy_document" "task_role" {
   statement {
     actions = [
-      "ec2:DescribeImages",
     ]
 
     resources = [
