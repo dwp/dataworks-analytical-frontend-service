@@ -3,6 +3,7 @@ ENV APP_NAME=dataworks-analytical-frontend-service
 ENV APP_HOME=/app
 ENV HTTPS=true
 ENV PORT=8443
+
 RUN mkdir ${APP_HOME}
 WORKDIR ${APP_HOME}
 
@@ -15,6 +16,11 @@ COPY .babelrc ./
 RUN npm install
 RUN npm run build
 
+RUN apk add openssl
+
+COPY entrypoint.sh ./
+RUN chmod +x ./entrypoint.sh
+
 EXPOSE 8443
 
-CMD ["node","server-build/index.js"]
+ENTRYPOINT ["./entrypoint.sh"]
