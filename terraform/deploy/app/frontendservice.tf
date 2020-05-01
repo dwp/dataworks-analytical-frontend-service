@@ -24,24 +24,12 @@ module "ecs-fargate-task-definition" {
   }
   environment = [
     {
-      name  = "frontendService.user_container_task_definition"
-      value = "${var.name_prefix}-analytical-workspace"
+      name  = "REACT_APP_LOGIN_URL"
+      value = "https://placeholder-url" # to be amended at a later date (in another ticket)
     },
     {
-      name  = "frontendService.load_balancer_name"
-      value = "aws-analytical-env-lb"
-    },
-    {
-      name  = "frontendService.aws_region"
-      value = var.region
-    },
-    {
-      name  = "frontendService.user_container_url"
-      value = "aws-analytical-env.${local.root_dns_prefix[local.environment]}.${local.parent_domain_name[local.environment]}"
-    },
-    {
-      name  = "frontendService.user_container_port"
-      value = 8443
+      name  = "REACT_APP_API_CONNECT_ENDPOINT"
+      value = "/connect"
     }
   ]
 }
@@ -54,7 +42,8 @@ module "ecs-fargate-service" {
   name_prefix     = var.name_prefix
   region          = var.region
   vpc_id          = data.terraform_remote_state.aws_analytical_env_infra.outputs.vpc.aws_vpc
-  private_subnets = data.terraform_remote_state.aws_analytical_env_infra.outputs.vpc.aws_subnets_private.*.id
+  service_subnets = data.terraform_remote_state.aws_analytical_env_infra.outputs.vpc.aws_subnets_private.*.id
+  alb_subnets     = data.terraform_remote_state.aws_analytical_env_infra.outputs.vpc.aws_subnets_public.*.id
 
   ecs_cluster_name        = data.aws_ecs_cluster.ecs_main_cluster.cluster_name
   ecs_cluster_arn         = data.aws_ecs_cluster.ecs_main_cluster.arn

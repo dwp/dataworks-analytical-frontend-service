@@ -1,8 +1,8 @@
 resource "aws_lb" "lb" {
   name                             = "${var.name_prefix}-lb"
-  internal                         = true
+  internal                         = var.internal_lb
   load_balancer_type               = "application"
-  subnets                          = var.private_subnets
+  subnets                          = var.alb_subnets
   security_groups                  = [aws_security_group.lb_sg.id]
   enable_deletion_protection       = false
   enable_cross_zone_load_balancing = true

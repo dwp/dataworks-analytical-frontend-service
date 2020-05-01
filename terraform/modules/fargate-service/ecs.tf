@@ -4,7 +4,6 @@ resource "aws_ecs_service" "service" {
   cluster                            = var.ecs_cluster_arn
   task_definition                    = var.task_definition_arn
   launch_type                        = "FARGATE"
-  desired_count                      = var.desired_count
   platform_version                   = var.platform_version
   deployment_maximum_percent         = var.deployment_maximum_percent
   deployment_minimum_healthy_percent = var.deployment_minimum_healthy_percent
@@ -35,12 +34,16 @@ resource "aws_ecs_service" "service" {
   }
   network_configuration {
     security_groups  = [aws_security_group.ecs_tasks_sg.id]
-    subnets          = var.private_subnets
+    subnets          = var.service_subnets
     assign_public_ip = var.assign_public_ip
   }
   load_balancer {
     target_group_arn = aws_lb_target_group.lb_tg.arn
     container_name   = var.container_name
     container_port   = var.container_port
+  }
+
+  lifecycle {
+    ignore_changes = ["desired_count"]
   }
 }
