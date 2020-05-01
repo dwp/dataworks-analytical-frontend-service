@@ -24,7 +24,7 @@ module "ecs-fargate-task-definition" {
   }
   environment = [
     {
-      name  = "REACT_APP_LOGIN_URL"
+      name  = "REACT_APP_UI_LOGIN_URL"
       value = "https://placeholder-url" # to be amended at a later date (in another ticket)
     },
     {
