@@ -1,6 +1,8 @@
 import path from 'path';
 import fs from 'fs';
 import express from 'express';
+import http from 'http';
+import https from 'https';
 
 import templateApp from './template'
 import getConfig from '../utils/appConfig'
@@ -8,8 +10,9 @@ import getRuntimeConfig from './runtimeConfig'
 
 import  { connect, disconnect } from '../utils/api.js'
 import regeneratorRuntime from "regenerator-runtime";
+import {getTlsConfig} from "./serverConfig";
 
-const PORT = process.env.PORT || 3006;
+const port = process.env.PORT || 3006;
 const app = express();
 
 app.use(express.static('./build', {index: false}));
@@ -37,7 +40,7 @@ app.get('/*', (req, res) => {
     });
 });
 
+const tlsConfig = getTlsConfig();
 
-app.listen(PORT, () => {
-    console.log(`Server is listening on port ${PORT}`);
-});
+if (tlsConfig) https.createServer(tlsConfig, app).listen(port, () => console.info(`Server is HTTPS listening on port ${port}`));
+else http.createServer(app).listen(port, () => console.info(`Server is HTTP listening on port ${port}`));
