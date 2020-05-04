@@ -5,12 +5,28 @@ import http from 'http';
 import https from 'https';
 
 import templateApp from './template'
+import getConfig from '../utils/appConfig'
+import getRuntimeConfig from './runtimeConfig'
+
+import  { connect, disconnect } from '../utils/api.js'
+import regeneratorRuntime from "regenerator-runtime";
 import {getTlsConfig} from "./serverConfig";
 
 const port = process.env.PORT || 3006;
 const app = express();
 
 app.use(express.static('./build', {index: false}));
+
+app.get('/connect', async (req, res) => {
+    console.log('Connection request to Orchestration Service');
+    url = await connect(req.id_token);
+    return res.send(url);
+});
+
+app.get('/disconnect',(req, res) => {
+    console.log('Disconnection request to Orchestration Service');
+    disconnect(req.id_token);
+});
 
 app.get('/*', (req, res) => {
     const indexFile = path.resolve('./build/index.html');

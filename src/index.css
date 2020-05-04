@@ -4,3 +4,14 @@ header {
     left: 0;
     width: 100%;
 }
+
+:root {
+  --amplify-primary-color: #007535;
+  --amplify-primary-constrast: #ffffff;
+  --amplify-primary-shade: #000000;
+  --amplify-primary-tint: #107535;
+}
+
+.mfasetup {
+    text-align:center;
+}
