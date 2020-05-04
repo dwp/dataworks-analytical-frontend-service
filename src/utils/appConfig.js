@@ -4,9 +4,8 @@ let appConfig;
 
 function initConfig() {
     if (!appConfig) {
-        if (typeof window !== "undefined") {
+        if (typeof window !== "undefined" && !process.title.endsWith("node")) {
             appConfig = window.__CONFIG__;
-            delete window.__CONFIG__;
         } else {
             appConfig = getRuntimeConfig();
         }
