@@ -7,5 +7,9 @@ This image requires the following environment variables at runtime:
 | Env var | Description | Example value |
 | ------- | ----------- | ------------- |
 | REACT_APP_UI_LOGIN_URL    | URL to redirect user for login | https://domain.cogntio.com/login?client_id=id&redirect_uri=https://example.com |
-| REACT_APP_API_CONNECT_ENDPOINT    | URL for orchestration service `/connect` endpoint | https://localhost:3000/connect |
+| REACT_APP_OS_URL    | URL for orchestration service | https://localhost:3000/ |
+| REACT_APP_REGION    | Region we are running in | eu-west-2 |
+| REACT_APP_USERPOOL_WEBCLIENT_ID    | Cognito Appication ID | - |
+| REACT_APP_USERPOOLID    | Cognito User Pool ID | - |
+| REACT_APP_ENV    | Where we are deploying | development |
 | ALLOW_HTTP (Optional)    | Allow the server to accept HTTP requests  | true |
