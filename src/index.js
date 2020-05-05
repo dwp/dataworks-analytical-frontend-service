@@ -6,6 +6,8 @@ import { BrowserRouter } from "react-router-dom";
 import { Auth } from 'aws-amplify';
 import { AmplifyAuthenticator, AmplifySignOut, AmplifySignIn } from '@aws-amplify/ui-react';
 import getConfig from './utils/appConfig';
+import 'react-mdl/extra/material.css';
+import 'react-mdl/extra/material.js';
 
 Auth.configure(
     {
