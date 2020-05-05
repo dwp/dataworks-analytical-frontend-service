@@ -24,12 +24,28 @@ module "ecs-fargate-task-definition" {
   }
   environment = [
     {
-      name  = "REACT_APP_UI_LOGIN_URL"
-      value = "https://placeholder-url" # to be amended at a later date (in another ticket)
+      name  = "REACT_APP_OS_URL"
+      value = "https://${data.terraform_remote_state.orchestration-service.outputs.orchestration_service_fqdn}"
     },
     {
-      name  = "REACT_APP_API_CONNECT_ENDPOINT"
-      value = "/connect"
+      name  = "REACT_APP_REGION"
+      value = data.aws_region.current.name
+    },
+    {
+      name  = "REACT_APP_USERPOOL_WEBCLIENT_ID"
+      value = module.cognito-app.outputs.app_client.id
+    },
+    {
+      name  = "REACT_APP_USERPOOLID"
+      value = data.terraform_remote_state.aws_analytical_env_cognito.outputs.cognito-fs.user_pool_id
+    },
+    {
+      name  = "REACT_APP_ENV"
+      value = local.environment
+    },
+    {
+      name  = "ALLOW_HTTP"
+      value = "false"
     }
   ]
 }
@@ -57,10 +73,20 @@ module "ecs-fargate-service" {
   role_arn = {
     management-dns = "arn:aws:iam::${local.account[local.management_account[local.environment]]}:role/${var.assume_role}"
   }
-  interface_vpce_sg_id      = data.terraform_remote_state.aws_analytical_env_infra.outputs.interface_vpce_sg_id
-  s3_prefixlist_id          = data.terraform_remote_state.aws_analytical_env_infra.outputs.s3_prefix_list_id
-  common_tags               = local.common_tags
-  parent_domain_name        = local.parent_domain_name[local.environment]
-  root_dns_prefix           = local.root_dns_prefix[local.environment]
-  cert_authority_arn        = data.terraform_remote_state.aws_certificate_authority.outputs.root_ca.arn
+  interface_vpce_sg_id = data.terraform_remote_state.aws_analytical_env_infra.outputs.interface_vpce_sg_id
+  s3_prefixlist_id     = data.terraform_remote_state.aws_analytical_env_infra.outputs.s3_prefix_list_id
+  common_tags          = local.common_tags
+  parent_domain_name   = local.parent_domain_name[local.environment]
+  root_dns_prefix      = local.root_dns_prefix[local.environment]
+  cert_authority_arn   = data.terraform_remote_state.aws_certificate_authority.outputs.root_ca.arn
+}
+
+module cognito-app {
+  source        = "../../modules/cognito-app/"
+  name          = var.name_prefix
+  user_pool_id  = data.terraform_remote_state.aws_analytical_env_cognito.outputs.cognito-fs.user_pool_id
+  callback_urls = ["https://${module.ecs-fargate-service.fqdn}"]
+  role_arn = {
+    management = "arn:aws:iam::${local.account[local.management_account[local.environment]]}:role/${var.assume_role}"
+  }
 }
