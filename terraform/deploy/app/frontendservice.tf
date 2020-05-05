@@ -37,7 +37,7 @@ module "ecs-fargate-task-definition" {
     },
     {
       name  = "REACT_APP_USERPOOL_WEBCLIENT_ID"
-      value = module.cognito-app.outputs.app_clients.id
+      value = module.cognito-app.outputs.app_client.id
     },
     {
       name  = "REACT_APP_USERPOOLID"
