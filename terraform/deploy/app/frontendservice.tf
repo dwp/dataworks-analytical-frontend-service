@@ -32,7 +32,7 @@ module "ecs-fargate-task-definition" {
       value = data.aws_region.current.name
     },
     {
-      name  = "REACT_APP_USERPOOL_WEBCLIENT_ID"
+      name  = "REACT_APP_USERPOOL_WEBCLIENTID"
       value = module.cognito-app.outputs.app_client.id
     },
     {
