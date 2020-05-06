@@ -1,12 +1,12 @@
 resources:
-- name: analytical-frontend-service-pr
+- name: dataworks-analytical-frontend-service-pr
   type: pull-request
   source:
     access_token: ((github_com.token))
     repo: dwp/dataworks-analytical-frontend-service
     uri: https://github.com/dwp/dataworks-analytical-frontend-service.git
   check_every: 15m
-- name: analytical-frontend-service
+- name: dataworks-analytical-frontend-service
   type: git
   source:
     branch: master

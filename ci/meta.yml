@@ -20,7 +20,7 @@ meta:
               cp terraform/deploy/$DEPLOY_PATH/terraform.tfvars ../terraform-config
           dir: dataworks-analytical-frontend-service
         inputs:
-          - name: analytical-frontend-service
+          - name: dataworks-analytical-frontend-service
         outputs:
           - name: terraform-config
       params:
@@ -56,7 +56,7 @@ meta:
             terraform plan -var assume_role=ci -out terraform.plan
             terraform apply -auto-approve terraform.plan
         inputs:
-        - name: analytical-frontend-service
+        - name: dataworks-analytical-frontend-service
         - name: terraform-config
     terraform-plan:
       task: terraform-plan
@@ -85,7 +85,7 @@ meta:
             terraform workspace show
             terraform plan -var assume_role=ci -detailed-exitcode
         inputs:
-        - name: analytical-frontend-service
+        - name: dataworks-analytical-frontend-service
         - name: terraform-config
     terraform-output:
       task: terraform-output
@@ -112,7 +112,7 @@ meta:
             terraform workspace show
             terraform output -json > ../../../terraform-output/outputs.json
         inputs:
-        - name: analytical-frontend-service
+        - name: dataworks-analytical-frontend-service
         - name: terraform-config
         outputs:
         - name: terraform-output

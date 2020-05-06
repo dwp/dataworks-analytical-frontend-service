@@ -1,19 +1,19 @@
 jobs:
-- name: analytical-frontend-service-pr
+- name: dataworks-analytical-frontend-service-pr
   plan:
-  - get: analytical-frontend-service-pr
+  - get: dataworks-analytical-frontend-service-pr
     trigger: true
     version: every
-  - put: analytical-frontend-service-pr
+  - put: dataworks-analytical-frontend-service-pr
     params:
       context: $BUILD_JOB_NAME
-      path: analytical-frontend-service-pr
+      path: dataworks-analytical-frontend-service-pr
       status: pending
   - .: (( inject meta.plan.terraform-bootstrap ))
     params:
       DEPLOY_PATH: app
     input_mapping:
-      analytical-frontend-service: analytical-frontend-service-pr
+      dataworks-analytical-frontend-service: dataworks-analytical-frontend-service-pr
   - task: terraform-plan-app
     config:
       platform: linux
@@ -32,7 +32,7 @@ jobs:
         TF_CLI_ARGS_plan:  -lock-timeout=300s
       run:
         path: sh
-        dir: analytical-frontend-service/terraform/deploy/app
+        dir: dataworks-analytical-frontend-service/terraform/deploy/app
         args:
         - -exc
         - |
@@ -41,19 +41,19 @@ jobs:
           terraform init
           terraform plan -var assume_role=ci
       inputs:
-      - name: analytical-frontend-service
+      - name: dataworks-analytical-frontend-service
       - name: terraform-config
     input_mapping:
-      analytical-frontend-service: analytical-frontend-service-pr
+      dataworks-analytical-frontend-service: dataworks-analytical-frontend-service-pr
     on_failure:
-      put: analytical-frontend-service-pr
+      put: dataworks-analytical-frontend-service-pr
       params:
         context: $BUILD_JOB_NAME
-        path: analytical-frontend-service-pr
+        path: dataworks-analytical-frontend-service-pr
         status: failure
     on_success:
-      put: analytical-frontend-service-pr
+      put: dataworks-analytical-frontend-service-pr
       params:
         context: $BUILD_JOB_NAME
-        path: analytical-frontend-service-pr
+        path: dataworks-analytical-frontend-service-pr
         status: success

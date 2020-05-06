@@ -1,7 +1,7 @@
 jobs:
 - name: integration
   plan:
-  - get: analytical-frontend-service
+  - get: dataworks-analytical-frontend-service
     trigger: true
     passed:
       - qa
@@ -11,13 +11,13 @@ jobs:
   - .: (( inject meta.plan.terraform-apply ))
     config:
       run:
-        dir: 'analytical-frontend-service/terraform/deploy/app'
+        dir: 'dataworks-analytical-frontend-service/terraform/deploy/app'
     params:
       TF_WORKSPACE: integration
   - .: (( inject meta.plan.terraform-plan ))
     config:
       run:
-        dir: 'analytical-frontend-service/terraform/deploy/app'
+        dir: 'dataworks-analytical-frontend-service/terraform/deploy/app'
     params:
       TF_WORKSPACE: integration
 

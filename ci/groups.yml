@@ -6,4 +6,4 @@ groups:
   - integration
 - name: pull-request
   jobs:
-  - analytical-frontend-service-pr
+  - dataworks-analytical-frontend-service-pr

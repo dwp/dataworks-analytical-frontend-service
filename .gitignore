@@ -63,3 +63,6 @@ logs/
 *.p12
 # Testing
 .kotlintest
+
+#Aviator
+aviator_pipeline.yml
