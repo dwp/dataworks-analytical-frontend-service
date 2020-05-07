@@ -3,10 +3,11 @@ import { ProgressBar } from 'react-mdl';
 
 export default class handleClusterDelay extends Component {
     state = {
-        minutes: 0,
-        seconds: 10,
+        minutes: 5,
+        seconds: 0,
         status:"Please wait for For clusters to Spin up",
-        waitTime:"Estimate Wait Time"
+        waitTime:"Estimate Wait Time",
+        clusterUrl:""
       }
       setTimer(){
             if (this.state.seconds > 0){
@@ -31,12 +32,13 @@ export default class handleClusterDelay extends Component {
       }
       
       getClusterUrl(){
-        fetch('http://localhost:8080/connect')
+        fetch(REACT_APP_API_CONNECT_ENDPOINT)
         .then(function(response){
             if(response.status === 200 || response.status === 503 || response.status === 502){
+              this.setState({status:"Cluster Ready",waitTime:"",clusterUrl:response.body})
                 console.log(response.body);
             }else{
-              return "error"
+              this.setState({status:"Error in Loading custers",waitTime:""})
             }
         })
       }
@@ -45,10 +47,10 @@ export default class handleClusterDelay extends Component {
           return (
                 <div className="progressStatus">
                   <h1>{this.state.status}</h1>
+                  <h2>{this.state.clusterUrl}</h2>
                   <h2>{this.state.waitTime} {this.state.minutes}:{this.state.seconds < 10 ? `0${this.state.seconds}` : this.state.seconds}</h2>
                   <ProgressBar indeterminate />
                 </div>
-                
           )
       }
 }
