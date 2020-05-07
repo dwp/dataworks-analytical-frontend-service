@@ -5,39 +5,29 @@ import Enzyme, { shallow} from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import HandleDelay from './components/startupDelay';
 
-
-Enzyme.configure({adapter: new Adapter() });
-
 test('Displays signin button', () => {
 });
 
-// test("response status from connection to the Orchestration Service",()=>{
-//     try{fetch.then(response => {
-//       expect(response.status).toBe(200 || 503 || 502)
-//     })
-//     }catch(e){
-//       fetch.then(response =>{
-//         expect(response.status).toBe("error")
-//       })
-//     }
-//   }
-//   )
-//   test("cluster URL from the Orchestration Service",()=>{
-//     try{fetch.then(response => {
-//       expect(response.body).toBe(URL.toString)
-//     })
-//     }catch(e){
-//       fetch.then(response =>{
-//         expect(response.body).toBe("error")
-//       })
-//     }
-//   }
-//   )
+Enzyme.configure({adapter: new Adapter() });
 
-describe('HandleDelay',()=>{
-    it('response status from connection to the Orchestration Service',()=>{
-        const wrapper = shallow(<HandleDelay {... getClusterUrl()} />);
-        expect(wrapper.instance().getClusterUrl()).toBe("{}")
-
-    })
-})
+describe('HandleDelay', () => {
+  it('fetches data from server when server returns a successful response', done => {
+    const mockSuccessResponse = "testurl";
+    const mockJsonPromise = Promise.resolve(mockSuccessResponse);
+    const mockFetchPromise = Promise.resolve({ 
+      json: () => mockJsonPromise,
+    });
+    jest.spyOn(global, 'fetch').mockImplementation(() => mockFetchPromise);
+    const wrapper = shallow(<HandleDelay />);
+    wrapper.instance().getClusterUrl()
+    expect(global.fetch).toHaveBeenCalledTimes(1);
+    expect(global.fetch).toHaveBeenCalledWith('http://localhost:80/login', {"cache": "no-cache", "headers": {"Content-Type": "application/json"}, "method": "POST", "mode": "cors"});
+    process.nextTick(() => {
+      expect(wrapper.state()).toEqual({
+        status:"Cluster Ready",waitTime:"",clusterUrl:"",minutes: 5,seconds: 0,status: "Please wait for For clusters to Spin up", waitTime: "Estimate Wait Time",
+      });
+      global.fetch.mockClear();
+      done();
+    });
+  });
+});
