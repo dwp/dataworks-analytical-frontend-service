@@ -143,6 +143,14 @@ locals {
     management     = "management"
   }
 
+  whitelist_cidr_blocks = [
+    {% set doiranges = doi["cidr_blocks"].split(',') %}
+    {% for cidr in doiranges %}
+    "{{ cidr }}",
+    {% endfor %} 
+    "{{ucfs["team_cidr_block"]}}"
+  ]
+
   common_tags = {
     {% for key, value in common_tags.items() %}
       {{key}} = "{{value}}"

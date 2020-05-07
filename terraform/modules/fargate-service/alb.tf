@@ -9,6 +9,11 @@ resource "aws_lb" "lb" {
   tags                             = merge(var.common_tags, { Name = "${var.name_prefix}-alb" })
 }
 
+resource "aws_wafregional_web_acl_association" "lb" {
+  resource_arn = aws_lb.lb.arn
+  web_acl_id   = var.wafregional_web_acl_id
+}
+
 resource "aws_lb_target_group" "lb_tg" {
   depends_on  = [aws_lb.lb]
   name        = "${var.name_prefix}-lb-tg"

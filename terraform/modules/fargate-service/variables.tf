@@ -181,3 +181,12 @@ variable "internal_lb" {
   default     = true
 }
 
+variable "wafregional_web_acl_id" {
+  type        = string
+  description = "(Required) The WAF that will be protecting this ALB"
+}
+
+variable "whitelist_cidr_blocks" {
+  type        = list
+  description = "(Required) Rangese we will accept traffic from"
+}
