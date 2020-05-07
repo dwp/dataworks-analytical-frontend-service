@@ -20,7 +20,7 @@ resource aws_security_group_rule ingress_to_alb {
   security_group_id = aws_security_group.lb_sg.id
   to_port           = 443
   type              = "ingress"
-  cidr_blocks       = [data.aws_vpc.vpc.cidr_block]
+  cidr_blocks       = var.whitelist_cidr_blocks
 }
 
 resource aws_security_group_rule ingress_from_alb {
