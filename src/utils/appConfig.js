@@ -13,9 +13,16 @@ function initConfig() {
     }
 }
 
-export default function getConfig(key) {
+export function getConfig(key) {
     initConfig();
-    if(appConfig.hasOwnProperty(key)) return appConfig[key];
+    if (appConfig.hasOwnProperty(key)) return appConfig[key];
 
     throw new Error(`No value found for config key ${key}`)
 };
+
+export function getConfigOrDefault(key, defaultValue) {
+    initConfig();
+
+    if (appConfig.hasOwnProperty(key)) return appConfig[key];
+    return defaultValue;
+}

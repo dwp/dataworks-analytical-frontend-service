@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
-import getConfig from "../utils/appConfig";
 import QRCode from 'qrcode.react';
 import { Auth, Hub } from 'aws-amplify';
 import { AmplifyButton, AmplifyLabel, AmplifyCodeField } from '@aws-amplify/ui-react';
 import { ProgressBar } from 'react-mdl';
-import { connect } from '../utils/api';
+import { connect } from '../../utils/api';
+import {getConfig, getConfigOrDefault} from "../../utils/appConfig";
 
 const PageMode ={
         LOGIN : 'LOGIN',
@@ -13,7 +13,7 @@ const PageMode ={
         DISPLAY_DESKTOP: 'DISPLAY_DESKTOP'
 }
 
-class MainPage extends Component {
+class MainPageOld extends Component {
 
     constructor(props){
         super(props);
@@ -45,7 +45,7 @@ class MainPage extends Component {
                         if (this.state.minutes === 0) {
                         this.setState({status:"Error in Loading custers",waitTime:""})
                         this.setTimertoNull()
-                        return;
+
                         } else {
                         this.setState({minutes:this.state.minutes-1,seconds: 59})
                         }   
@@ -79,13 +79,8 @@ class MainPage extends Component {
 
                Auth.setupTOTP(user)
                .then((totpcode) => {
-                    let env;
-                    try {
-                        env = getConfig('REACT_APP_ENV');
-                    } catch (e) {
-                        env = '';
-                    }
-                    
+                    const env = getConfigOrDefault('REACT_APP_ENV', '');
+
                     let authCode = encodeURI("otpauth://totp/DWP-Analytics-" + env + ":" + user.username + "?secret=" + totpcode + "&issuer=DWP");
                     this.state.mode = PageMode.REQUIRE_MFA;
                     this.state.code = authCode;
@@ -216,4 +211,4 @@ class MainPage extends Component {
     }
 }
 
-export default MainPage;
+export default MainPageOld;
