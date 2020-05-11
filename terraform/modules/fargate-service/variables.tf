@@ -190,3 +190,8 @@ variable "whitelist_cidr_blocks" {
   type        = list
   description = "(Required) Rangese we will accept traffic from"
 }
+
+variable "os_alb_sg" {
+  type        = string
+  description = "(Required) - The ALB SG for Orchestration service"
+}

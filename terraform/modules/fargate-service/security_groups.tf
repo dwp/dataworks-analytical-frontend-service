@@ -23,6 +23,26 @@ resource aws_security_group_rule ingress_to_alb {
   cidr_blocks       = var.whitelist_cidr_blocks
 }
 
+resource aws_security_group_rule ingress_to_os_alb {
+  description              = "ingress_to_os_alb"
+  from_port                = 443
+  protocol                 = "tcp"
+  security_group_id        = var.os_alb_sg
+  to_port                  = 443
+  type                     = "ingress"
+  source_security_group_id = aws_security_group.ecs_tasks_sg.id
+}
+
+resource aws_security_group_rule egress_to_os_alb {
+  description              = "egress_to_os_alb"
+  from_port                = 443
+  protocol                 = "tcp"
+  security_group_id        = aws_security_group.ecs_tasks_sg.id
+  to_port                  = 443
+  type                     = "egress"
+  source_security_group_id = var.os_alb_sg
+}
+
 resource aws_security_group_rule ingress_from_alb {
   description              = "ingress_from_alb"
   from_port                = var.container_port

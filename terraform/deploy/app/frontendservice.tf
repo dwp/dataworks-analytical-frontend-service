@@ -46,6 +46,10 @@ module "ecs-fargate-task-definition" {
     {
       name  = "ALLOW_HTTP"
       value = "false"
+    },
+    {
+      name  = "NODE_TLS_REJECT_UNAUTHORIZED"
+      value = "0"
     }
   ]
 }
@@ -81,6 +85,8 @@ module "ecs-fargate-service" {
   cert_authority_arn     = data.terraform_remote_state.aws_certificate_authority.outputs.root_ca.arn
   wafregional_web_acl_id = module.waf.wafregional_web_acl_id
   whitelist_cidr_blocks  = local.whitelist_cidr_blocks
+
+  os_alb_sg = data.terraform_remote_state.orchestration-service.outputs.alb_sg.id
 }
 
 module cognito-app {
