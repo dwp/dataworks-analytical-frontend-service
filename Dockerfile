@@ -14,6 +14,7 @@ COPY webpack.server.js ./
 COPY .babelrc ./
 
 RUN npm install
+RUN npm install --save react-mdl
 RUN npm run build
 
 RUN apk add openssl
