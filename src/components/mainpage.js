@@ -64,7 +64,7 @@ class MainPage extends Component {
     
     async getClusterUrl(){
         let that = this;
-    await fetch(getConfig("REACT_APP_OS_URL"+"/connect"), {method:'POST',mode:'cors',cache:'no-cache',headers:{"Content-Type": "application/json"}, Authorisation:this.shouldConnect.jwtToken})
+    await fetch(`${getConfig("REACT_APP_OS_URL")}/connect`, {method:'POST',mode:'cors',cache:'no-cache',headers:{"Content-Type": "application/json"}, Authorisation:this.shouldConnect.jwtToken})
         .then(function(response){
             if(response.status.code === 200 || response.status.code === 503 || response.status.code === 502){
             that.setState({status:"Cluster Ready",waitTime:"",clusterUrl:response.body})
