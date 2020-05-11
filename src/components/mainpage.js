@@ -28,16 +28,13 @@ class MainPage extends Component {
                        enteredCode: '',
                        desktopUrl: '',
                        mode: PageMode.CONNECT,
-                       message: 'Attempting to connect to desktop, please wait...' };
-
-
-                       state = {
-                        minutes: 5,
-                        seconds: 0,
-                        status:"Please wait for For clusters to Spin up",
-                        waitTime:"Estimate Wait Time",
-                        clusterUrl:""
-                      }
+                       message: 'Attempting to connect to desktop, please wait...',
+                       minutes: 5,
+                       seconds: 0,
+                       status:"Please wait for For clusters to Spin up",
+                       waitTime:"Estimate Wait Time",
+                       clusterUrl:"" };
+                       
         Hub.listen('auth', this.authEvents);
 
     }
