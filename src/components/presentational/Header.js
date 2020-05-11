@@ -1,4 +1,7 @@
 import React from "react";
+import { AmplifyButton, AmplifyLabel, AmplifyCodeField } from '@aws-amplify/ui-react';
+import {Auth} from "aws-amplify";
+
 
 const Header = () => (<header role="banner" id="global-header" className="with-proposition">
     <div className="header-wrapper">

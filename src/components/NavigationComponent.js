@@ -11,14 +11,14 @@ export const Pages = Object.freeze({
     DESKTOP: DesktopPage,
 });
 
-const NavigationComponent = () => {
+const NavigationComponent = ({style}) => {
     const [pageState, setPageState] = useState({page: Pages.MAIN, props: {}});
 
     const nav = {
         go: (page, props) => setPageState({page, props})
     }
+    return <div style={style}><pageState.page {...pageState.props} nav={nav}/></div>
 
-    return React.createElement(pageState.page, {...pageState.props, nav})
 }
 
 export default NavigationComponent;

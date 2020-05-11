@@ -30,12 +30,10 @@ function App() {
                     <div className="content-block">
                         <div id="desktop" className="inner">
                             <MainWrapper>
-                                <AmplifyAuthenticator signInConfig={
-                                    {isSignUpDisplayed: false}
-                                }>
-                                    <AmplifySignIn headerText='Analytical Environment SignIn' slot='sign-in'/>
+                                <AmplifyAuthenticator>
                                     <AmplifySignOut/>
-                                    <NavigationComponent/>
+                                    <AmplifySignIn headerText='Analytical Environment SignIn' slot='sign-in'/>
+                                    <NavigationComponent style={{margin: "30px 0px"}}/>
                                 </AmplifyAuthenticator>
                             </MainWrapper>
                         </div>

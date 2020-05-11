@@ -10,7 +10,7 @@ function HttpApiException(message, status) {
 
 export async function connect(token) {
 
-    const url = (`${getConfig("REACT_APP_OS_URL")}/connect/`);
+    const url = (`${getConfig("REACT_APP_OS_URL")}/connect`);
 
     const requestConfig = {
         method: 'POST',
@@ -20,7 +20,7 @@ export async function connect(token) {
         },
         redirect: 'follow',
         referrerPolicy: 'no-referrer',
-        body: {}
+        body: JSON.stringify({})
     }
 
     const response = await fetch(url, requestConfig);
@@ -39,7 +39,7 @@ export async function connect(token) {
 
 export async function disconnect(token) {
 
-    const url = (`${getConfig("REACT_APP_OS_URL")}/disconnect/`);
+    const url = (`${getConfig("REACT_APP_OS_URL")}/disconnect`);
 
     const requestConfig = {
         method: 'POST',
@@ -49,7 +49,7 @@ export async function disconnect(token) {
         },
         redirect: 'follow',
         referrerPolicy: 'no-referrer',
-        body: {}
+        body: JSON.stringify({})
     }
 
     const response = await fetch(url, requestConfig);
