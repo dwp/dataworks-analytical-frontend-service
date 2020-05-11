@@ -15,3 +15,8 @@ header {
 .mfasetup {
     text-align:center;
 }
+
+footer {
+    position: absolute;
+    bottom: 0;
+}

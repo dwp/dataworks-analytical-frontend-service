@@ -1,6 +1,6 @@
 import React from "react";
 
-const HeaderComponent = () => (<header role="banner" id="global-header" className="with-proposition">
+const Header = () => (<header role="banner" id="global-header" className="with-proposition">
     <div className="header-wrapper">
         <div className="header-global">
             <div className="header-logo">
@@ -22,4 +22,4 @@ const HeaderComponent = () => (<header role="banner" id="global-header" classNam
     </div>
 </header>)
 
-export default HeaderComponent;
+export default Header;

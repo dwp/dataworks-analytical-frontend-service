@@ -1,11 +1,12 @@
 import React from 'react';
 import './App.css';
-import {AmplifyAuthenticator, AmplifySignIn, AmplifySignOut} from "@aws-amplify/ui-react";
-import HeaderComponent from "./components/presentational/HeaderComponent";
-import FooterComponent from "./components/presentational/FooterComponent";
+import {AmplifyAuthenticator, AmplifySignIn, AmplifySignOut, AmplifySignUp} from "@aws-amplify/ui-react";
+import Header from "./components/presentational/Header";
+import Footer from "./components/presentational/Footer";
 import NavigationComponent from "./components/NavigationComponent";
 import {Auth} from "aws-amplify";
 import {getConfig} from "./utils/appConfig";
+import MainWrapper from "./components/presentational/MainWrapper";
 
 function App() {
     if (typeof window !== "undefined" && !process.title.endsWith("node")) {
@@ -23,22 +24,25 @@ function App() {
 
     return (
         <React.StrictMode>
-            <HeaderComponent/>
-            <div id="global-header-bar"></div>
+            <Header/>
             <main id="content" role="main" className="">
                 <div className="article-container group">
                     <div className="content-block">
                         <div id="desktop" className="inner">
-                            <AmplifyAuthenticator>
-                                <AmplifySignIn headerText='Analytical Sandpit SignIn' slot='sign-in'/>
-                                <AmplifySignOut/>
-                                <NavigationComponent/>
-                            </AmplifyAuthenticator>
+                            <MainWrapper>
+                                <AmplifyAuthenticator signInConfig={
+                                    {isSignUpDisplayed: false}
+                                }>
+                                    <AmplifySignIn headerText='Analytical Environment SignIn' slot='sign-in'/>
+                                    <AmplifySignOut/>
+                                    <NavigationComponent/>
+                                </AmplifyAuthenticator>
+                            </MainWrapper>
                         </div>
                     </div>
                 </div>
             </main>
-            <FooterComponent/>
+            <Footer/>
         </React.StrictMode>
     );
 }

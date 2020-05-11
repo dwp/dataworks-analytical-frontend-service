@@ -1,6 +1,6 @@
 import React from "react";
 
-const FooterComponent = () => (<footer className="group js-footer" id="footer" role="contentinfo">
+const Footer = () => (<footer className="group js-footer" id="footer" role="contentinfo">
     <div className="footer-wrapper">
         <div className="footer-meta">
             <div className="footer-meta-inner">
@@ -21,4 +21,4 @@ const FooterComponent = () => (<footer className="group js-footer" id="footer" r
     </div>
 </footer>)
 
-export default FooterComponent;
+export default Footer;
