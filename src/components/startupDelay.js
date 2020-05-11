@@ -31,7 +31,7 @@ export default class handleClusterDelay extends Component {
       }
       async getClusterUrl(){
         let that = this;
-       await fetch('http://localhost:80/login', {method:'POST',mode:'cors',cache:'no-cache',headers:{"Content-Type": "application/json"}})
+       await fetch(REACT_APP_API_CONNECT_ENDPOINT, {method:'POST',mode:'cors',cache:'no-cache',headers:{"Content-Type": "application/json"}})
         .then(function(response){
             if(response.status.code === 200 || response.status.code === 503 || response.status.code === 502){
               that.setState({status:"Cluster Ready",waitTime:"",clusterUrl:response.body})
