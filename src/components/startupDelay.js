@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import { ProgressBar } from 'react-mdl';
+import getConfig from '../utils/appConfig';
+import App from '../App';
 
 export default class handleClusterDelay extends Component {
     state = {
@@ -31,7 +33,7 @@ export default class handleClusterDelay extends Component {
       }
       async getClusterUrl(){
         let that = this;
-       await fetch(REACT_APP_API_CONNECT_ENDPOINT, {method:'POST',mode:'cors',cache:'no-cache',headers:{"Content-Type": "application/json"}})
+       await fetch(getConfig(REACT_APP_API_CONNECT_ENDPOINT), {method:'POST',mode:'cors',cache:'no-cache',headers:{"Content-Type": "application/json"}})
         .then(function(response){
             if(response.status.code === 200 || response.status.code === 503 || response.status.code === 502){
               that.setState({status:"Cluster Ready",waitTime:"",clusterUrl:response.body})
