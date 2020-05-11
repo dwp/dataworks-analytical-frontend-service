@@ -3,6 +3,8 @@ import getConfig from "../utils/appConfig";
 import QRCode from 'qrcode.react';
 import { Auth, Hub } from 'aws-amplify';
 import { AmplifyButton, AmplifyLabel, AmplifyCodeField } from '@aws-amplify/ui-react';
+import { ProgressBar } from 'react-mdl';
+import { connect } from '../utils/api';
 
 const PageMode ={
         LOGIN : 'LOGIN',
@@ -26,10 +28,45 @@ class MainPage extends Component {
                        enteredCode: '',
                        desktopUrl: '',
                        mode: PageMode.CONNECT,
-                       message: 'Attempting to connect to desktop, please wait...' };
-
+                       message: 'Attempting to connect to desktop, please wait...',
+                       minutes: 5,
+                       seconds: 0,
+                       status:"Please wait for For clusters to Spin up",
+                       waitTime:"Estimate Wait Time",
+                       clusterUrl:"" };
+                       
         Hub.listen('auth', this.authEvents);
 
+    }
+        setTimer(){
+            if (this.state.seconds > 0){
+                this.setState({seconds:this.state.seconds-1})
+            }else if (this.state.seconds === 0) {
+                        if (this.state.minutes === 0) {
+                        this.setState({status:"Error in Loading custers",waitTime:""})
+                        this.setTimertoNull()
+                        return;
+                        } else {
+                        this.setState({minutes:this.state.minutes-1,seconds: 59})
+                        }   
+            }
+    }
+    callingFunctions() {
+            this.timer = setInterval(()=> this.getClusterUrl(), 10000); 
+            this.timer = setInterval(()=> this.setTimer(), 1000);
+        }
+    setTimertoNull() {
+        this.timer = null; 
+    }
+    
+    async getClusterUrl(){
+        let that = this;
+    await fetch(`${getConfig("REACT_APP_OS_URL")}/connect`, {method:'POST',mode:'cors',cache:'no-cache',headers:{"Content-Type": "application/json"}, Authorisation:this.shouldConnect.jwtToken})
+        .then(function(response){
+            if(response.status.code === 200 || response.status.code === 503 || response.status.code === 502){
+            that.setState({status:"Cluster Ready",waitTime:"",clusterUrl:response.body})
+            }
+        }) 
     }
 
     shouldDisplayQR() {
@@ -90,7 +127,7 @@ class MainPage extends Component {
         return true;
     }
 
-    componentDidMount() {
+    callingFunctions() {
         console.log('ComponentDidMount', this.state);
 
         this.shouldConnect();
@@ -159,6 +196,16 @@ class MainPage extends Component {
                   <iframe src = {this.state.desktopUrl} title='Remote Desktop' height="1080" width="1920"/>
                 </div>
             )
+        }
+        if (this.state.mode == PageMode.CONNECT){
+            return (
+                <div className="progressStatus">
+                  <h1>{this.state.status}</h1>
+                  <h2>Estimate Wait Time {this.state.minutes}:{this.state.seconds < 10 ? `0${this.state.seconds}` : this.state.seconds}</h2>
+                  <h2>Cluster URL:{this.state.clusterUrl}</h2>
+                  <ProgressBar indeterminate />
+                </div>
+          )
         }
 
         return(
