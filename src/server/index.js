@@ -3,12 +3,12 @@ import fs from 'fs';
 import express from 'express';
 import http from 'http';
 import https from 'https';
+import "regenerator-runtime/runtime.js";
 
 import templateApp from './template'
-import getConfig from '../utils/appConfig'
-import getRuntimeConfig from './runtimeConfig'
 
-import  { connect, disconnect } from '../utils/api.js'
+
+import {connect, disconnect} from '../utils/api.js'
 import regeneratorRuntime from "regenerator-runtime";
 import {getTlsConfig} from "./serverConfig";
 
@@ -18,14 +18,21 @@ const app = express();
 app.use(express.static('./build', {index: false}));
 
 app.get('/connect', async (req, res) => {
-    console.log('Connection request to Orchestration Service');
-    url = await connect(req.id_token);
-    return res.send(url);
+    console.info('Connection request to Orchestration Service');
+    let url;
+    try {
+        url = await connect(req.id_token);
+    } catch(e){
+        res.status(500).send('Error occurred, cannot connect to Orchestration Service');
+        console.error(e);
+    }
+
+    return res.send(url)
 });
 
-app.get('/disconnect',(req, res) => {
+app.get('/disconnect', (req, res) => {
     console.log('Disconnection request to Orchestration Service');
-    disconnect(req.id_token);
+    return disconnect(req.id_token);
 });
 
 app.get('/*', (req, res) => {
