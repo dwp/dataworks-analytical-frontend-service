@@ -4,7 +4,6 @@ const MainWrapper = ({children}) => {
     return (
         <div style={
             {
-                maxWidth: '80%',
                 margin: 'auto',
                 padding: '50px',
                 display: 'flex',

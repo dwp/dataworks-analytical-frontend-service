@@ -1,6 +1,6 @@
 import {getConfig} from "./appConfig";
 
-const fetch = require("node-fetch");
+import fetch from "node-fetch";
 
 function HttpApiException(message, status) {
     this.message = message;
@@ -25,14 +25,12 @@ export async function connect(token) {
 
     const response = await fetch(url, requestConfig);
 
-    const data = await response.json();
-
     if (response.status === 200) {
-        return data.body;
+        return response.text();
     }
 
     throw new HttpApiException(
-        data || response.statusText,
+        await response.json(),
         response.status
     );
 }

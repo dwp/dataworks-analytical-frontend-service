@@ -25,8 +25,9 @@ const MainPage = ({nav}) => {
             const jwtToken = data.payload.data.signInUserSession.idToken.jwtToken;
             fetch('/disconnect?id_token=' + jwtToken)
                 .then(() => nav.go(Pages.MAIN))
-                .catch(error => {
-                    console.log('Error disconnect from Orchestration Service', error);
+                .catch(async (res) => {
+                    const err = await res.json()
+                    console.log('Error disconnect from Orchestration Service', err);
                 });
         }
     };
@@ -38,9 +39,10 @@ const MainPage = ({nav}) => {
         const user = await Auth.currentAuthenticatedUser({bypassCache: true});
         const jwtToken = user.signInUserSession.idToken.jwtToken;
         const res = await fetch(`/connect?id_token=${jwtToken}`);
-        if (res.status === 200) return nav.go(Pages.CONNECT, {desktopUrl: `${res.body}?token=${jwtToken}`})
+        const data = await res.text()
+        if (res.status === 200) return nav.go(Pages.CONNECT, {desktopUrl: `https://${data}?token=${jwtToken}`})
 
-        console.error('Error connecting to OS', res.body);
+        console.error('Error connecting to OS');
         return nav.go(Pages.MAIN);
     }
     if (!isLoading)
