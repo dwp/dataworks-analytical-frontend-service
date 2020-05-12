@@ -21,10 +21,10 @@ app.get('/connect', async (req, res) => {
     console.info('Connection request to Orchestration Service');
     let url;
     try {
-        url = await connect(req.id_token);
+        url = await connect(req.query.id_token);
     } catch(e){
         res.status(500).send('Error occurred, cannot connect to Orchestration Service');
-        console.error(e);
+        console.error(e.message);
     }
 
     return res.send(url)
@@ -32,7 +32,7 @@ app.get('/connect', async (req, res) => {
 
 app.get('/disconnect', (req, res) => {
     console.log('Disconnection request to Orchestration Service');
-    return disconnect(req.id_token);
+    return disconnect(req.query.id_token);
 });
 
 app.get('/*', (req, res) => {

@@ -3,8 +3,7 @@ import {ProgressBar} from "react-mdl";
 import {Pages} from "../NavigationComponent";
 
 const ConnectPage = ({nav, desktopUrl}) => {
-    const timeOutAt = Date.now() + 5 * 60 * 1000 // 5 minutes
-    const checkInterval = setInterval(async () => {
+    const checkIsEnvironmentReady = async () => {
         const status = await fetch(desktopUrl).then(res => res.status);
         if (status === 200) {
             clearInterval(checkInterval);
@@ -16,7 +15,11 @@ const ConnectPage = ({nav, desktopUrl}) => {
             throw new Error('Analytical Environment provisioning timeout')
         }
 
-    }, 10 * 1000) // 10 seconds
+    }
+
+    const timeOutAt = Date.now() + 5 * 60 * 1000 // 5 minutes
+    const checkInterval = setInterval(checkIsEnvironmentReady, 10 * 1000) // 10 seconds
+    checkIsEnvironmentReady()
 
     return (
         <div className="progressStatus">
