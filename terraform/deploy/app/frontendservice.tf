@@ -108,3 +108,11 @@ module "waf" {
   whitelist_cidr_blocks = local.whitelist_cidr_blocks
 
 }
+
+module "pre-auth-lambda" {
+  source = "../../modules/pre-auth-lambda"
+
+  name_prefix = var.name_prefix
+  common_tags = local.common_tags
+
+}

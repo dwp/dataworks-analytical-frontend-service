@@ -66,3 +66,5 @@ logs/
 
 #Aviator
 aviator_pipeline.yml
+
+terraform/modules/pre-auth-lambda/*.zip
