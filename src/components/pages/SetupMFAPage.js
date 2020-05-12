@@ -12,10 +12,10 @@ const SetupMFAPage = ({nav}) => {
     useEffect(() => {
         async function setupMfa() {
             const user = await Auth.currentAuthenticatedUser();
-            const tOtpCode = await Auth.setupTOTP(user)
+            const totpCode = await Auth.setupTOTP(user)
 
             const env = getConfigOrDefault('REACT_APP_ENV', '');
-            const authCode = encodeURI(`otpauth://totp/DWP-Analytics-${env}:${user.username}?secret=${tOtpCode}&issuer=DWP`);
+            const authCode = encodeURI(`otpauth://totp/DWP-Analytics-${env}:${user.username}?secret=${totpCode}&issuer=DWP`);
             setQrCode(authCode);
         }
 
