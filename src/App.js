@@ -1,10 +1,10 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import './App.css';
 import {AmplifyAuthenticator, AmplifySignIn, AmplifySignOut, AmplifySignUp} from "@aws-amplify/ui-react";
 import Header from "./components/presentational/Header";
 import Footer from "./components/presentational/Footer";
 import NavigationComponent from "./components/NavigationComponent";
-import {Auth} from "aws-amplify";
+import {Auth, Hub} from "aws-amplify";
 import {getConfig} from "./utils/appConfig";
 import MainWrapper from "./components/presentational/MainWrapper";
 
@@ -22,6 +22,24 @@ function App() {
         );
     }
 
+    const [user, setUser] = useState();
+
+    useEffect(() => {
+        let updateUser = async (e) => {
+            if(e && e.payload.event === 'configured') return;
+            try {
+                let user = await Auth.currentAuthenticatedUser()
+                setUser(user)
+            } catch {
+                setUser(null)
+            }
+        }
+        Hub.listen('auth', updateUser)
+
+        updateUser()
+        return () => Hub.remove('auth', updateUser) // cleanup
+    }, []);
+
     return (
         <React.StrictMode>
             <Header/>
@@ -33,7 +51,7 @@ function App() {
                                 <AmplifyAuthenticator>
                                     <AmplifySignOut/>
                                     <AmplifySignIn headerText='Analytical Environment SignIn' slot='sign-in'/>
-                                    <NavigationComponent style={{margin: "30px 0px"}}/>
+                                    {user ? <NavigationComponent style={{margin: "30px 0px"}}/> : null}
                                 </AmplifyAuthenticator>
                             </MainWrapper>
                         </div>
