@@ -9,7 +9,7 @@ const MainPage = ({nav}) => {
 
     useEffect(() => {
         async function checkMfaSetup() {
-            const user = await Auth.currentAuthenticatedUser();
+            const user = await Auth.currentAuthenticatedUser({bypassCache: true});
             if (user.preferredMFA !== 'SOFTWARE_TOKEN_MFA') {
                 return nav.go(Pages.SETUP_MFA);
             }
