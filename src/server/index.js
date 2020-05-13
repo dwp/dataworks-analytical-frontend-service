@@ -35,7 +35,7 @@ app.get('/disconnect', (req, res) => {
     return disconnect(req.query.id_token);
 });
 
-app.get('/*', (req, res) => {
+app.get('/', (req, res) => {
     const indexFile = path.resolve('./build/index.html');
     fs.readFile(indexFile, 'utf8', (err, data) => {
         if (err) {
