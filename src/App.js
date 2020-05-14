@@ -28,7 +28,7 @@ function App() {
         let updateUser = async (e) => {
             if(e && e.payload.event === 'configured') return;
             try {
-                let user = await Auth.currentAuthenticatedUser()
+                let user = await Auth.currentAuthenticatedUser({bypassCache:true})
                 setUser(user)
             } catch {
                 setUser(null)
