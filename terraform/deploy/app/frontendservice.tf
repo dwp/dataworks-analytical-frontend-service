@@ -25,7 +25,7 @@ module "ecs-fargate-task-definition" {
   environment = [
     {
       name  = "REACT_APP_OS_URL"
-      value = "https://example.com"
+      value = "https://${data.terraform_remote_state.orchestration-service.outputs.orchestration_service_fqdn}"
     },
     {
       name  = "REACT_APP_REGION"
@@ -37,7 +37,7 @@ module "ecs-fargate-task-definition" {
     },
     {
       name  = "REACT_APP_USERPOOLID"
-      value = data.terraform_remote_state.aws_analytical_env_cognito.outputs.cognito.user_pool_id
+      value = data.terraform_remote_state.aws_analytical_env_cognito.outputs.cognito-fs.user_pool_id
     },
     {
       name  = "REACT_APP_ENV"
@@ -91,6 +91,16 @@ module cognito-app {
   role_arn = {
     management = "arn:aws:iam::${local.account[local.management_account[local.environment]]}:role/${var.assume_role}"
   }
+}
+
+module "custom-auth-flow" {
+  source = "../../modules/custom-auth-flow"
+
+  name_prefix = var.name_prefix
+  region      = var.region
+  common_tags = local.common_tags
+  account = local.account
+  cognito_user_pool = data.terraform_remote_state.aws_analytical_env_cognito.outputs.cognito-fs.arn
 }
 
 module "pre-auth-lambda" {
