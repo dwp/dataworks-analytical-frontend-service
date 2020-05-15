@@ -52,10 +52,8 @@ export async function disconnect(token) {
 
     const response = await fetch(url, requestConfig);
 
-    const data = await response.json();
-
     if (response.status === 200) {
-        return data.body;
+        return response.text();
     }
 
     throw new HttpApiException(
