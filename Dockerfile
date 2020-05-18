@@ -8,15 +8,16 @@ RUN mkdir ${APP_HOME}
 WORKDIR ${APP_HOME}
 
 COPY package*.json ./ 
+
+RUN apk add openssl
+RUN npm install
+
 COPY src/ ./src/
 COPY public/ ./public/
 COPY webpack.server.js ./
 COPY .babelrc ./
 
-RUN npm install
 RUN npm run build
-
-RUN apk add openssl
 
 COPY entrypoint.sh ./
 RUN chmod +x ./entrypoint.sh
