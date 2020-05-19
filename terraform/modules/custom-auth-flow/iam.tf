@@ -92,9 +92,9 @@ data aws_iam_policy_document cognito_challenge_trigger_document {
   statement {
     effect = "Allow"
     actions = [
-      "logs:CreateLogGroup"]
+    "logs:CreateLogGroup"]
     resources = [
-      "arn:aws:logs:${var.region}:${var.account}:*"]
+    "arn:aws:logs:${var.region}:${var.account}:*"]
   }
   statement {
     effect = "Allow"
@@ -108,7 +108,7 @@ data aws_iam_policy_document cognito_challenge_trigger_document {
   }
 }
 
-resource "aws_iam_role_policy_attachment" "cognito_define_challenge_trigger_policy_attach" {
+resource "aws_iam_role_policy_attachment" "cognito_define_auth_trigger_policy_attach" {
   role       = aws_iam_role.role_for_lambda_define_auth_challenge.name
   policy_arn = aws_iam_policy.cognito_define_auth_trigger_policy.arn
 }

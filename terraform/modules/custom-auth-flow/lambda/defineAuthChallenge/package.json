@@ -1,0 +1,11 @@
+{
+  "name": "defineauthchallenge",
+  "version": "1.0.0",
+  "description": "",
+  "main": "handler.js",
+  "scripts": {
+    "test": "test"
+  },
+  "author": "",
+  "license": "ISC"
+}
