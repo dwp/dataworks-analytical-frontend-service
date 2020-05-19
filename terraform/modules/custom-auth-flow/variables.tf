@@ -14,7 +14,7 @@ variable "region" {
 }
 
 variable "account" {
-  type        = string
+  type        = map(string)
   description = "(Required) AWS account number"
 }
 

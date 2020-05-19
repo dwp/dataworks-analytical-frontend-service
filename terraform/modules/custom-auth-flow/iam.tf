@@ -34,90 +34,97 @@ resource aws_iam_policy cognito_auth_sns_policy {
 
 data aws_iam_policy_document cognito_auth_sns_policy_document {
   statement {
+    effect = "Allow"
     actions = [
-      "SNS:Publish"
+      "sns:Publish"
     ]
-    resources = ["arn:aws:sns:${var.region}:${var.account}:****TOPICNAME****"]
+    resources = ["*"]
+  }
+  statement {
+    effect = "Deny"
+    actions = [
+      "sns:Publish"
+    ]
+    resources = ["arn:aws:sns:*:*:*"]
   }
 }
 
 resource "aws_iam_role_policy_attachment" "cognito_create_challenge_trigger_policy_attach" {
   role       = aws_iam_role.role_for_lambda_create_auth_challenge.name
-  policy_arn = aws_iam_policy.cognito_create_challenge_trigger_policy.arn
-}
-
-resource aws_iam_policy cognito_create_challenge_trigger_policy {
-  policy = data.aws_iam_policy_document.cognito_create_challenge_trigger_document.json
-}
-
-data aws_iam_policy_document cognito_create_challenge_trigger_document {
-  statement {
-    Sid = "lambda-something"
-    Effect = "Allow"
-    Principal = {
-      Service = "cognito-sync.amazonaws.com"
-    }
-    Action = "lambda:InvokeFunction"
-    Resource = aws_lambda_function.lambda_create_challenge.arn
-    Condition = {
-      test = "ArnLike"
-      values = [
-        var.cognito_user_pool_arn
-      ]
-    }
-  }
+  policy_arn = aws_iam_policy.cognito_challenge_trigger_policy.arn
 }
 
 resource "aws_iam_role_policy_attachment" "cognito_verify_challenge_trigger_policy_attach" {
   role       = aws_iam_role.role_for_lambda_verify_auth_challenge.name
-  policy_arn = aws_iam_policy.cognito_verify_challenge_trigger_policy.arn
+  policy_arn = aws_iam_policy.cognito_challenge_trigger_policy.arn
 }
 
-resource aws_iam_policy cognito_verify_challenge_trigger_policy {
-  policy = data.aws_iam_policy_document.cognito_verify_challenge_trigger_document.json
+resource "aws_iam_role_policy_attachment" "cognito_define_challenge_trigger_policy_attach" {
+  role       = aws_iam_role.role_for_lambda_define_auth_challenge.name
+  policy_arn = aws_iam_policy.cognito_challenge_trigger_policy.arn
 }
 
-data aws_iam_policy_document cognito_verify_challenge_trigger_document {
+resource aws_iam_policy cognito_challenge_trigger_policy {
+  policy = data.aws_iam_policy_document.cognito_challenge_trigger_document.json
+}
+
+data aws_iam_policy_document cognito_challenge_trigger_document {
   statement {
-    Sid = "lambda-something"
-    Effect = "Allow"
-    Principal = {
-      Service = "cognito-sync.amazonaws.com"
+    effect = "Allow"
+    principals {
+      identifiers = ["cognito-sync.amazonaws.com"]
+      type = "Service"
     }
-    Action = "lambda:InvokeFunction"
-    Resource = aws_lambda_function.lambda_verify_challenge.arn
-    Condition = {
+    actions   = ["lambda:InvokeFunction"]
+    resources = [
+      aws_lambda_function.lambda_create_challenge.arn,
+      aws_lambda_function.lambda_verify_challenge.arn,
+      aws_lambda_function.lambda_define_challenge.arn
+    ]
+    condition {
       test = "ArnLike"
       values = [
         var.cognito_user_pool_arn
       ]
+      variable = "cognito:user_pool"
     }
+  }
+  statement {
+    effect = "Allow"
+    actions = [
+      "logs:CreateLogGroup"]
+    resources = [
+      "arn:aws:logs:${var.region}:${var.account}:*"]
+  }
+  statement {
+    effect = "Allow"
+    actions = [
+      "logs:CreateLogStream",
+      "logs:PutLogEvents"
+    ]
+    resources = [
+      "arn:aws:logs:${var.region}:${var.account}:log-group:/aws/lambda/*:*"
+    ]
   }
 }
 
 resource "aws_iam_role_policy_attachment" "cognito_define_challenge_trigger_policy_attach" {
   role       = aws_iam_role.role_for_lambda_define_auth_challenge.name
-  policy_arn = aws_iam_policy.cognito_define_challenge_trigger_policy.arn
+  policy_arn = aws_iam_policy.cognito_define_auth_trigger_policy.arn
 }
 
-resource aws_iam_policy cognito_define_challenge_trigger_policy {
-  policy = data.aws_iam_policy_document.cognito_define_challenge_trigger_document.json
+resource aws_iam_policy cognito_define_auth_trigger_policy {
+  policy = data.aws_iam_policy_document.cognito_define_auth_trigger_document.json
 }
 
-data aws_iam_policy_document cognito_define_challenge_trigger_document {
+data aws_iam_policy_document cognito_define_auth_trigger_document {
   statement {
-    Sid = "lambda-something"
-    Effect = "Allow"
-    Principal = {
-      Service = "cognito-sync.amazonaws.com"
-    }
-    Action = "lambda:InvokeFunction"
-    Resource = aws_lambda_function.lambda_define_challenge.arn
-    Condition = {
-      test = "ArnLike"
-      values = [
-        var.cognito_user_pool_arn
-      ]
-    }
+    effect = "Allow"
+    actions = [
+      "cognito-idp:Get*",
+      "cognito-identity:Get*"]
+    resources = [
+      var.cognito_user_pool_arn
+    ]
   }
 }
