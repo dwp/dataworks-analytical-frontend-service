@@ -96,17 +96,19 @@ module cognito-app {
 module "custom-auth-flow" {
   source = "../../modules/custom-auth-flow"
 
-  name_prefix       = var.name_prefix
-  region            = var.region
-  common_tags       = local.common_tags
-  account           = local.account
-  cognito_user_pool_arn = data.terraform_remote_state.aws_analytical_env_cognito.outputs.cognito-fs.user_pool_arn
+  name_prefix           = var.name_prefix
+  region                = var.region
+  common_tags           = local.common_tags
+  account               = lookup(local.account, local.environment)
+  cognito_user_pool_arn = data.terraform_remote_state.aws_analytical_env_cognito.outputs.cognito.user_pool_arn
 }
 
 module "pre-auth-lambda" {
   source = "../../modules/pre-auth-lambda"
 
-  name_prefix = var.name_prefix
-  common_tags = local.common_tags
-
+  name_prefix       = var.name_prefix
+  region            = var.region
+  common_tags       = local.common_tags
+  account           = local.account
+  cognito_user_pool_arn = data.terraform_remote_state.aws_analytical_env_cognito.outputs.cognito-fs.user_pool_arn
 }

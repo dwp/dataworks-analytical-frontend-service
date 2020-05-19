@@ -14,7 +14,11 @@ variable "region" {
 }
 
 variable "account" {
+<<<<<<< HEAD
+  type        = string
+=======
   type        = map(string)
+>>>>>>> 1d9b461db3e0e68141b9031d6bf586667990bfba
   description = "(Required) AWS account number"
 }
 
