@@ -1,4 +1,3 @@
-
 resource "aws_lambda_function" "lambda_create_challenge" {
   filename         = "${path.module}/${var.name_prefix}-create-challenge.zip"
   function_name    = "${var.name_prefix}-create-challenge"
