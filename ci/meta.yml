@@ -154,4 +154,31 @@ meta:
               max_concurrent_requests = 5
               signature_version = s3v4
               addressing_style = virtual
-            EOF
+            EOF     
+    npm-install:
+      task: npm-install
+      config: 
+        platform: linux
+        image_resource:
+          type: docker-image
+            source:
+              repository: ((terraform.repository))
+              version: ((terraform12.version))
+              tag: ((terraform12.version))
+                path: sh
+                args: 
+                - -exc
+                - |
+                cd terraform/modules/custom-auth-flow/createAuthChallenge
+                npm ci
+                npm run build --if-present
+                npm test
+                cd ../defineAuthChallenge
+                npm ci
+                npm run build --if-present
+                npm test
+                cd ../verifyAuthChallenge
+                npm ci
+                npm run build --if-present
+                npm test
+

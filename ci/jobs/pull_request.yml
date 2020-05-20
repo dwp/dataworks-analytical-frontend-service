@@ -9,6 +9,7 @@ jobs:
       context: $BUILD_JOB_NAME
       path: dataworks-analytical-frontend-service-pr
       status: pending
+  - .: (( inject meta.plan.npm-install )) 
   - .: (( inject meta.plan.terraform-bootstrap ))
     params:
       DEPLOY_PATH: app
