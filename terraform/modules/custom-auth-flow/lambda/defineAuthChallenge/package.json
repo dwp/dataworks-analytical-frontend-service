@@ -4,8 +4,12 @@
   "description": "",
   "main": "handler.js",
   "scripts": {
-    "test": "test"
+    "test": "jest"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "aws-sdk": "^2.680.0",
+    "jest": "^26.0.1"
+  }
 }

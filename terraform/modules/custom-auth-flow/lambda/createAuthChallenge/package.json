@@ -3,14 +3,15 @@
   "version": "1.0.0",
   "main": "handler.js",
   "scripts": {
-    "test": "test"
+    "test": "jest"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "aws": "0.0.3-2",
     "aws-sdk": "^2.676.0",
-    "crypto-secure-random-digit": "^1.0.9"
+    "crypto-secure-random-digit": "^1.0.9",
+    "jest": "^26.0.1"
   },
   "description": ""
 }
