@@ -8,7 +8,6 @@ exports.handler = async (event, context) => {
         event.response.issueTokens = false;
         event.response.failAuthentication = false;
         event.response.challengeName = 'PASSWORD_VERIFIER';
-        console.log(JSON.stringify(event))
     } else if (!existingMFA && event.request.session.length == 2 && event.request.session[1].challengeName == 'PASSWORD_VERIFIER' && event.request.session[1].challengeResult == true) {
         event.response.issueTokens = false;
         event.response.failAuthentication = false;
