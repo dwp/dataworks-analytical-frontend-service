@@ -1,12 +1,17 @@
 const AWS = require("aws-sdk");
 const crypto = require("crypto-secure-random-digit");
+const sendSMS = require('./aws/sendSMS.js').sendSMS
 
-const sns = new AWS.SNS({region: 'eu-west-1'});
-
-module.exports.handler = async (event= {}, context) => {
-    var mobileNumber = event.request.userAttributes.phone_number;
+module.exports.handler = async (event = {}, context) => {
+    var mobileNumber = ()=> {
+        console.log("Phone Number = ", event.request.userAttributes.phone_number)
+        if(event.request.userAttributes.phone_number == null||event.request.userAttributes.phone_number == undefined){
+            throw new Error("No phone number provided")
+        }
+        else return event.request.userAttributes.phone_number;
+    }
     oneTimeAuthCode = crypto.randomDigits(6).join('');
-    await sendSMS(mobileNumber, oneTimeAuthCode, event.userName)
+    await sendSMS(mobileNumber(), oneTimeAuthCode, event.userName)
     event.response.privateChallengeParameters = { "otp" : oneTimeAuthCode };
     
 //    await sendTestEmail(oneTimeAuthCode, event.userName, context)
@@ -14,10 +19,7 @@ module.exports.handler = async (event= {}, context) => {
     return event
 }
 
-async function sendSMS(mobileNumber, otp, userName){
-    const params = {"Message" : userName + ", your one-time MFA code is: " + otp, "PhoneNumber": mobileNumber};
-    await sns.publish(params).promise();
-}
+
 
 //async function sendTestEmail(otp, userName, context){
 //    var params = {

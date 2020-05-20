@@ -1,12 +1,7 @@
-const AWS = require("aws-sdk");
-const cognitoidentityserviceprovider = new AWS.CognitoIdentityServiceProvider();
+const getUserDetails = require('./aws/getUserDetails').getUserDetails;
 
-exports.handler = async (event, context, callback) => {
-    var userParams = {
-      UserPoolId: event.userPoolId, 
-      Username: event.userName 
-    };
-    let userDetails = await cognitoidentityserviceprovider.adminGetUser(userParams).promise()
+exports.handler = async (event, context) => {
+    let userDetails = await getUserDetails(event.userPoolId, event.userName)
     let existingMFA = (userDetails.PreferredMfaSetting == "SOFTWARE_TOKEN_MFA")
     
     if (event.request.session.length == 1 && event.request.session[0].challengeName == 'SRP_A') {
@@ -26,5 +21,5 @@ exports.handler = async (event, context, callback) => {
         event.response.failAuthentication = true;
     }
 
-    callback(null, event);
+    return await event;
 }
