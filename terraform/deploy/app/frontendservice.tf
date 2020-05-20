@@ -25,7 +25,7 @@ module "ecs-fargate-task-definition" {
   environment = [
     {
       name  = "REACT_APP_OS_URL"
-      value = "https://${data.terraform_remote_state.orchestration-service.outputs.orchestration_service_fqdn}"
+      value = "https://example.com"
     },
     {
       name  = "REACT_APP_REGION"
@@ -86,7 +86,7 @@ module "ecs-fargate-service" {
   wafregional_web_acl_id = module.waf.wafregional_web_acl_id
   whitelist_cidr_blocks  = local.whitelist_cidr_blocks
 
-  os_alb_sg = data.terraform_remote_state.orchestration-service.outputs.alb_sg.id
+  os_alb_sg = "sg-fake"
 }
 
 module cognito-app {
