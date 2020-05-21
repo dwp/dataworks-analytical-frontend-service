@@ -20,5 +20,5 @@ variable "account" {
 
 variable "cognito_user_pool_arn" {
   type        = string
-  description = "(Required) AWS account number"
+  description = "(Required) ARN value of the cognito userpool to validate against"
 }
