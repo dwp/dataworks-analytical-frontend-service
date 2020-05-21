@@ -1,12 +1,13 @@
-import React, {useEffect, useState, useRef} from "react";
+import React, {useEffect, useState, useRef, useContext} from "react";
 import {Auth} from "aws-amplify"
 import {Button} from "react-mdl";
 import {Pages} from "../NavigationComponent";
 import {Hub} from "aws-amplify";
+import {AuthContext, AuthEvents} from "../../utils/Auth";
 
 const MainPage = ({nav}) => {
     const [isLoading, setIsLoading] = useState(true);
-    const disconnectRef = useRef(false);
+    const authContext = useContext(AuthContext);
 
     useEffect(() => {
         async function checkMfaSetup() {
@@ -20,27 +21,22 @@ const MainPage = ({nav}) => {
         checkMfaSetup();
     });
 
-    const disconnect = async (url) => {
-        if (disconnectRef.current) {
-           return;
-        }
-        disconnectRef.current = true;
-        console.log('Shutting down desktop');
-        fetch(url)
-            .then(() => nav.go(Pages.MAIN))
-            .catch(async (res) => {
-                const err = await res.text()
-                console.log('Error disconnect from Orchestration Service', err);
-            });
-    };
+    useEffect(() => {
+        const disconnect = async () => {
+            console.log('Shutting down desktop');
+            const user = await authContext.getCurrentUser();
 
-    const authHandler = async (data) => {
-        if (data.payload.event === 'signOut') {
-            disconnect('/disconnect?id_token=' + data.payload.data.signInUserSession.idToken.jwtToken);
-        }
-    };
+            fetch(`/disconnect?id_token=${user.signInUserSession.idToken.jwtToken}`)
+                .then(() => nav.go(Pages.MAIN))
+                .catch(async (res) => {
+                    const err = await res.text()
+                    console.log('Error disconnect from Orchestration Service', err);
+                });
+        };
 
-    Hub.listen('auth', authHandler);
+        authContext.addAuthListener(AuthEvents.SIGN_OUT, disconnect);
+        return () => authContext.removeAuthListener(AuthEvents.SIGN_OUT, disconnect);
+    }, []);
 
     const createEnvironment = async () => {
         setIsLoading(true);

@@ -51,8 +51,6 @@ const CustomAuthWrapper = ({headerText}) => {
             throw new Error("Invalid page state")
     }
 
-    console.log(pageState);
-
     return (
         <>
             {signInComponent}
