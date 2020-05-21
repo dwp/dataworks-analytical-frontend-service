@@ -43,6 +43,12 @@ const CustomSignIn = ({headerText, confirmUser, requireNewPassword}) => {
                                   handleInputChange={(e) => setFormState({...formState, username: e.target.value})}/>
             <AmplifyPasswordField value={formState.password}
                                   handleInputChange={(e) => setFormState({...formState, password: e.target.value})}/>
+            <div style={{margin: '20px 0'}}>
+                Forgot your password?{'  '}
+                <AmplifyButton variant="anchor" handleButtonClick={() => authContext.forgotPassword()}>
+                    Reset password
+                </AmplifyButton>
+            </div>
             <div slot="amplify-form-section-footer" className="sign-in-form-footer">
                 <AmplifyButton type={"submit"} disabled={isLoading}>
                     <AmplifyLoadingSpinner style={{display: isLoading ? 'initial' : 'none'}}/>

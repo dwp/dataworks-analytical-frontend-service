@@ -78,6 +78,10 @@ class AuthHelper {
         return Auth.signOut();
     }
 
+    async forgotPassword(){
+        return this.dispatchAuthStateChangeEvent(AuthState.ForgotPassword);
+    }
+
     async handleUserChallenge(user) {
         switch (user.challengeName) {
             case "MFA_SETUP":
