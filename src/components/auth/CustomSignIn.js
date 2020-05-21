@@ -2,7 +2,7 @@ import React, {useContext, useState} from "react";
 import {AmplifyFormSection, AmplifyPasswordField, AmplifyUsernameField} from "@aws-amplify/ui-react";
 import {AuthContext, AuthEvents} from "../../utils/Auth";
 
-const CustomSignIn = ({headerText, customConfirmUser}) => {
+const CustomSignIn = ({headerText, confirmUser, requireNewPassword}) => {
     const [formState, setFormState] = useState({
         username: '',
         password: '',
@@ -14,12 +14,12 @@ const CustomSignIn = ({headerText, customConfirmUser}) => {
         event.preventDefault();
         try {
             const user = await authContext.signIn(formState.username, formState.password);
-
-            if (user.challengeName === "CUSTOM_CHALLENGE") customConfirmUser(user);
+            if (user.challengeName === "CUSTOM_CHALLENGE") confirmUser(user);
+            else if(user.challengeName === "NEW_PASSWORD_REQUIRED") requireNewPassword(user);
             else await authContext.handleUserChallenge(user);
 
         } catch (e){
-            authContext.handleAuthError(e);
+            authContext.dispatchAuthToast(e.message);
         } finally {
             setFormState({username: '', password: ''})
         }

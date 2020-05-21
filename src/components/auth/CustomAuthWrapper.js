@@ -2,10 +2,13 @@ import React, {useContext, useEffect, useState} from "react";
 import CustomSignIn from "./CustomSignIn";
 import CustomConfirmSignIn from "./CustomConfirmSignIn";
 import {AuthContext, AuthEvents} from "../../utils/Auth";
+import {AmplifyRequireNewPassword} from "@aws-amplify/ui-react";
+import {AuthState} from "@aws-amplify/ui-components";
 
 const PageState = Object.freeze({
     SIGN_IN: 'signIn',
-    CUSTOM_CONFIRM_SIGN_IN: 'customConfirmSignIn'
+    CUSTOM_CONFIRM_SIGN_IN: 'customConfirmSignIn',
+    REQUIRE_NEW_PASSWORD: 'requireNewPassword'
 });
 
 /**
@@ -24,20 +27,42 @@ const CustomAuthWrapper = ({headerText}) => {
         authContext.addAuthListener(AuthEvents.SIGN_OUT, resetState);
 
         return () => authContext.removeAuthListener(AuthEvents.SIGN_OUT, resetState);
-    }, [])
+    }, []);
 
-    const customConfirmUser = (user) => {
-        setPageState({state: PageState.CUSTOM_CONFIRM_SIGN_IN, user})
+    const confirmSignIn = (user) => setPageState({state: PageState.CUSTOM_CONFIRM_SIGN_IN, user});
+    const requireNewPassword = async (user) => {
+        setPageState({state: PageState.REQUIRE_NEW_PASSWORD, user});
+        await authContext.dispatchAuthStateChangeEvent(AuthState.ResetPassword);
     }
 
+
+    let signInComponent;
     switch (pageState.state) {
         case PageState.SIGN_IN:
-            return <CustomSignIn headerText={headerText} customConfirmUser={customConfirmUser}/>
+            signInComponent = <CustomSignIn headerText={headerText} confirmUser={confirmSignIn}
+                                            requireNewPassword={requireNewPassword}/>;
+            break;
         case PageState.CUSTOM_CONFIRM_SIGN_IN:
-            return <CustomConfirmSignIn user={pageState.user}/>
+            signInComponent = <CustomConfirmSignIn user={pageState.user}/>;
+            break;
+        case PageState.REQUIRE_NEW_PASSWORD:
+            break;
         default:
             throw new Error("Invalid page state")
     }
+
+    console.log(pageState);
+
+    return (
+        <>
+            {signInComponent}
+            <AmplifyRequireNewPassword user={pageState.user} handleAuthStateChange={() => {
+                authContext.dispatchAuthToast("Successfully changed password. Please log in again.")
+                authContext.signOut();
+            }} slot={'require-new-password'}/>
+        </>
+    )
+
 };
 
 export default CustomAuthWrapper;

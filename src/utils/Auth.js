@@ -55,11 +55,10 @@ class AuthHelper {
         });
     }
 
-    handleAuthError(error) {
-        console.error(error)
+    dispatchAuthToast(message) {
         Hub.dispatch(UI_AUTH_CHANNEL, {
             event: TOAST_AUTH_ERROR_EVENT,
-            message: error.message,
+            message: message,
         });
     }
 

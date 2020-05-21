@@ -12,7 +12,7 @@ const CustomConfirmSignIn = ({user}) => {
             const confirmedUser = await authContext.confirmSignIn(user, enteredCode);
             await authContext.handleUserChallenge(confirmedUser);
         } catch (e) {
-            authContext.handleAuthError(e);
+            authContext.dispatchAuthToast(e.message);
             await authContext.signOut();
         }
 
