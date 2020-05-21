@@ -75,7 +75,9 @@ data aws_iam_policy_document cognito_challenge_trigger_document {
       identifiers = ["cognito-sync.amazonaws.com"]
       type        = "Service"
     }
-    actions = ["lambda:InvokeFunction"]
+    actions = [
+      "lambda:InvokeFunction"
+    ]
     resources = [
       aws_lambda_function.lambda_create_challenge.arn,
       aws_lambda_function.lambda_verify_challenge.arn,
@@ -92,9 +94,11 @@ data aws_iam_policy_document cognito_challenge_trigger_document {
   statement {
     effect = "Allow"
     actions = [
-    "logs:CreateLogGroup"]
+      "logs:CreateLogGroup"
+    ]
     resources = [
-    "arn:aws:logs:${var.region}:${var.account}:*"]
+      "arn:aws:logs:${var.region}:${var.account}:*"
+    ]
   }
   statement {
     effect = "Allow"
@@ -122,7 +126,8 @@ data aws_iam_policy_document cognito_define_auth_trigger_document {
     effect = "Allow"
     actions = [
       "cognito-idp:Get*",
-    "cognito-identity:Get*"]
+      "cognito-identity:Get*"
+    ]
     resources = [
       var.cognito_user_pool_arn
     ]

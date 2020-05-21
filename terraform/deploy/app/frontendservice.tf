@@ -106,6 +106,6 @@ module "custom-auth-flow" {
 module "pre-auth-lambda" {
   source = "../../modules/pre-auth-lambda"
 
-  name_prefix           = var.name_prefix
-  common_tags           = local.common_tags
+  name_prefix = var.name_prefix
+  common_tags = local.common_tags
 }
