@@ -129,11 +129,6 @@ variable "lb_health_check_path" {
   default     = "/"
 }
 
-variable "role_arn" {
-  type        = map(string)
-  description = "(Required) The role to assume when doing an apply, defaults to ci"
-}
-
 variable "interface_vpce_sg_id" {
   type        = string
   description = "(Required) The VPCe Security group ID"
@@ -158,4 +153,14 @@ variable "common_tags" {
 variable "os_alb_sg" {
   type        = string
   description = "(Required) - The ALB SG for Orchestration service"
+}
+
+variable "analytical_alb_sg" {
+  type        = string
+  description = "(Required) - The SG for our ALB"
+}
+
+variable "analytical_alb_listener" {
+  type        = string
+  description = "(Required) Analytical front end listener"
 }

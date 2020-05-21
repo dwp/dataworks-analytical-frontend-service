@@ -33,7 +33,7 @@ resource aws_security_group_rule ingress_from_alb {
   security_group_id        = aws_security_group.ecs_tasks_sg.id
   to_port                  = var.container_port
   type                     = "ingress"
-  source_security_group_id = aws_security_group.lb_sg.id
+  source_security_group_id = var.analytical_alb_sg
 }
 
 resource aws_security_group_rule ingress_https_to_vpc_endpoints {
@@ -50,7 +50,7 @@ resource aws_security_group_rule egress_to_ecs_tasks {
   description              = "egress_to_ecs_tasks"
   from_port                = var.container_port
   protocol                 = "tcp"
-  security_group_id        = aws_security_group.lb_sg.id
+  security_group_id        = var.analytical_alb_sg
   to_port                  = var.container_port
   type                     = "egress"
   source_security_group_id = aws_security_group.ecs_tasks_sg.id

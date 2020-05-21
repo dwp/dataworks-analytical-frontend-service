@@ -1,5 +1,4 @@
 resource "aws_ecs_service" "service" {
-  depends_on                         = [aws_lb_listener.listener]
   name                               = "${var.name_prefix}-service"
   cluster                            = var.ecs_cluster_arn
   task_definition                    = var.task_definition_arn

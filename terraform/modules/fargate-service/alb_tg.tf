@@ -1,5 +1,20 @@
+resource "aws_lb_listener_rule" "analytical_alb_listener" {
+  listener_arn = var.analytical_alb_listener
+  priority     = 100
+
+  action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.lb_tg.arn
+  }
+
+  condition {
+    path_pattern {
+      values = ["/*"]
+    }
+  }
+}
+
 resource "aws_lb_target_group" "lb_tg" {
-  depends_on  = [aws_lb.lb]
   name        = "${var.name_prefix}-lb-tg"
   target_type = "ip"
   protocol    = "HTTPS"
