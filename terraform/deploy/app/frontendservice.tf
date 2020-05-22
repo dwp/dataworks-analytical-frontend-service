@@ -77,8 +77,6 @@ module "ecs-fargate-service" {
   s3_prefixlist_id     = data.terraform_remote_state.aws_analytical_env_infra.outputs.s3_prefix_list_id
   common_tags          = local.common_tags
 
-  whitelist_cidr_blocks  = local.whitelist_cidr_blocks
-
   analytical_alb_sg       = data.terraform_remote_state.aws_analytical_env_infra.outputs.alb_sg.id
   os_alb_sg               = data.terraform_remote_state.orchestration-service.outputs.alb_sg.id
   analytical_alb_listener = data.terraform_remote_state.aws_analytical_env_infra.outputs.alb_listner.arn
