@@ -39,6 +39,7 @@ jobs:
           cp ../../../../terraform-config/terraform.tf .
           cp ../../../../terraform-config/terraform.tfvars .
           terraform init
+          terraform workspace show
           terraform plan -var assume_role=ci
       inputs:
       - name: dataworks-analytical-frontend-service
