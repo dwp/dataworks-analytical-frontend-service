@@ -101,6 +101,7 @@ module "custom-auth-flow" {
   common_tags           = local.common_tags
   account               = lookup(local.account, local.environment)
   cognito_user_pool_arn = data.terraform_remote_state.aws_analytical_env_cognito.outputs.cognito.user_pool_arn
+  custom_auth_lambda_zip = var.custom_auth_file_path
 }
 
 module "pre-auth-lambda" {

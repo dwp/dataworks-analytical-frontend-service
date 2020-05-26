@@ -3,6 +3,9 @@ jobs:
   plan:
   - get: dataworks-analytical-frontend-service
     trigger: true
+  - get: custom-auth-lambda-release
+    version: { tag: '0.0.12' }
+    trigger: true
   - .: (( inject meta.plan.terraform-bootstrap ))
     params:
       DEPLOY_PATH: app
@@ -10,7 +13,15 @@ jobs:
     config:
       run:
         dir: 'dataworks-analytical-frontend-service/terraform/deploy/app'
+      inputs:
+        - name: custom-auth-lambda-release
+      params:
+        TF_VAR_custom_auth_file_path: ../../../../custom-auth-lambda-release/lambda.zip
   - .: (( inject meta.plan.terraform-plan ))
     config:
       run:
         dir: 'dataworks-analytical-frontend-service/terraform/deploy/app'
+      inputs:
+        - name: custom-auth-lambda-release
+      params:
+        TF_VAR_custom_auth_file_path: ../../../../custom-auth-lambda-release/lambda.zip

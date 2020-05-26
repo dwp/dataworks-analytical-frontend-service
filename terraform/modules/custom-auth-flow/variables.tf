@@ -22,3 +22,8 @@ variable "cognito_user_pool_arn" {
   type        = string
   description = "(Required) ARN value of the cognito userpool to validate against"
 }
+
+variable "custom_auth_file_path" {
+  type        = string
+  description = "(Required) local file path to custom auth lambda zip"
+}
