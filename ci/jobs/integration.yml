@@ -5,6 +5,11 @@ jobs:
     trigger: true
     passed:
       - qa
+  - get: custom-auth-lambda-release
+    version: { tag: '0.0.13' }
+    trigger: true
+    passed:
+      - qa
   - .: (( inject meta.plan.terraform-bootstrap ))
     params:
       DEPLOY_PATH: app
