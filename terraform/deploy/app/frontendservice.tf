@@ -37,7 +37,7 @@ module "ecs-fargate-task-definition" {
     },
     {
       name  = "REACT_APP_USERPOOLID"
-      value = data.terraform_remote_state.aws_analytical_env_cognito.outputs.cognito-fs.user_pool_id
+      value = data.terraform_remote_state.aws_analytical_env_cognito.outputs.cognito.user_pool_id
     },
     {
       name  = "REACT_APP_ENV"
