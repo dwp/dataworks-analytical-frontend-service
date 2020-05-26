@@ -91,7 +91,7 @@ class AuthHelper {
             case "NEW_PASSWORD_REQUIRED":
                 return this.dispatchAuthStateChangeEvent(AuthState.ResetPassword, user);
             case "CUSTOM_CHALLENGE":
-                throw new Error("Unhandled Custom Challenge")
+                return this.dispatchAuthStateChangeEvent(AuthState.SignIn, user);
             case "SMS_MFA":
                 throw new Error(`Unsupported Challenge: ${user.challengeName}`)
             default:
