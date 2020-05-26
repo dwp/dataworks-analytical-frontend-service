@@ -25,7 +25,7 @@ module "ecs-fargate-task-definition" {
   environment = [
     {
       name  = "REACT_APP_OS_URL"
-      value = "https://example.com"
+      value = "https://${data.terraform_remote_state.orchestration-service.outputs.orchestration_service_fqdn}"
     },
     {
       name  = "REACT_APP_REGION"
