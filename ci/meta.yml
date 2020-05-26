@@ -44,7 +44,6 @@ meta:
           TF_VAR_assume_role: ci
           TF_CLI_ARGS_apply: -lock-timeout=300s
           TF_CLI_ARGS_plan:  -lock-timeout=300s
-          TF_VAR_custom_auth_file_path: ../../../../custom-auth-lambda-release/lambda.zip
         run:
           path: sh
           args:
@@ -59,7 +58,6 @@ meta:
         inputs:
           - name: dataworks-analytical-frontend-service
           - name: terraform-config
-          - name: custom-auth-lambda-release
     terraform-plan:
       task: terraform-plan
       config:
@@ -76,7 +74,6 @@ meta:
           TF_INPUT: false
           TF_CLI_ARGS_apply: -lock-timeout=300s
           TF_CLI_ARGS_plan:  -lock-timeout=300s
-          TF_VAR_custom_auth_file_path: ../../../../custom-auth-lambda-release/lambda.zip
         run:
           path: sh
           args:
@@ -90,7 +87,6 @@ meta:
         inputs:
         - name: dataworks-analytical-frontend-service
         - name: terraform-config
-        - name: custom-auth-lambda-release
     terraform-output:
       task: terraform-output
       config:
@@ -104,7 +100,6 @@ meta:
         params:
           AWS_ACCESS_KEY_ID: ((ci.aws_access_key_id))
           AWS_SECRET_ACCESS_KEY: ((ci.aws_secret_access_key))
-          TF_VAR_custom_auth_file_path: ../../../../custom-auth-lambda-release/lambda.zip
         run:
           path: sh
           dir: analytical-frontend-service/terraform/deploy
@@ -119,7 +114,6 @@ meta:
         inputs:
         - name: dataworks-analytical-frontend-service
         - name: terraform-config
-        - name: custom-auth-lambda-release
         outputs:
         - name: terraform-output
     create-aws-profiles:

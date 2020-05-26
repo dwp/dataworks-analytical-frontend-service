@@ -266,11 +266,3 @@ variable "lb_health_check_path" {
   type        = string
   default     = "/"
 }
-
-# ---------------------------------------------------------------------------------------------------------------------
-# Custom Auth Lambda
-# ---------------------------------------------------------------------------------------------------------------------
-
-variable "custom_auth_file_path" {
-  description = "Local path pointing to the Encryption Materials Provider dir"
-}
