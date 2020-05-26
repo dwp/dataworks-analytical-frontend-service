@@ -3,14 +3,15 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import {BrowserRouter} from "react-router-dom";
-import {Auth} from 'aws-amplify';
-import {getConfig} from './utils/appConfig';
 import 'react-mdl/extra/material.css';
 import 'react-mdl/extra/material.js';
+import {AuthProvider} from "./utils/Auth";
 
 ReactDOM.hydrate(
     <BrowserRouter>
-        <App/>
+        <AuthProvider>
+            <App/>
+        </AuthProvider>
     </BrowserRouter>,
     document.getElementById('root')
 );
