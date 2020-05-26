@@ -71,28 +71,6 @@ resource aws_iam_policy cognito_challenge_trigger_policy {
 data aws_iam_policy_document cognito_challenge_trigger_document {
   statement {
     effect = "Allow"
-    principals {
-      identifiers = ["cognito-sync.amazonaws.com"]
-      type        = "Service"
-    }
-    actions = [
-      "lambda:InvokeFunction"
-    ]
-    resources = [
-      aws_lambda_function.lambda_create_challenge.arn,
-      aws_lambda_function.lambda_verify_challenge.arn,
-      aws_lambda_function.lambda_define_challenge.arn
-    ]
-    condition {
-      test = "ArnLike"
-      values = [
-        var.cognito_user_pool_arn
-      ]
-      variable = "cognito:user_pool"
-    }
-  }
-  statement {
-    effect = "Allow"
     actions = [
       "logs:CreateLogGroup"
     ]
@@ -112,13 +90,9 @@ data aws_iam_policy_document cognito_challenge_trigger_document {
   }
 }
 
-resource "aws_iam_role_policy_attachment" "cognito_define_auth_trigger_policy_attach" {
-  role       = aws_iam_role.role_for_lambda_define_auth_challenge.name
-  policy_arn = aws_iam_policy.cognito_define_auth_trigger_policy.arn
-}
-
-resource aws_iam_policy cognito_define_auth_trigger_policy {
+resource aws_iam_role_policy cognito_define_auth_trigger_policy {
   policy = data.aws_iam_policy_document.cognito_define_auth_trigger_document.json
+  role = aws_iam_role.role_for_lambda_define_auth_challenge.name
 }
 
 data aws_iam_policy_document cognito_define_auth_trigger_document {
