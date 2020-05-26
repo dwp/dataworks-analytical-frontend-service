@@ -14,10 +14,3 @@ resources:
     password: ((github_com.token))
     uri: https://github.com/dwp/dataworks-analytical-frontend-service.git
   check_every: 15m
-- name: custom-auth-lambda-release
-  type: github-release
-  source:
-    owner: dwp
-    repository: dataworks-analytical-custom-auth-flow
-    access_token: ((github_com.token))
-  check_every: 1h
