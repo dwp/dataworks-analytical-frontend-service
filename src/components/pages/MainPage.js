@@ -21,23 +21,6 @@ const MainPage = ({nav}) => {
         checkMfaSetup();
     });
 
-    useEffect(() => {
-        const disconnect = async () => {
-            console.log('Shutting down desktop');
-            const user = await authContext.getCurrentUser();
-
-            fetch(`/disconnect?id_token=${user.signInUserSession.idToken.jwtToken}`)
-                .then(() => nav.go(Pages.MAIN))
-                .catch(async (res) => {
-                    const err = await res.text()
-                    console.log('Error disconnect from Orchestration Service', err);
-                });
-        };
-
-        authContext.addAuthListener(AuthEvents.SIGN_OUT, disconnect);
-        return () => authContext.removeAuthListener(AuthEvents.SIGN_OUT, disconnect);
-    }, []);
-
     const createEnvironment = async () => {
         setIsLoading(true);
         const user = await Auth.currentAuthenticatedUser({bypassCache: true});
