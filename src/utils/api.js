@@ -52,6 +52,7 @@ export async function disconnect(token) {
 
     const response = await fetch(url, requestConfig);
 
+
     if (response.status === 200) {
         return response.text();
     }

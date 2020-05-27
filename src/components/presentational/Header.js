@@ -1,9 +1,7 @@
 import React from "react";
-import { AmplifyButton, AmplifyLabel, AmplifyCodeField } from '@aws-amplify/ui-react';
-import {Auth} from "aws-amplify";
+import {AmplifyButton} from '@aws-amplify/ui-react';
 
-
-const Header = () => (<header role="banner" id="global-header" className="with-proposition">
+const Header = ({user, disconnect}) => (<header role="banner" id="global-header" className="with-proposition">
     <div className="header-wrapper">
         <div className="header-global">
             <div className="header-logo">
@@ -17,8 +15,10 @@ const Header = () => (<header role="banner" id="global-header" className="with-p
         <div className="header-proposition">
             <div className="content">
                 <a href="#" className="js-header-toggle menu">Menu</a>
-                <nav id="proposition-menu">
-                    <a href='/' id="proposition-name">Dataworks Analytical Environment</a>
+                <nav id="proposition-menu" style={{display: "inline-flex"}}>
+                    <a href='/' id="proposition-name">DataWorks Analytical Environment</a>
+                    {user ? <AmplifyButton handleButtonClick={disconnect} style={{marginLeft: "50px"}}>Sign
+                        out</AmplifyButton> : null}
                 </nav>
             </div>
         </div>

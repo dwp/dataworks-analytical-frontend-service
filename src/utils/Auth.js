@@ -48,6 +48,7 @@ class AuthHelper {
     }
 
     dispatchAuthStateChangeEvent(nextAuthState, data) {
+        console.log("Dispatching auth state change: " + nextAuthState)
         Hub.dispatch(UI_AUTH_CHANNEL, {
             event: AUTH_STATE_CHANGE_EVENT,
             message: nextAuthState,
