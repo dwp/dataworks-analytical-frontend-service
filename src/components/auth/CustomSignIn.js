@@ -24,8 +24,10 @@ const CustomSignIn = ({headerText, confirmUser, requireNewPassword}) => {
 
         try {
             const user = await authContext.signIn(formState.username, formState.password);
-            if (user.challengeName === "CUSTOM_CHALLENGE") confirmUser(user);
-            else if (user.challengeName === "NEW_PASSWORD_REQUIRED") requireNewPassword(user);
+            if (user.challengeName === "CUSTOM_CHALLENGE") {
+                confirmUser(user);
+                await authContext.handleUserChallenge(user);
+            } else if (user.challengeName === "NEW_PASSWORD_REQUIRED") requireNewPassword(user);
             else await authContext.handleUserChallenge(user);
 
         } catch (e) {
