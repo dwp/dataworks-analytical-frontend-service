@@ -11,7 +11,7 @@ const MainPage = ({nav}) => {
 
     useEffect(() => {
         async function checkMfaSetup() {
-            const user = await Auth.currentAuthenticatedUser({bypassCache: true});
+            const user = await authContext.getCurrentUser();
             if (user.preferredMFA !== 'SOFTWARE_TOKEN_MFA') {
                 return nav.go(Pages.SETUP_MFA);
             }
@@ -23,7 +23,7 @@ const MainPage = ({nav}) => {
 
     const createEnvironment = async () => {
         setIsLoading(true);
-        const user = await Auth.currentAuthenticatedUser({bypassCache: true});
+        const user = await authContext.getCurrentUser();
         const jwtToken = user.signInUserSession.idToken.jwtToken;
         const res = await fetch(`/connect?id_token=${jwtToken}`);
         const data = await res.text()
