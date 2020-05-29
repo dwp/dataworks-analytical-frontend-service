@@ -1,0 +1,22 @@
+jobs:
+  - name: preprod
+    plan:
+      - get: dataworks-analytical-frontend-service
+        trigger: true
+        passed:
+          - qa
+      - .: (( inject meta.plan.terraform-bootstrap ))
+        params:
+          DEPLOY_PATH: app
+      - .: (( inject meta.plan.terraform-apply ))
+        config:
+          run:
+            dir: 'dataworks-analytical-frontend-service/terraform/deploy/app'
+        params:
+          TF_WORKSPACE: preprod
+      - .: (( inject meta.plan.terraform-plan ))
+        config:
+          run:
+            dir: 'dataworks-analytical-frontend-service/terraform/deploy/app'
+        params:
+          TF_WORKSPACE: preprod
