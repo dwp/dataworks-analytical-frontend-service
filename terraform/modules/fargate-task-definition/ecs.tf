@@ -1,9 +1,16 @@
+data "aws_ecr_image" "ecr_image" {
+  provider = aws.management
+
+  repository_name = var.repository_name
+  image_tag       = "latest"
+}
+
 module "container_definition" {
   source  = "cloudposse/ecs-container-definition/aws"
   version = "0.21.0"
 
   container_name               = var.container_name
-  container_image              = var.container_image
+  container_image              = "${var.container_image}@${data.aws_ecr_image.ecr_image.image_digest}"
   container_memory             = var.container_memory
   container_memory_reservation = var.container_memory_reservation
   port_mappings                = local.port_mappings
