@@ -12,6 +12,8 @@ module "ecs-fargate-task-definition" {
   container_memory_reservation = var.container_memory_reservation
   common_tags                  = local.common_tags
   role_arn                     = "arn:aws:iam::${local.account[local.environment]}:role/${var.assume_role}"
+  management_role_arn          = "arn:aws:iam::${local.account[local.management_account[local.environment]]}:role/${var.assume_role}"
+  repository_name              = var.ecr_repository_name
   account                      = lookup(local.account, local.environment)
   log_configuration = {
     secretOptions = []

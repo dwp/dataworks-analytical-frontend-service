@@ -1,5 +1,6 @@
 data "aws_iam_policy_document" "ecs-tasks" {
   statement {
+    sid = "AllowAssumeRole"
     actions = [
       "sts:AssumeRole",
     ]

@@ -203,6 +203,12 @@ variable "proxy_configuration" {
   default     = []
 }
 
+variable "ecr_repository_name" {
+  type        = string
+  description = "Name of the ECR repository where container image is stored"
+  default     = "aws-analytical-env/analytical-frontend-service"
+}
+
 # ---------------------------------------------------------------------------------------------------------------------
 # AWS ECS SERVICE
 # ---------------------------------------------------------------------------------------------------------------------
