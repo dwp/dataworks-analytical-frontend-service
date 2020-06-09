@@ -4,6 +4,7 @@ import CustomConfirmSignIn from "./CustomConfirmSignIn";
 import {AuthContext, AuthEvents} from "../../utils/Auth";
 import {AmplifyRequireNewPassword} from "@aws-amplify/ui-react";
 import {AuthState} from "@aws-amplify/ui-components";
+import CustomRequireNewPassword from "./CustomRequireNewPassword";
 
 const PageState = Object.freeze({
     SIGN_IN: 'signIn',
@@ -54,10 +55,7 @@ const CustomAuthWrapper = ({headerText}) => {
     return (
         <>
             {signInComponent}
-            <AmplifyRequireNewPassword user={pageState.user} handleAuthStateChange={() => {
-                authContext.dispatchAuthToast("Successfully changed password. Please log in again.")
-                authContext.signOut();
-            }} slot={'require-new-password'}/>
+            <CustomRequireNewPassword user={pageState.user}/>
         </>
     )
 
