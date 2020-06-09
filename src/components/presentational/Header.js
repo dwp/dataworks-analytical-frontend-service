@@ -1,7 +1,7 @@
 import React from "react";
-import {AmplifyButton} from '@aws-amplify/ui-react';
+import SignOutButton from "../auth/SignOutButton";
 
-const Header = ({user, disconnect}) => (<header role="banner" id="global-header" className="with-proposition">
+const Header = ({user, handleSignOut}) => (<header role="banner" id="global-header" className="with-proposition">
     <div className="header-wrapper">
         <div className="header-global">
             <div className="header-logo">
@@ -17,8 +17,7 @@ const Header = ({user, disconnect}) => (<header role="banner" id="global-header"
                 <a href="#" className="js-header-toggle menu">Menu</a>
                 <nav id="proposition-menu" style={{display: "inline-flex"}}>
                     <a href='/' id="proposition-name">DataWorks Analytical Environment</a>
-                    {user ? <AmplifyButton handleButtonClick={disconnect} style={{marginLeft: "50px"}}>Sign
-                        out</AmplifyButton> : null}
+                    {user ? <SignOutButton handleSignOut={handleSignOut} style={{marginLeft: "50px"}}/> : null}
                 </nav>
             </div>
         </div>

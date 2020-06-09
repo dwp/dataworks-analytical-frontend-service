@@ -46,7 +46,7 @@ function App() {
 
     return (
         <React.StrictMode>
-            <Header user={user} disconnect={disconnect}/>
+            <Header user={user} handleSignOut={disconnect}/>
             <main id="content" role="main" className="">
                 <div className="article-container group">
                     <div className="content-block">
