@@ -17,7 +17,7 @@ const NavigationComponent = ({style}) => {
     const nav = {
         go: (page, props) => setPageState({page, props})
     }
-    return <div style={style}><pageState.page {...pageState.props} nav={nav}/></div>
+    return <pageState.page {...pageState.props} nav={nav}/>
 
 }
 

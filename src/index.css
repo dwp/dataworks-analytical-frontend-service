@@ -1,3 +1,13 @@
+html, body, #root{
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+}
+
+* {
+    box-sizing: border-box;
+}
+
 header {
     /* position: fixed; */
     top: 0;
@@ -7,7 +17,6 @@ header {
 
 .iframe-container {
    width: 100vw;
-   height: 100vh;
 }
  
 .iframe-container iframe {
