@@ -5,7 +5,6 @@ import {AuthContext} from "../../utils/Auth";
 const SignOutButton = ({handleSignOut, style}) => {
     const [isLoading, setIsLoading] = useState(false);
     const handleButtonClick = async () => {
-        console.log('click')
         setIsLoading(true);
         try{
             await handleSignOut();
