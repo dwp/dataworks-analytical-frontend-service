@@ -50,7 +50,8 @@ const CustomSignIn = ({headerText, confirmUser, requireNewPassword}) => {
                 Forgot your password?{'  '}
                 <AmplifyButton variant="anchor" handleButtonClick={() => authContext.forgotPassword()}>
                     Reset password
-                </AmplifyButton>
+                </AmplifyButton><br />
+                Need help? <a href="./faq">Vist our FAQ</a>
             </div>
             <div slot="amplify-form-section-footer" className="sign-in-form-footer">
                 <AmplifyButton type={"submit"} disabled={isLoading}>
