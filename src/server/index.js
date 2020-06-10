@@ -41,6 +41,18 @@ app.get('/disconnect', async (req, res) => {
     }
 });
 
+app.get('/faq', (req, res) => {
+    const faqFile = path.resolve('./build/faq.html');
+    fs.readFile(faqFile, 'utf8', (err, data) => {
+        if (err) {
+            console.error('Something went wrong:', err);
+            return res.status(500).send();
+        }
+
+        return res.send(data);
+    });
+});
+
 app.get('/', (req, res) => {
     const indexFile = path.resolve('./build/index.html');
     fs.readFile(indexFile, 'utf8', (err, data) => {

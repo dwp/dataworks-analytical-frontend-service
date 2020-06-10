@@ -1,12 +1,11 @@
 import React, {useEffect, useState, useRef, useContext} from "react";
-import {Auth} from "aws-amplify"
-import {Button} from "react-mdl";
+import {Button, Spinner} from "react-mdl";
 import {Pages} from "../NavigationComponent";
-import {Hub} from "aws-amplify";
 import {AuthContext, AuthEvents} from "../../utils/Auth";
 
 const MainPage = ({nav}) => {
-    const [isLoading, setIsLoading] = useState(true);
+    const [isLoading, setIsLoading] = useState(false);
+    const [isMfaSetup, setIsMfaSetup] = useState(false);
     const authContext = useContext(AuthContext);
 
     useEffect(() => {
@@ -15,7 +14,7 @@ const MainPage = ({nav}) => {
             if (user.preferredMFA !== 'SOFTWARE_TOKEN_MFA') {
                 return nav.go(Pages.SETUP_MFA);
             }
-            if (isLoading === true) setIsLoading(false);
+            if (isMfaSetup === false) setIsMfaSetup(true);
         }
 
         checkMfaSetup();
@@ -23,19 +22,35 @@ const MainPage = ({nav}) => {
 
     const createEnvironment = async () => {
         setIsLoading(true);
-        const user = await authContext.getCurrentUser();
-        const jwtToken = user.signInUserSession.idToken.jwtToken;
-        const res = await fetch(`/connect?id_token=${jwtToken}`);
-        const data = await res.text()
-        if (res.status === 200) return nav.go(Pages.CONNECT, {desktopUrl: `https://${data}?token=${jwtToken}`})
+        try {
+            const user = await authContext.getCurrentUser();
+            const jwtToken = user.signInUserSession.idToken.jwtToken;
+            const res = await fetch(`/connect?id_token=${jwtToken}`);
+            if (res.status === 200) return nav.go(Pages.CONNECT, {desktopUrl: `https://${await res.text()}?token=${jwtToken}`})
 
-        console.error('Error connecting to OS');
-        return nav.go(Pages.MAIN);
+            authContext.dispatchAuthToast('Error encountered while provisioning environment. Please try again later.')
+            console.error(`Error connecting to OS: ${await res.json()}`);
+            return nav.go(Pages.MAIN);
+        } catch (e) {
+            authContext.dispatchAuthToast('Error encountered while provisioning environment. Please try again later.')
+            console.error(JSON.stringify(e));
+        } finally {
+            setIsLoading(false);
+        }
+
     }
-    if (!isLoading)
+
+    if (isMfaSetup)
         return (
             <div>
-                <Button raised colored onClick={createEnvironment}>Connect to Analytical Environment</Button>
+                <Button raised colored onClick={createEnvironment} disabled={isLoading}
+                        style={{display: "inline-flex", alignItems: "center"}}>
+                    <Spinner singleColor style={{
+                        display: isLoading ? 'inline-block' : 'none',
+                        margin: '15px',
+                    }}/>
+                    Connect to Analytical Environment
+                </Button>
             </div>)
     else
         return (<div>Loading...</div>)

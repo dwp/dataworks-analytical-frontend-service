@@ -1,6 +1,6 @@
 import React from "react";
 
-const Footer = () => (<footer className="group js-footer" id="footer" role="contentinfo">
+const Footer = ({style}) => (<footer className="group js-footer" id="footer" role="contentinfo" style={style}>
     <div className="footer-wrapper">
         <div className="footer-meta">
             <div className="footer-meta-inner">

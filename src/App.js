@@ -13,6 +13,7 @@ import CustomAuthWrapper from "./components/auth/CustomAuthWrapper";
 function App() {
     const authContext = useContext(AuthContext)
     const [user, setUser] = useState();
+    const [heights, setHeights] = useState({header: 0, footer: 0});
 
     useEffect(() => {
         let updateUser = async (e) => {
@@ -44,24 +45,27 @@ function App() {
         await authContext.signOut();
     };
 
+    useEffect(() => {
+        setHeights({
+            header: document.querySelector('#global-header').clientHeight,
+            footer: document.querySelector('footer').clientHeight,
+        });
+    }, []);
+
     return (
         <React.StrictMode>
-            <Header user={user} disconnect={disconnect}/>
-            <main id="content" role="main" className="">
-                <div className="article-container group">
-                    <div className="content-block">
-                        <div id="desktop" className="inner">
-                            <MainWrapper>
-                                <AmplifyAuthenticator>
-                                    <CustomAuthWrapper headerText='Analytical Environment SignIn'/>
-                                    {user ? <NavigationComponent style={{margin: "30px 0px"}}/> : null}
-                                </AmplifyAuthenticator>
-                            </MainWrapper>
-                        </div>
-                    </div>
+            <Header user={user} handleSignOut={disconnect}/>
+            <main id="content" role="main" className={"group"} style={{height: `calc(100% - (${heights.footer}px + ${heights.header}px))`, position: 'relative'}}>
+                <div className="article-container group" style={{height: '100%'}}>
+                    <MainWrapper>
+                        <AmplifyAuthenticator>
+                            <CustomAuthWrapper headerText='Analytical Environment SignIn'/>
+                            {user ? <NavigationComponent/> : null}
+                        </AmplifyAuthenticator>
+                    </MainWrapper>
                 </div>
             </main>
-            <Footer/>
+            <Footer style={{position: 'absolute', bottom: '0'}}/>
         </React.StrictMode>
     );
 }

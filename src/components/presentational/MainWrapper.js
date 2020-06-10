@@ -4,10 +4,12 @@ const MainWrapper = ({children}) => {
     return (
         <div style={
             {
+                height: "100%",
+                width: "100%",
                 margin: 'auto',
-                padding: '50px',
                 display: 'flex',
                 justifyContent: 'center',
+                alignItems: 'center',
             }}>
             {children}
         </div>
