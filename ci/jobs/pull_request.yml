@@ -15,21 +15,8 @@ jobs:
     input_mapping:
       dataworks-analytical-frontend-service: dataworks-analytical-frontend-service-pr
   - task: terraform-plan-app
+    .: (( inject meta.plan.terraform-common-config ))
     config:
-      platform: linux
-      image_resource:
-        type: docker-image
-        source:
-          repository: ((terraform.repository))
-          version: ((terraform12.version))
-          tag: ((terraform12.version))
-      params:
-        AWS_ACCESS_KEY_ID: ((ci.aws_access_key_id))
-        AWS_SECRET_ACCESS_KEY: ((ci.aws_secret_access_key))
-        TF_INPUT: false
-        TF_WORKSPACE: default
-        TF_CLI_ARGS_apply: -lock-timeout=300s
-        TF_CLI_ARGS_plan:  -lock-timeout=300s
       run:
         path: sh
         dir: dataworks-analytical-frontend-service/terraform/deploy/app
