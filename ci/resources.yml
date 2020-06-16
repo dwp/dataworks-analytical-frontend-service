@@ -2,15 +2,15 @@ resources:
 - name: dataworks-analytical-frontend-service-pr
   type: pull-request
   source:
-    access_token: ((github_com.token))
-    repo: dwp/dataworks-analytical-frontend-service
-    uri: https://github.com/dwp/dataworks-analytical-frontend-service.git
-  check_every: 15m
+    access_token: ((dataworks-secrets.concourse_github_pat))
+    repository: dwp/dataworks-analytical-frontend-service
+  check_every: 5m 
+  webhook_token: ((dataworks.concourse_github_webhook_token))
 - name: dataworks-analytical-frontend-service
   type: git
   source:
     branch: master
-    username: ((github_com.username))
-    password: ((github_com.token))
+    access_token: ((dataworks-secrets.concourse_github_pat))
     uri: https://github.com/dwp/dataworks-analytical-frontend-service.git
-  check_every: 15m
+  check_every: 5m
+  webhook_token: ((dataworks.concourse_github_webhook_token))

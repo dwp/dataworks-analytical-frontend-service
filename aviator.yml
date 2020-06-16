@@ -9,6 +9,6 @@ spruce:
   to: aviator_pipeline.yml
 fly:
   name: dataworks-analytical-frontend-service
-  target: concourse
+  target: aws-concourse
   expose: false
   config: aviator_pipeline.yml
