@@ -14,6 +14,7 @@ meta:
         TF_CLI_ARGS_apply: -lock-timeout=300s
         TF_CLI_ARGS_plan: -lock-timeout=300s
         TF_VAR_slack_webhook_url: ((dataworks.slack_webhook_url))
+        TF_VAR_costcode: ((dataworks.costcode))
 
     terraform-bootstrap:
       task: terraform-bootstrap
@@ -59,6 +60,7 @@ meta:
         inputs:
           - name: dataworks-analytical-frontend-service
           - name: terraform-config
+
     terraform-plan:
       task: terraform-plan
       .: (( inject meta.plan.terraform-common-config ))
@@ -76,6 +78,7 @@ meta:
         inputs:
         - name: dataworks-analytical-frontend-service
         - name: terraform-config
+
     terraform-output:
       task: terraform-output
       .: (( inject meta.plan.terraform-common-config ))
@@ -96,6 +99,7 @@ meta:
         - name: terraform-config
         outputs:
         - name: terraform-output
+
     create-aws-profiles:
       task: create-aws-profiles
       config:
