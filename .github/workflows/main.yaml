@@ -28,6 +28,12 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@master
+      - name: Use Node.js
+        uses: actions/setup-node@v1
+      - name: Install dependencies
+        run: npm install
+        run: npm run build
+        run: npm test
       - name: Create GitHub Release
         id: create_release
         uses: actions/create-release@latest
@@ -38,6 +44,16 @@ jobs:
           release_name: Release ${{ needs.get-publish-version.outputs.publish-version }}
           draft: false
           prerelease: false
+      - name: Upload Release Asset
+        id: upload-release-asset 
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./pacts/frontendservice-orchestrationservice.json
+          asset_name: frontendservice-orchestrationservice.json
+          asset_content_type: application/json
 
   publish-docker:
     runs-on: ubuntu-latest

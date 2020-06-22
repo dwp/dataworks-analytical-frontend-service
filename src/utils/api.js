@@ -29,8 +29,10 @@ export async function connect(token) {
         return response.text();
     }
 
+    let msg = await response.text();
+
     throw new HttpApiException(
-        await response.json(),
+        msg,
         response.status
     );
 }
@@ -57,8 +59,10 @@ export async function disconnect(token) {
         return response.text();
     }
 
+    let msg = await response.text();
+
     throw new HttpApiException(
-        data || response.statusText,
+        msg,
         response.status
     );
 }
