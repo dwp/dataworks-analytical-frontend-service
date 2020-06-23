@@ -1,6 +1,6 @@
 import React, {useContext, useState} from 'react';
 import {AmplifyButton, AmplifyFormSection, AmplifyLoadingSpinner, AmplifyPasswordField} from "@aws-amplify/ui-react";
-import {AuthContext} from "../../utils/Auth";
+import {AuthContext, AuthEvents} from "../../utils/Auth";
 import {AuthState} from "@aws-amplify/ui-components";
 import {Auth} from "aws-amplify";
 
@@ -17,7 +17,10 @@ const CustomRequireNewPassword = ({user}) => {
             await Auth.completeNewPassword(user, password, {});
         } catch (e) {
             authContext.dispatchAuthStateChangeEvent(AuthState.SignIn);
-            if(e.code === 'UserLambdaValidationException') window.location.reload(false)  
+            if(e.code === 'UserLambdaValidationException') {
+                authContext.dispatchAuthToast("Successfully changed password. Please log in again.");
+                authContext.handleAuthEvent({payload: {event: AuthEvents.CHANGE_PASSWORD}});
+            }
             else authContext.dispatchAuthToast(e.message);
         } finally {
             setIsLoading(false);
