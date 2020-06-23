@@ -2,7 +2,6 @@ import React, {useContext, useEffect, useState} from "react";
 import CustomSignIn from "./CustomSignIn";
 import CustomConfirmSignIn from "./CustomConfirmSignIn";
 import {AuthContext, AuthEvents} from "../../utils/Auth";
-import {AmplifyRequireNewPassword} from "@aws-amplify/ui-react";
 import {AuthState} from "@aws-amplify/ui-components";
 import CustomRequireNewPassword from "./CustomRequireNewPassword";
 
@@ -28,7 +27,7 @@ const CustomAuthWrapper = ({headerText}) => {
         authContext.addAuthListener(AuthEvents.SIGN_OUT, resetState);
 
         return () => authContext.removeAuthListener(AuthEvents.SIGN_OUT, resetState);
-    }, []);
+    }, [authContext, initialState]);
 
     const confirmSignIn = (user) => setPageState({state: PageState.CUSTOM_CONFIRM_SIGN_IN, user});
     const requireNewPassword = async (user) => {

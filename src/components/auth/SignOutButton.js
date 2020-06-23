@@ -1,6 +1,5 @@
 import {AmplifyButton, AmplifyLoadingSpinner} from "@aws-amplify/ui-react";
-import React, {useContext, useState} from "react";
-import {AuthContext} from "../../utils/Auth";
+import React, {useState} from "react";
 
 const SignOutButton = ({handleSignOut, style}) => {
     const [isLoading, setIsLoading] = useState(false);
