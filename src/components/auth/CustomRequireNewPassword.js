@@ -17,7 +17,7 @@ const CustomRequireNewPassword = ({user}) => {
             await Auth.completeNewPassword(user, password, {});
         } catch (e) {
             authContext.dispatchAuthStateChangeEvent(AuthState.SignIn);
-            if(e.code === 'UserLambdaValidationException') authContext.dispatchAuthToast("Successfully changed password. Please log in again.");
+            if(e.code === 'UserLambdaValidationException') window.location.reload(false)  
             else authContext.dispatchAuthToast(e.message);
         } finally {
             setIsLoading(false);
