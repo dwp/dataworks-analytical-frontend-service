@@ -25,9 +25,13 @@ const CustomAuthWrapper = ({headerText}) => {
     useEffect(() => {
         const resetState = () => setPageState(initialState)
         authContext.addAuthListener(AuthEvents.SIGN_OUT, resetState);
+        authContext.addAuthListener(AuthEvents.CHANGE_PASSWORD, resetState);
 
-        return () => authContext.removeAuthListener(AuthEvents.SIGN_OUT, resetState);
-    }, [authContext, initialState]);
+        return () => {
+            authContext.removeAuthListener(AuthEvents.SIGN_OUT, resetState);
+            authContext.removeAuthListener(AuthEvents.CHANGE_PASSWORD, resetState);
+        }
+    }, []);
 
     const confirmSignIn = (user) => setPageState({state: PageState.CUSTOM_CONFIRM_SIGN_IN, user});
     const requireNewPassword = async (user) => {

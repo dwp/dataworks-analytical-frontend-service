@@ -18,7 +18,8 @@ if (typeof window !== "undefined" && !process.title.endsWith("node")) {
 
 export const AuthEvents = {
     SIGN_IN: 'signIn',
-    SIGN_OUT: 'signOut'
+    SIGN_OUT: 'signOut',
+    CHANGE_PASSWORD: 'changePassword'
 }
 
 class AuthHelper {
@@ -26,7 +27,8 @@ class AuthHelper {
     constructor() {
         this.authListeners = new Map([
             [AuthEvents.SIGN_IN, []],
-            [AuthEvents.SIGN_OUT, []]
+            [AuthEvents.SIGN_OUT, []],
+            [AuthEvents.CHANGE_PASSWORD, []]
         ])
 
         Hub.listen('auth', (data) => this.handleAuthEvent(data));
