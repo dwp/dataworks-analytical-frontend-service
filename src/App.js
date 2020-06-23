@@ -1,13 +1,12 @@
 import React, {useContext, useEffect, useState} from 'react';
 import './App.css';
-import {AmplifyAuthenticator, AmplifyRequireNewPassword, AmplifySignOut} from "@aws-amplify/ui-react";
+import {AmplifyAuthenticator} from "@aws-amplify/ui-react";
 import Header from "./components/presentational/Header";
 import Footer from "./components/presentational/Footer";
-import NavigationComponent, {Pages} from "./components/NavigationComponent";
-import {Auth, Hub} from "aws-amplify";
+import NavigationComponent from "./components/NavigationComponent";
+import {Hub} from "aws-amplify";
 import MainWrapper from "./components/presentational/MainWrapper";
-import {AuthContext, AuthEvents} from "./utils/Auth";
-import CustomSignIn from "./components/auth/CustomSignIn";
+import {AuthContext} from "./utils/Auth";
 import CustomAuthWrapper from "./components/auth/CustomAuthWrapper";
 
 function App() {
@@ -29,7 +28,7 @@ function App() {
 
         updateUser()
         return () => Hub.remove('auth', updateUser) // cleanup
-    }, []);
+    }, [authContext]);
 
 
     const disconnect = async () => {

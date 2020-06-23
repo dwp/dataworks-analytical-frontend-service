@@ -6,8 +6,7 @@ import {
     AmplifyPasswordField,
     AmplifyUsernameField
 } from "@aws-amplify/ui-react";
-import {AuthContext, AuthEvents} from "../../utils/Auth";
-import {AuthState} from "@aws-amplify/ui-components";
+import {AuthContext} from "../../utils/Auth";
 
 const CustomSignIn = ({headerText, confirmUser, requireNewPassword}) => {
     const [formState, setFormState] = useState({

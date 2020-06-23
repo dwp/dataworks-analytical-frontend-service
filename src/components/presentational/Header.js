@@ -15,9 +15,8 @@ const Header = ({user, handleSignOut}) => {
             </div>
             <div className="header-proposition">
                 <div className="content">
-                    <a href="#" className="js-header-toggle menu">Menu</a>
                     <nav id="proposition-menu" style={{display: "inline-flex"}}>
-                        <a href='/' id="proposition-name">DataWorks Analytical Environment</a>
+                        <a href="/" id="proposition-name">DataWorks Analytical Environment</a>
                         {user ? <SignOutButton handleSignOut={handleSignOut} style={{marginLeft: "50px"}}/> : null}
                     </nav>
                 </div>

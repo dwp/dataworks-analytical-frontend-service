@@ -1,7 +1,7 @@
-import React, {useEffect, useState, useRef, useContext} from "react";
+import React, {useEffect, useState, useContext} from "react";
 import {Button, Spinner} from "react-mdl";
 import {Pages} from "../NavigationComponent";
-import {AuthContext, AuthEvents} from "../../utils/Auth";
+import {AuthContext} from "../../utils/Auth";
 
 const MainPage = ({nav}) => {
     const [isLoading, setIsLoading] = useState(false);
