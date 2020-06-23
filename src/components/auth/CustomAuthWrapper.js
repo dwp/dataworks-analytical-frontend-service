@@ -27,16 +27,11 @@ const CustomAuthWrapper = ({headerText}) => {
         authContext.addAuthListener(AuthEvents.SIGN_OUT, resetState);
         authContext.addAuthListener(AuthEvents.CHANGE_PASSWORD, resetState);
 
-<<<<<<< HEAD
-        return () => authContext.removeAuthListener(AuthEvents.SIGN_OUT, resetState);
-    }, [authContext, initialState]);
-=======
         return () => {
             authContext.removeAuthListener(AuthEvents.SIGN_OUT, resetState);
             authContext.removeAuthListener(AuthEvents.CHANGE_PASSWORD, resetState);
         }
     }, []);
->>>>>>> adding new custom authEvent, authListener and using that to reset state in signIn
 
     const confirmSignIn = (user) => setPageState({state: PageState.CUSTOM_CONFIRM_SIGN_IN, user});
     const requireNewPassword = async (user) => {
