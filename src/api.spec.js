@@ -31,7 +31,7 @@ describe('Pact Test Suite', () => {
     beforeEach((done) => {
       provider.addInteraction({
         state: 'I am awaiting a connection',
-        uponReceiving: 'Request JupyterHub',
+        uponReceiving: 'Valid request for remote tooling access',
         withRequest: {
           method: 'POST',
           path: '/connect',
@@ -48,7 +48,7 @@ describe('Pact Test Suite', () => {
       }).catch((err) => catchAndContinue(err, done));
     })
  
-    test('works', (done) => {
+    test('authorized token', (done) => {
       connect('token')
         .then(
            url => {
@@ -65,7 +65,7 @@ describe('Pact Test Suite', () => {
     beforeEach((done) => {
       provider.addInteraction({
         state: 'I am awaiting an invalid connection',
-        uponReceiving: 'Request invalid JupyterHub',
+        uponReceiving: 'Invalid request for remote tooling access',
         withRequest: {
           method: 'POST',
           path: '/connect',
