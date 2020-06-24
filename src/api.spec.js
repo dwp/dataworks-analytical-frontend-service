@@ -41,7 +41,7 @@ describe('Pact Test Suite', () => {
         willRespondWith: {
           status: 200,
           headers: { 'Content-Type':'text/plain' },
-          body: like('example.com')
+          body: like('userContainerUrl/validUser/')
         }
       }).then(() => {
          done();
@@ -52,7 +52,7 @@ describe('Pact Test Suite', () => {
       connect('token')
         .then(
            url => {
-             expect(url).toBe('example.com');
+             expect(url).toBe('userContainerUrl/validUser/');
            },
            error => {
              console.log("Unexpected error from test: " + JSON.stringify(error));
@@ -74,8 +74,7 @@ describe('Pact Test Suite', () => {
         },
         willRespondWith: {
           status: 401,
-          headers: { 'Content-Type':'text/plain' },
-          body: like('Failed to verify JWT token')
+          headers: { 'Content-Type':'text/plain' }
         }
       }).then(() => done()).catch((err) => catchAndContinue(err, done));
     })
@@ -84,7 +83,6 @@ describe('Pact Test Suite', () => {
        connect('badtoken')
         .catch( error => {
           expect(error.status).toBe(401);
-          expect(error.message).toBe('Failed to verify JWT token');
         })
         .then( () => { done()} );
     })
