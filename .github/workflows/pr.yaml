@@ -10,6 +10,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - name: Use Node.js
+        uses: actions/setup-node@v1
+      - name: Install dependencies
+        run: npm install
+      - run: npm run build
+      - run: npm test
       - name: Build Docker image
         run: docker build -t ${{ env.IMAGE_NAME }}:latest .
       - name: Run Snyk to check image for high vulnerabilities
