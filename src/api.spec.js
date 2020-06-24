@@ -40,7 +40,7 @@ describe('Pact Test Suite', () => {
         },
         willRespondWith: {
           status: 200,
-          headers: { 'Content-Type':'application/text' },
+          headers: { 'Content-Type':'text/plain' },
           body: like('example.com')
         }
       }).then(() => {
@@ -74,7 +74,7 @@ describe('Pact Test Suite', () => {
         },
         willRespondWith: {
           status: 401,
-          headers: { 'Content-Type':'application/text' },
+          headers: { 'Content-Type':'text/plain' },
           body: like('Failed to verify JWT token')
         }
       }).then(() => done()).catch((err) => catchAndContinue(err, done));
