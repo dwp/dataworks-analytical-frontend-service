@@ -32,7 +32,27 @@ header {
   --amplify-primary-tint: #107535;
 }
 
-.mfasetup {
+.mfasetup, .confirmSignin {
     text-align:center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    max-width: 40vw;
 }
+
+.mfasetup canvas {
+    align-self: center;
+}
+
+.explanatoryText {
+   text-align: left;
+}
+
+.codeAndBtn {
+    align-self: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
 

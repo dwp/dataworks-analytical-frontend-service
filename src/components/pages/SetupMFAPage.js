@@ -36,14 +36,29 @@ const SetupMFAPage = ({nav}) => {
     if (qrCode)
         return (<div style={{textAlign: 'centre'}}>
             <div className="mfasetup">
-                <h3>MFA Setup Required</h3>
-                <QRCode value={qrCode} includeMargin='true'/>
-                <div className="verificationcode">
-                    <AmplifyCodeField label="Verification Code" placeholder="Enter MFA Code" value={enteredCode}
-                                      handleInputChange={(event) => setEnteredCode(event.target.value)}/>
+                <h3>App-based multi-factor setup required</h3>
+                <div className="codeAndBtn" style={{margin: '20px 0'}}>
+                    <QRCode value={qrCode} includeMargin='true'/>
+                    <div className="verificationcode">
+                        <AmplifyCodeField label="Verification Code" placeholder="Enter MFA Code" value={enteredCode}
+                                          handleInputChange={(event) => setEnteredCode(event.target.value)}/>
+                    </div>
+                    <AmplifyButton
+                        handleButtonClick={() => verifyOtpCode().then(() => nav.go(Pages.MAIN))}>Verify</AmplifyButton>
                 </div>
-                <AmplifyButton
-                    handleButtonClick={() => verifyOtpCode().then(() => nav.go(Pages.MAIN))}>Verify</AmplifyButton>
+                <div className="explanatoryText" style={{margin: '20px 0'}}>
+                    <p>
+                        First download an authentication app onto your phone
+                        (Google and Microsoft have authenticator apps which can be freely downloaded).
+                    </p>
+                    <p>
+                        Once downloaded, you can then scan the QR code with your phone camera.
+                    </p>
+                    <p>
+                        This should automatically link to your authenticator app,
+                        where you will see a 6-digit code which cycles every 30 seconds.
+                    </p>
+                </div>
             </div>
         </div>)
     else
