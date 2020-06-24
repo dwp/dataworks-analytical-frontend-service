@@ -57,7 +57,7 @@ const CustomForgotPassword = () => {
 
     if (codeSent){
         return (
-            <AmplifyFormSection handleSubmit={handlePasswordReset} headerText="Reset Forgotten Password" slot={"sign-in"}>
+            <AmplifyFormSection handleSubmit={handlePasswordReset} headerText="Enter new password" slot={"sign-in"}>
                  <AmplifyPasswordField value={formState.new_password}
                                         handleInputChange={(e) => setFormState({...formState, new_password: e.target.value})}/>
                   <AmplifyCodeField label="Verification Code" value={formState.code}
