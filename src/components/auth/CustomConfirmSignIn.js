@@ -21,6 +21,7 @@ const CustomConfirmSignIn = ({user}) => {
     return (
         <AmplifyFormSection handleSubmit={handleConfirmCode} headerText={"Confirm SMS code"} submitButtonText={"Confirm"} slot={"sign-in"}>
            <AmplifyCodeField label="Verification Code" value={enteredCode} handleInputChange={(e) => setEnteredCode(e.target.value)}/>
+           <p>You will receive an SMS message containing a 6-digit verification code to your phone. This is required for your first log in only. You will set up app-based verification in the next step.</p>
         </AmplifyFormSection>
     )
 };

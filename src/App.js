@@ -58,7 +58,7 @@ function App() {
                 <div className="article-container group" style={{height: '100%'}}>
                     <MainWrapper>
                         <AmplifyAuthenticator>
-                            <CustomAuthWrapper headerText='Analytical Environment SignIn'/>
+                            <CustomAuthWrapper headerText='Analytical environment sign in'/>
                             {user ? <NavigationComponent/> : null}
                         </AmplifyAuthenticator>
                     </MainWrapper>
