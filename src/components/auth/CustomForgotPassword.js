@@ -11,7 +11,7 @@ import {Auth} from "aws-amplify";
 import {AuthContext, AuthEvents} from "../../utils/Auth";
 import {AuthState} from "@aws-amplify/ui-components";
 
-const CustomForgotPassword = () => {
+const CustomForgotPassword = ({signIn}) => {
     const [formState, setFormState] = useState({
         username: '',
         new_password: '',
@@ -78,6 +78,10 @@ const CustomForgotPassword = () => {
                 <AmplifyUsernameField value={formState.username}
                                       handleInputChange={(e) => setFormState({...formState, username: e.target.value})}/>
                 <div style={{margin: '20px 0'}}>
+                    Back to {'  '}
+                    <AmplifyButton variant="anchor" handleButtonClick={signIn}>
+                        Sign In
+                    </AmplifyButton><br />
                     Need help? <a href="./faq">Vist our FAQ</a>
                 </div>
                 <div slot="amplify-form-section-footer" className="sign-in-form-footer">

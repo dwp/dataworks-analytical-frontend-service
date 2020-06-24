@@ -42,6 +42,7 @@ const CustomAuthWrapper = ({headerText}) => {
         await authContext.dispatchAuthStateChangeEvent(AuthState.ResetPassword);
     }
     const forgotPassword = () =>  setPageState({state: PageState.CUSTOM_FORGOT_PASSWORD, user: null});
+    const signIn = () => setPageState(initialState);
 
     let signInComponent;
     switch (pageState.state) {
@@ -55,7 +56,7 @@ const CustomAuthWrapper = ({headerText}) => {
         case PageState.REQUIRE_NEW_PASSWORD:
             break;
         case PageState.CUSTOM_FORGOT_PASSWORD:
-            signInComponent = <CustomForgotPassword />;
+            signInComponent = <CustomForgotPassword signIn={signIn}/>;
             break;
         default:
             throw new Error("Invalid page state")

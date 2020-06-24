@@ -21,7 +21,11 @@ const CustomRequireNewPassword = ({user}) => {
                 authContext.dispatchAuthToast("Successfully changed password. Please log in again.");
                 authContext.handleAuthEvent({payload: {event: AuthEvents.CHANGE_PASSWORD}});
             }
-            else authContext.dispatchAuthToast(e.message);
+            else if (password.length > 18){
+                authContext.dispatchAuthToast("Your password must be at least 18 characters in length. There is no additional requirement for numerical values, special characters or uppercase letters.");
+            } else {
+                authContext.dispatchAuthToast(e.message);
+            }
         } finally {
             setIsLoading(false);
         }
