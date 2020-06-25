@@ -2,12 +2,8 @@ import React, {useContext, useEffect, useState} from "react";
 import CustomSignIn from "./CustomSignIn";
 import CustomConfirmSignIn from "./CustomConfirmSignIn";
 import {AuthContext, AuthEvents} from "../../utils/Auth";
-<<<<<<< HEAD
 import {AmplifyRequireNewPassword} from "@aws-amplify/ui-react";
 import {AuthState} from "@aws-amplify/ui-components";
-=======
-import {AuthState, ConfirmSignIn} from "@aws-amplify/ui-components";
->>>>>>> adding MFA title change
 import CustomRequireNewPassword from "./CustomRequireNewPassword";
 import CustomForgotPassword from "./CustomForgotPassword";
 

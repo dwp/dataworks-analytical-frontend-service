@@ -40,7 +40,11 @@ const CustomForgotPassword = ({signIn}) => {
     const handlePasswordReset = async (event) => {
         event.preventDefault();
         setIsLoading(true);
-        if(formState.new_password.length < 18) authContext.dispatchAuthToast("Your password must be at least 18 characters in length. There is no additional requirement for numerical values, special characters or uppercase letters.");
+        if(formState.new_password.length < 18) {
+            authContext.dispatchAuthToast("Your password must be at least 18 characters in length. There is no additional requirement for numerical values, special characters or uppercase letters.");
+            setFormState({...formState, new_password: ''});
+            setIsLoading(false);
+        }
         else {
             try {
                 await Auth.forgotPasswordSubmit(formState.username, formState.code, formState.new_password);
