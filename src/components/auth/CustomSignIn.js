@@ -8,7 +8,7 @@ import {
 } from "@aws-amplify/ui-react";
 import {AuthContext} from "../../utils/Auth";
 
-const CustomSignIn = ({headerText, confirmUser, customMFA, requireNewPassword, forgotPassword}) => {
+const CustomSignIn = ({headerText, confirmUser, requireNewPassword, forgotPassword}) => {
     const [formState, setFormState] = useState({
         username: '',
         password: '',
@@ -28,9 +28,7 @@ const CustomSignIn = ({headerText, confirmUser, customMFA, requireNewPassword, f
                 confirmUser(user);
                 await authContext.handleUserChallenge(user);
             } else if (user.challengeName === "NEW_PASSWORD_REQUIRED") requireNewPassword(user);
-            else if (user.challengeName === "SOFTWARE_TOKEN_MFA"){
-                customMFA(user);
-            } else {
+              else {
                 await authContext.handleUserChallenge(user);
             }
 

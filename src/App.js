@@ -8,6 +8,15 @@ import {Hub} from "aws-amplify";
 import MainWrapper from "./components/presentational/MainWrapper";
 import {AuthContext} from "./utils/Auth";
 import CustomAuthWrapper from "./components/auth/CustomAuthWrapper";
+import { I18n } from 'aws-amplify';
+
+const authScreenLabels = {
+    en: {
+        'Confirm TOTP Code': 'Multi factor authentication code required'
+    }
+};
+I18n.setLanguage('en');
+I18n.putVocabularies(authScreenLabels);
 
 function App() {
     const authContext = useContext(AuthContext)
