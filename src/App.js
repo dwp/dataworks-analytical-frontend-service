@@ -12,7 +12,7 @@ import { I18n } from 'aws-amplify';
 
 const authScreenLabels = {
     en: {
-        'Confirm TOTP Code': 'Multi factor authentication code required'
+        'Confirm TOTP Code': 'Enter the multi-factor authentication code from your authenticator app.'
     }
 };
 I18n.setLanguage('en');

@@ -78,9 +78,13 @@ const CustomForgotPassword = ({signIn}) => {
             </AmplifyFormSection>
         )
     } else return (
-            <AmplifyFormSection handleSubmit={handleUserName} headerText="Send Confirmation Code" slot={"sign-in"}>
+            <AmplifyFormSection handleSubmit={handleUserName} headerText="Send verification code to email" slot={"sign-in"}>
                 <AmplifyUsernameField value={formState.username}
                                       handleInputChange={(e) => setFormState({...formState, username: e.target.value})}/>
+                <div className="explanatoryText" style={{margin: '20px 0'}}>
+                    <p>A six digit code will be sent to the email address linked to your user account.</p>
+                    <p>You will need this to reset your password.</p>
+                </div>
                 <div style={{margin: '20px 0'}}>
                     Back to {'  '}
                     <AmplifyButton variant="anchor" handleButtonClick={signIn}>
