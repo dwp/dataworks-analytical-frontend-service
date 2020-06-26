@@ -4,11 +4,13 @@ import CustomConfirmSignIn from "./CustomConfirmSignIn";
 import {AuthContext, AuthEvents} from "../../utils/Auth";
 import {AuthState} from "@aws-amplify/ui-components";
 import CustomRequireNewPassword from "./CustomRequireNewPassword";
+import CustomForgotPassword from "./CustomForgotPassword";
 
 const PageState = Object.freeze({
     SIGN_IN: 'signIn',
     CUSTOM_CONFIRM_SIGN_IN: 'customConfirmSignIn',
-    REQUIRE_NEW_PASSWORD: 'requireNewPassword'
+    REQUIRE_NEW_PASSWORD: 'requireNewPassword',
+    CUSTOM_FORGOT_PASSWORD: 'customForgotPassword',
 });
 
 /**
@@ -38,20 +40,26 @@ const CustomAuthWrapper = ({headerText}) => {
         setPageState({state: PageState.REQUIRE_NEW_PASSWORD, user});
         await authContext.dispatchAuthStateChangeEvent(AuthState.ResetPassword);
     }
-
+    const forgotPassword = () =>  setPageState({state: PageState.CUSTOM_FORGOT_PASSWORD, user: null});
+    const signIn = () => setPageState(initialState);
 
     let signInComponent;
     switch (pageState.state) {
         case PageState.SIGN_IN:
             signInComponent = <CustomSignIn headerText={headerText} confirmUser={confirmSignIn}
-                                            requireNewPassword={requireNewPassword}/>;
+                                            requireNewPassword={requireNewPassword} forgotPassword={forgotPassword}/>;
             break;
         case PageState.CUSTOM_CONFIRM_SIGN_IN:
             signInComponent = <CustomConfirmSignIn user={pageState.user}/>;
             break;
         case PageState.REQUIRE_NEW_PASSWORD:
             break;
+        case PageState.CUSTOM_FORGOT_PASSWORD:
+            signInComponent = <CustomForgotPassword signIn={signIn}/>;
+            break;
         default:
+            console.log(pageState.state)
+            console.log(pageState)
             throw new Error("Invalid page state")
     }
 

@@ -8,7 +8,7 @@ import {
 } from "@aws-amplify/ui-react";
 import {AuthContext} from "../../utils/Auth";
 
-const CustomSignIn = ({headerText, confirmUser, requireNewPassword}) => {
+const CustomSignIn = ({headerText, confirmUser, requireNewPassword, forgotPassword}) => {
     const [formState, setFormState] = useState({
         username: '',
         password: '',
@@ -28,7 +28,9 @@ const CustomSignIn = ({headerText, confirmUser, requireNewPassword}) => {
                 confirmUser(user);
                 await authContext.handleUserChallenge(user);
             } else if (user.challengeName === "NEW_PASSWORD_REQUIRED") requireNewPassword(user);
-            else await authContext.handleUserChallenge(user);
+              else {
+                await authContext.handleUserChallenge(user);
+            }
 
         } catch (e) {
             authContext.dispatchAuthToast(e.message);
@@ -36,7 +38,6 @@ const CustomSignIn = ({headerText, confirmUser, requireNewPassword}) => {
             setIsLoading(false);
             setFormState({username: '', password: ''})
         }
-
     };
 
     return (
@@ -47,7 +48,7 @@ const CustomSignIn = ({headerText, confirmUser, requireNewPassword}) => {
                                   handleInputChange={(e) => setFormState({...formState, password: e.target.value})}/>
             <div style={{margin: '20px 0'}}>
                 Forgot your password?{'  '}
-                <AmplifyButton variant="anchor" handleButtonClick={() => authContext.forgotPassword()}>
+                <AmplifyButton variant="anchor" handleButtonClick={forgotPassword}>
                     Reset password
                 </AmplifyButton><br />
                 Need help? <a href="./faq">Vist our FAQ</a>

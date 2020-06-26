@@ -8,6 +8,15 @@ import {Hub} from "aws-amplify";
 import MainWrapper from "./components/presentational/MainWrapper";
 import {AuthContext} from "./utils/Auth";
 import CustomAuthWrapper from "./components/auth/CustomAuthWrapper";
+import { I18n } from 'aws-amplify';
+
+const authScreenLabels = {
+    en: {
+        'Confirm TOTP Code': 'Enter the multi-factor authentication code from your authenticator app.'
+    }
+};
+I18n.setLanguage('en');
+I18n.putVocabularies(authScreenLabels);
 
 function App() {
     const authContext = useContext(AuthContext)
@@ -58,7 +67,7 @@ function App() {
                 <div className="article-container group" style={{height: '100%'}}>
                     <MainWrapper>
                         <AmplifyAuthenticator>
-                            <CustomAuthWrapper headerText='Analytical Environment SignIn'/>
+                            <CustomAuthWrapper headerText='Analytical environment sign in'/>
                             {user ? <NavigationComponent/> : null}
                         </AmplifyAuthenticator>
                     </MainWrapper>
