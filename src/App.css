@@ -18,10 +18,25 @@ h1{
     line-height: 1.25;
     box-shadow: 0 2px 0 #003618;
 }
-#proposition-name,#spinUp{
+#proposition-name,#spinUp, #faqNav{
     color:white;
     text-decoration: none;
     font-size: 2em;
 }
 
+#faqNav{
+    font-family: "nta", Arial, sans-serif;
+    margin: auto;
+    margin-right: 0;
+    line-height: initial;
+}
 
+.content{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.signOut {
+    display: block;
+}
