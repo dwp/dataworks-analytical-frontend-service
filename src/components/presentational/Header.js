@@ -15,10 +15,13 @@ const Header = ({user, handleSignOut}) => {
             </div>
             <div className="header-proposition">
                 <div className="content">
-                    <nav id="proposition-menu" style={{display: "inline-flex"}}>
+                    <nav id="proposition-menu">
                         <a href="/" id="proposition-name">DataWorks Analytical Environment</a>
-                        {user ? <SignOutButton handleSignOut={handleSignOut} style={{marginLeft: "50px"}}/> : null}
                     </nav>
+                    <div>
+                        <a id="faqNav" href="./faq"><strong>FAQ</strong></a>
+                        {user ? <SignOutButton handleSignOut={handleSignOut} /> : null}
+                    </div>
                 </div>
             </div>
         </div>

@@ -14,7 +14,7 @@ const SignOutButton = ({handleSignOut, style}) => {
         }
     }
     return (
-        <AmplifyButton handleButtonClick={handleButtonClick} style={style} disabled={isLoading}>
+        <AmplifyButton handleButtonClick={handleButtonClick} style={style} disabled={isLoading} className="signOut">
             <AmplifyLoadingSpinner style={{display: isLoading ? 'initial' : 'none'}}/>
             <span style={{display: isLoading ? 'none' : 'initial'}}>Sign out</span>
         </AmplifyButton>);
