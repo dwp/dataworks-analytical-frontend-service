@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "@aws-amplify/ui-react": "^0.2.4",
-    "@pact-foundation/pact-node": "^10.9.5",
+    "@pact-foundation/pact-node": "^10.9.6",
     "aws-sdk": "^2.656.0",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
