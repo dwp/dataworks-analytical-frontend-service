@@ -12,16 +12,17 @@ const Header = ({user, handleSignOut}) => {
                              alt=""/> GOV.UK
                     </a>
                 </div>
-            </div>
-            <div className="header-proposition">
-                <div className="content">
-                    <nav id="proposition-menu">
-                        <a href="/" id="proposition-name">DataWorks Analytical Environment</a>
-                    </nav>
-                    <div>
-                        <a id="faqNav" href="./faq"><strong>FAQ</strong></a>
-                        {user ? <SignOutButton handleSignOut={handleSignOut} /> : null}
+            
+                <div className="header-proposition">
+                    <div className="content">
+                        <nav id="proposition-menu">
+                            <a href="/" id="proposition-name">DataWorks Analytical Environment</a>
+                        </nav>
                     </div>
+                </div>
+                <div className="navBtns">
+                    <a id="faqNav" className="button" href="./faq">FAQ</a>
+                    {user ? <SignOutButton handleSignOut={handleSignOut} /> : null}
                 </div>
             </div>
         </div>

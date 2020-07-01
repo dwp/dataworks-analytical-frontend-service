@@ -5,6 +5,22 @@
     width: 100% !important;
 }
 
+.header-global {
+    display: flex;
+    justify-content: space-around;
+    flex-direction: row;
+    float: none !important;
+    width: 100% !important;
+}
+
+.header-logo{
+    width: 160px !important;
+}
+
+.navBtns{
+    display: inline-flex;
+}
+
 h1{
     margin: 30px 0 60px;
     font-size: 48px;
@@ -18,25 +34,38 @@ h1{
     line-height: 1.25;
     box-shadow: 0 2px 0 #003618;
 }
-#proposition-name,#spinUp, #faqNav{
+#proposition-name,#spinUp{
     color:white;
     text-decoration: none;
     font-size: 2em;
 }
 
 #faqNav{
-    font-family: "nta", Arial, sans-serif;
-    margin: auto;
-    margin-right: 0;
-    line-height: initial;
+    color:white;
+    min-width: 153px;
+    height: 43px;
+    margin-right: 5px;
+    background-color: #3f51b5;
+    border: 0;
+    letter-spacing: normal;
+    word-spacing: normal;
+    text-transform: none;
+    text-indent: 0px;
+    text-shadow: none;
+    display: inline-block;
+    text-align: center;
+    align-items: flex-start;
+    cursor: default;
+    font: 400 13.3333px Arial;
+    padding: 14px 6px;
+    text-rendering: auto;
+    text-decoration: none;
 }
 
 .content{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+    text-align: center;
 }
 
-.signOut {
-    display: block;
+#logo.content {
+    display: inline-flex;
 }
