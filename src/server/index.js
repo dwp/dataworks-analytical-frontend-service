@@ -12,6 +12,11 @@ import {connect, disconnect} from '../utils/api.js'
 import regeneratorRuntime from "regenerator-runtime";
 import {getTlsConfig} from "./serverConfig";
 
+// include the library
+const dwpNodeLogger = require('@dwp/node-logger');
+
+const logger = dwpNodeLogger('web');
+
 const port = process.env.PORT || 3006;
 const app = express();
 
@@ -25,7 +30,7 @@ app.get('/connect', async (req, res) => {
         return res.send(url)
     } catch(e){
         res.status(500).send('Error occurred, cannot connect to Orchestration Service');
-        console.error(e.message);
+        logger.error(e.message);
     }
 
 });
@@ -36,8 +41,8 @@ app.get('/disconnect', async (req, res) => {
         const response = await disconnect(req.query.id_token);
         res.send(response);
     } catch (e){
-        console.error(e);
         res.status(500).send("Error shutting down environments");
+        logger.error(e.message);
     }
 });
 
@@ -45,7 +50,7 @@ app.get('/faq', (req, res) => {
     const faqFile = path.resolve('./build/faq.html');
     fs.readFile(faqFile, 'utf8', (err, data) => {
         if (err) {
-            console.error('Something went wrong:', err);
+            logger.error('Something went wrong:', err);
             return res.status(500).send();
         }
 
@@ -57,7 +62,7 @@ app.get('/', (req, res) => {
     const indexFile = path.resolve('./build/index.html');
     fs.readFile(indexFile, 'utf8', (err, data) => {
         if (err) {
-            console.error('Something went wrong:', err);
+            logger.error('Something went wrong:', err);
             return res.status(500).send();
         }
 
@@ -67,5 +72,5 @@ app.get('/', (req, res) => {
 
 const tlsConfig = getTlsConfig();
 
-if (tlsConfig) https.createServer(tlsConfig, app).listen(port, () => console.info(`Server is HTTPS listening on port ${port}`));
-else http.createServer(app).listen(port, () => console.info(`Server is HTTP listening on port ${port}`));
+if (tlsConfig) https.createServer(tlsConfig, app).listen(port, () => logger.info(`Server is HTTPS listening on port ${port}`));
+else http.createServer(app).listen(port, () => logger.info(`Server is HTTP listening on port ${port}`));

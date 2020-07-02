@@ -24,7 +24,7 @@
     "dev": "npm-run-all --parallel build dev:*",
     "build-server": "NODE_ENV=production webpack --config webpack.server.js --mode=production",
     "build": "react-scripts build && npm run build-server",
-    "test": "react-scripts test --env=node",
+    "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -48,6 +48,7 @@
     "@babel/core": "^7.9.0",
     "@babel/preset-env": "^7.9.5",
     "@babel/preset-react": "^7.9.4",
+    "@dwp/node-logger": "^0.14.2",
     "@pact-foundation/pact": "^9.11.0",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
