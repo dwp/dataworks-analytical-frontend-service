@@ -9,7 +9,7 @@ export const createEnvironment = async (authContext) => {
 }
 
 
-const destroyEnvironment = async (authContext) => {
+export const destroyEnvironment = async (authContext) => {
     const user = await authContext.getCurrentUser();
 
     const res = await fetch(`/disconnect?id_token=${user.signInUserSession.idToken.jwtToken}`);

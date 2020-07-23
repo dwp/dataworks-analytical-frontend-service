@@ -38,7 +38,7 @@ const MainPage = ({nav}) => {
     if (isMfaSetup)
         return (
             <div>
-                <Button raised colored onClick={createEnvironment} disabled={isLoading}
+                <Button raised colored onClick={connect} disabled={isLoading}
                         style={{display: "inline-flex", alignItems: "center"}}>
                     <Spinner singleColor style={{
                         display: isLoading ? 'inline-block' : 'none',

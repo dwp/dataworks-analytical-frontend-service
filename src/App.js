@@ -8,7 +8,8 @@ import {Hub} from "aws-amplify";
 import MainWrapper from "./components/presentational/MainWrapper";
 import {AuthContext} from "./utils/Auth";
 import CustomAuthWrapper from "./components/auth/CustomAuthWrapper";
-import { I18n } from 'aws-amplify';
+import {I18n} from 'aws-amplify';
+import {destroyEnvironment} from "./utils/api";
 
 const authScreenLabels = {
     en: {
@@ -41,16 +42,13 @@ function App() {
 
 
     const disconnect = async () => {
-        console.log('Shutting down desktop');
-        const user = await authContext.getCurrentUser();
-
-        await fetch(`/disconnect?id_token=${user.signInUserSession.idToken.jwtToken}`)
-            .catch(async (res) => {
-                const err = await res.text()
-                console.log('Error disconnect from Orchestration Service', err);
-            });
-
-        await authContext.signOut();
+        try {
+            await destroyEnvironment(authContext);
+        } catch (e) {
+            console.error('Error disconnect from Orchestration Service');
+        } finally {
+            await authContext.signOut();
+        }
     };
 
     useEffect(() => {
