@@ -22,7 +22,7 @@ export const AuthEvents = {
     CHANGE_PASSWORD: 'changePassword'
 }
 
-class AuthHelper {
+export class AuthHelper {
 
     constructor() {
         this.authListeners = new Map([

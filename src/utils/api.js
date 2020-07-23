@@ -1,68 +1,20 @@
-import {getConfig} from "./appConfig";
+export const createEnvironment = async (authContext) => {
+    const user = await authContext.getCurrentUser();
+    const jwtToken = user.signInUserSession.idToken.jwtToken;
+    const res = await fetch(`/connect?id_token=${jwtToken}`);
+    if (res.status === 200) return `https://${await res.text()}?token=${jwtToken}`
 
-import fetch from "node-fetch";
-
-function HttpApiException(message, status) {
-    this.message = message;
-    this.status = status;
-    this.name = 'HttpApiException';
+    const errRes = await res.json();
+    throw new Error(`${res.status} ${errRes.error}: ${errRes.message}`);
 }
 
-export async function connect(token) {
 
-    const url = (`${getConfig("REACT_APP_OS_URL")}/connect`);
+const destroyEnvironment = async (authContext) => {
+    const user = await authContext.getCurrentUser();
 
-    const requestConfig = {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorisation': token
-        },
-        redirect: 'follow',
-        referrerPolicy: 'no-referrer',
-        body: JSON.stringify({})
-    }
+    const res = await fetch(`/disconnect?id_token=${user.signInUserSession.idToken.jwtToken}`);
+    if (res.status === 200) return;
 
-    const response = await fetch(url, requestConfig);
-
-    if (response.status === 200) {
-        return response.text();
-    }
-
-    let msg = await response.text();
-
-    throw new HttpApiException(
-        msg,
-        response.status
-    );
-}
-
-export async function disconnect(token) {
-
-    const url = (`${getConfig("REACT_APP_OS_URL")}/disconnect`);
-
-    const requestConfig = {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorisation': token
-        },
-        redirect: 'follow',
-        referrerPolicy: 'no-referrer',
-        body: JSON.stringify({})
-    }
-
-    const response = await fetch(url, requestConfig);
-
-
-    if (response.status === 200) {
-        return response.text();
-    }
-
-    let msg = await response.text();
-
-    throw new HttpApiException(
-        msg,
-        response.status
-    );
-}
+    const errRes = await res.json();
+    throw new Error(`${res.status} ${errRes.error}: ${errRes.message}`);
+};

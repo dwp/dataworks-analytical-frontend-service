@@ -2,6 +2,7 @@ import React, {useEffect, useState, useContext} from "react";
 import {Button, Spinner} from "react-mdl";
 import {Pages} from "../NavigationComponent";
 import {AuthContext} from "../../utils/Auth";
+import {createEnvironment} from "../../utils/api";
 
 const MainPage = ({nav}) => {
     const [isLoading, setIsLoading] = useState(false);
@@ -20,24 +21,18 @@ const MainPage = ({nav}) => {
         checkMfaSetup();
     });
 
-    const createEnvironment = async () => {
+    const connect = async () => {
         setIsLoading(true);
         try {
-            const user = await authContext.getCurrentUser();
-            const jwtToken = user.signInUserSession.idToken.jwtToken;
-            const res = await fetch(`/connect?id_token=${jwtToken}`);
-            if (res.status === 200) return nav.go(Pages.CONNECT, {desktopUrl: `https://${await res.text()}?token=${jwtToken}`})
-
-            authContext.dispatchAuthToast('Error encountered while provisioning environment. Please try again later.')
-            console.error(`Error connecting to OS: ${await res.json()}`);
-            return nav.go(Pages.MAIN);
+            const desktopUrl = await createEnvironment(authContext);
+            nav.go(Pages.CONNECT, {desktopUrl})
         } catch (e) {
             authContext.dispatchAuthToast('Error encountered while provisioning environment. Please try again later.')
-            console.error(JSON.stringify(e));
+            console.error(`Error connecting to OS: ${e}`);
+            nav.go(Pages.MAIN)
         } finally {
             setIsLoading(false);
         }
-
     }
 
     if (isMfaSetup)

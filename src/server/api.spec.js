@@ -2,7 +2,7 @@ import path from 'path'
 import { pactWith } from 'jest-pact';
 import { Pact } from '@pact-foundation/pact';
 import { like } from '@pact-foundation/pact/dsl/matchers';
-import { connect } from './utils/api.js';
+import { connect } from './api.js';
 
 function catchAndContinue(err, done) {
   fail(err);
