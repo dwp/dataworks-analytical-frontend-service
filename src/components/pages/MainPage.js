@@ -7,11 +7,13 @@ import {createEnvironment} from "../../utils/api";
 const MainPage = ({nav}) => {
     const [isLoading, setIsLoading] = useState(false);
     const [isMfaSetup, setIsMfaSetup] = useState(false);
-    const authContext = useContext(AuthContext);
+    const authContext = React.useContext(AuthContext);
 
-    useEffect(() => {
+    React.useEffect(() => {
         async function checkMfaSetup() {
+
             const user = await authContext.getCurrentUser();
+
             if (user.preferredMFA !== 'SOFTWARE_TOKEN_MFA') {
                 return nav.go(Pages.SETUP_MFA);
             }

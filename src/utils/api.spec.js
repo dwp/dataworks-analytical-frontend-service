@@ -1,25 +1,6 @@
-import {AuthContext, AuthHelper} from "./Auth";
 import {createEnvironment, destroyEnvironment} from "./api";
+import {mockAuthHelper, mockFetch} from "./testUtils";
 
-const mockFetch = (statusCode, body) => {
-    const mockFetchPromise = Promise.resolve({
-        status: statusCode,
-        json: () => Promise.resolve(body),
-        text: () => Promise.resolve(body)
-    });
-    jest.spyOn(global, 'fetch').mockImplementation(() => mockFetchPromise);
-}
-
-
-const mockAuthHelper = () => {
-    const getCurrentUser = jest.fn().mockImplementation(() => ({signInUserSession: {idToken: {jwtToken: "token"}}}));
-    return {
-        getCurrentUser,
-        AuthHelper: jest.fn().mockImplementation(() => ({
-            getCurrentUser,
-        }))
-    };
-}
 
 describe('Create environment function', () => {
     beforeEach(() => jest.clearAllMocks())
