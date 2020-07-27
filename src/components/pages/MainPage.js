@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useContext} from "react";
+import React, {useState} from "react";
 import {Button, Spinner} from "react-mdl";
 import {Pages} from "../NavigationComponent";
 import {AuthContext} from "../../utils/Auth";
