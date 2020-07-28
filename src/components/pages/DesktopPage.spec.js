@@ -12,4 +12,13 @@ describe("<DesktopPage/>", () => {
         expect(iframe).toExist()
         expect(iframe.props().src).toEqual(desktopUrl)
     })
+
+    it('focuses the iFrame on load', () => {
+        const desktopUrl = "http://test.url?token=token";
+        const wrapper = mount(<DesktopPage desktopUrl={desktopUrl}/>);
+        const elem = wrapper.find('#rd-iframe');
+        const focusedElement = document.activeElement;
+     
+        expect(elem.matchesElement(focusedElement)).toBeTruthy;
+     }); 
 })
