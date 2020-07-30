@@ -1,16 +1,19 @@
-import React, {useEffect, useState, useContext} from "react";
+import React, {useState} from "react";
 import {Button, Spinner} from "react-mdl";
 import {Pages} from "../NavigationComponent";
 import {AuthContext} from "../../utils/Auth";
+import {createEnvironment} from "../../utils/api";
 
 const MainPage = ({nav}) => {
     const [isLoading, setIsLoading] = useState(false);
     const [isMfaSetup, setIsMfaSetup] = useState(false);
-    const authContext = useContext(AuthContext);
+    const authContext = React.useContext(AuthContext);
 
-    useEffect(() => {
+    React.useEffect(() => {
         async function checkMfaSetup() {
+
             const user = await authContext.getCurrentUser();
+
             if (user.preferredMFA !== 'SOFTWARE_TOKEN_MFA') {
                 return nav.go(Pages.SETUP_MFA);
             }
@@ -20,30 +23,24 @@ const MainPage = ({nav}) => {
         checkMfaSetup();
     });
 
-    const createEnvironment = async () => {
+    const connect = async () => {
         setIsLoading(true);
         try {
-            const user = await authContext.getCurrentUser();
-            const jwtToken = user.signInUserSession.idToken.jwtToken;
-            const res = await fetch(`/connect?id_token=${jwtToken}`);
-            if (res.status === 200) return nav.go(Pages.CONNECT, {desktopUrl: `https://${await res.text()}?token=${jwtToken}`})
-
-            authContext.dispatchAuthToast('Error encountered while provisioning environment. Please try again later.')
-            console.error(`Error connecting to OS: ${await res.json()}`);
-            return nav.go(Pages.MAIN);
+            const desktopUrl = await createEnvironment(authContext);
+            nav.go(Pages.CONNECT, {desktopUrl})
         } catch (e) {
             authContext.dispatchAuthToast('Error encountered while provisioning environment. Please try again later.')
-            console.error(JSON.stringify(e));
+            console.error(`Error connecting to OS: ${e}`);
+            nav.go(Pages.MAIN)
         } finally {
             setIsLoading(false);
         }
-
     }
 
     if (isMfaSetup)
         return (
             <div>
-                <Button raised colored onClick={createEnvironment} disabled={isLoading}
+                <Button raised colored onClick={connect} disabled={isLoading}
                         style={{display: "inline-flex", alignItems: "center"}}>
                     <Spinner singleColor style={{
                         display: isLoading ? 'inline-block' : 'none',

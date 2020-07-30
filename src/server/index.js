@@ -8,7 +8,7 @@ import "regenerator-runtime/runtime.js";
 import templateApp from './template'
 
 
-import {connect, disconnect} from '../utils/api.js'
+import {connect, disconnect} from './api.js'
 import regeneratorRuntime from "regenerator-runtime";
 import {getTlsConfig} from "./serverConfig";
 

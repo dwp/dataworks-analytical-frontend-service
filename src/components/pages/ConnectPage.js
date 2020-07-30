@@ -3,7 +3,7 @@ import {ProgressBar} from "react-mdl";
 import {Pages} from "../NavigationComponent";
 import {AuthContext} from "../../utils/Auth";
 
-const ConnectPage = ({nav, desktopUrl}) => {
+const ConnectPage = ({nav, desktopUrl, timeout, interval}) => {
     const authContext = useContext(AuthContext);
     const checkIsEnvironmentReady = async () => {
         try {
@@ -27,8 +27,8 @@ const ConnectPage = ({nav, desktopUrl}) => {
 
     }
 
-    const timeOutAt = Date.now() + 5 * 60 * 1000 // 5 minutes
-    const checkInterval = setInterval(checkIsEnvironmentReady, 10 * 1000) // 10 seconds
+    const timeOutAt = timeout ? Date.now() + timeout : Date.now() + 5 * 60 * 1000 // 5 minutes
+    const checkInterval = setInterval(checkIsEnvironmentReady, interval ? interval : 10 * 1000) // 10 seconds
     checkIsEnvironmentReady();
 
     return (
