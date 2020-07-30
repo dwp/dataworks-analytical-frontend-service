@@ -13,8 +13,8 @@ if (typeof window !== "undefined" && !process.title.endsWith("node")) {
             authenticationFlowType: 'CUSTOM_AUTH',
             oauth: {
                 domain: getConfig('REACT_APP_COGNITO_DOMAIN'),
-                redirectSignIn: `http://${window.location.host}`,
-                redirectSignOut: `http://${window.location.host}`,
+                redirectSignIn: `${window.location.protocol}//${window.location.host}`,
+                redirectSignOut: `${window.location.protocol}//${window.location.host}`,
                 responseType: 'code',
             }
         }
