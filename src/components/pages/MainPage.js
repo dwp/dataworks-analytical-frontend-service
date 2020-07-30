@@ -12,11 +12,11 @@ const MainPage = ({nav}) => {
     React.useEffect(() => {
         async function checkMfaSetup() {
 
-            const user = await authContext.getCurrentUser();
-
-            if (user.preferredMFA !== 'SOFTWARE_TOKEN_MFA') {
+            const user = await authContext.getCurrentUser()
+            if (!authContext.isFederated(user) && user.preferredMFA !== 'SOFTWARE_TOKEN_MFA') {
                 return nav.go(Pages.SETUP_MFA);
             }
+
             if (isMfaSetup === false) setIsMfaSetup(true);
         }
 
