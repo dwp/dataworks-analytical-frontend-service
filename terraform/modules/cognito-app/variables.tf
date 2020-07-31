@@ -8,8 +8,13 @@ variable user_pool_id {
   description = "(Required) User pool ID in which to create app client"
 }
 
+variable adfs_identity_provider_name {
+  type        = string
+  description = "(Required) Name of ADFS Identity Provider"
+}
+
 variable callback_urls {
-  type        = list
+  type        = list(string)
   description = "(Required) Call back URLs to be accepted by client"
 }
 

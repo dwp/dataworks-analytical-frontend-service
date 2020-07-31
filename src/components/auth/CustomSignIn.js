@@ -58,7 +58,14 @@ const CustomSignIn = ({headerText, confirmUser, requireNewPassword, forgotPasswo
                     <AmplifyLoadingSpinner style={{display: isLoading ? 'initial' : 'none'}}/>
                     <span style={{display: isLoading ? 'none' : 'initial'}}>Sign in</span>
                 </AmplifyButton>
+
+                <hr style={{width: "100%", margin: "20px 0"}} size={2}/>
+
+                <AmplifyButton handleButtonClick={() => authContext.federatedSignIn()}>
+                    Sign in with DWP ADFS
+                </AmplifyButton>
             </div>
+
         </AmplifyFormSection>
     )
 }

@@ -15,12 +15,15 @@ export const mockAuthHelper = () => {
         preferredMFA: "SOFTWARE_TOKEN_MFA",
     }));
     const dispatchAuthToast = jest.fn()
+    const isFederated = jest.fn()
     return {
         getCurrentUser,
         dispatchAuthToast,
+        isFederated,
         AuthHelper: jest.fn().mockImplementation(() => ({
             getCurrentUser,
-            dispatchAuthToast
+            dispatchAuthToast,
+            isFederated
         }))
     };
 }

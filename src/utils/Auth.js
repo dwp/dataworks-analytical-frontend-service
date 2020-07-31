@@ -1,7 +1,7 @@
 import React from 'react'
 import {Auth, Hub} from 'aws-amplify';
 import {getConfig} from "./appConfig";
-import {AUTH_STATE_CHANGE_EVENT, TOAST_AUTH_ERROR_EVENT, AuthState, UI_AUTH_CHANNEL} from "@aws-amplify/ui-components";
+import {AUTH_STATE_CHANGE_EVENT, AuthState, TOAST_AUTH_ERROR_EVENT, UI_AUTH_CHANNEL} from "@aws-amplify/ui-components";
 
 if (typeof window !== "undefined" && !process.title.endsWith("node")) {
     Auth.configure(
@@ -10,8 +10,13 @@ if (typeof window !== "undefined" && !process.title.endsWith("node")) {
             userPoolId: getConfig('REACT_APP_USERPOOLID'),
             userPoolWebClientId: getConfig('REACT_APP_USERPOOL_WEBCLIENTID'),
             mandatorySignIn: true,
-
             authenticationFlowType: 'CUSTOM_AUTH',
+            oauth: {
+                domain: getConfig('REACT_APP_COGNITO_DOMAIN'),
+                redirectSignIn: `${window.location.protocol}//${window.location.host}`,
+                redirectSignOut: `${window.location.protocol}//${window.location.host}`,
+                responseType: 'code',
+            }
         }
     );
 }
@@ -34,18 +39,18 @@ export class AuthHelper {
         Hub.listen('auth', (data) => this.handleAuthEvent(data));
     }
 
-    addAuthListener(event, listener){
-        if(!this.authListeners.has(event)) throw new Error(`Unsupported event: ${event}`)
+    addAuthListener(event, listener) {
+        if (!this.authListeners.has(event)) throw new Error(`Unsupported event: ${event}`)
         this.authListeners.set(event, [...this.authListeners.get(event), listener])
     }
 
-    removeAuthListener(event, listener){
+    removeAuthListener(event, listener) {
         this.authListeners.set(event, this.authListeners.get(event).filter(l => l !== listener))
     }
 
-    handleAuthEvent(eventData){
+    handleAuthEvent(eventData) {
         const {event, data} = eventData.payload;
-        if(!this.authListeners.has(event)) return;
+        if (!this.authListeners.has(event)) return;
         this.authListeners.get(event).forEach(listener => listener(data));
     }
 
@@ -66,7 +71,11 @@ export class AuthHelper {
     }
 
     async getCurrentUser() {
-        return Auth.currentAuthenticatedUser({bypassCache: true})
+        return Auth.currentAuthenticatedUser({bypassCache: true});
+    }
+
+    async federatedSignIn() {
+        return Auth.federatedSignIn({customProvider: getConfig('REACT_APP_FEDERATED_PROVIDER')})
     }
 
     async signIn(username, password) {
@@ -77,11 +86,11 @@ export class AuthHelper {
         return Auth.sendCustomChallengeAnswer(user, challengeResponse);
     }
 
-    async signOut(){
+    async signOut() {
         return Auth.signOut();
     }
 
-    async forgotPassword(){
+    async forgotPassword() {
         return this.dispatchAuthStateChangeEvent(AuthState.ForgotPassword);
     }
 
@@ -100,6 +109,11 @@ export class AuthHelper {
             default:
                 this.dispatchAuthStateChangeEvent(AuthState.SignedIn, user);
         }
+    }
+
+    isFederated(user) {
+        const userIdentities = JSON.parse(user.attributes.identities);
+        return userIdentities.filter(identity => identity.providerType === "SAML").length > 0
     }
 
 }

@@ -42,6 +42,14 @@ module "ecs-fargate-task-definition" {
       value = data.terraform_remote_state.aws_analytical_env_cognito.outputs.cognito.user_pool_id
     },
     {
+      name  = "REACT_APP_COGNITO_DOMAIN"
+      value = "${data.terraform_remote_state.aws_analytical_env_cognito.outputs.cognito.user_pool_domain}.auth.${data.aws_region.current.name}.amazoncognito.com"
+    },
+    {
+      name  = "REACT_APP_FEDERATED_PROVIDER"
+      value = data.terraform_remote_state.aws_analytical_env_cognito.outputs.cognito.adfs_identity_provider_name
+    },
+    {
       name  = "REACT_APP_ENV"
       value = local.environment
     },
@@ -86,10 +94,11 @@ module "ecs-fargate-service" {
 }
 
 module cognito-app {
-  source        = "../../modules/cognito-app/"
-  name          = var.name_prefix
-  user_pool_id  = data.terraform_remote_state.aws_analytical_env_cognito.outputs.cognito.user_pool_id
-  callback_urls = ["https://${data.terraform_remote_state.aws_analytical_env_infra.outputs.alb_fqdn}"]
+  source                      = "../../modules/cognito-app/"
+  name                        = var.name_prefix
+  user_pool_id                = data.terraform_remote_state.aws_analytical_env_cognito.outputs.cognito.user_pool_id
+  adfs_identity_provider_name = data.terraform_remote_state.aws_analytical_env_cognito.outputs.cognito.adfs_identity_provider_name
+  callback_urls               = ["https://${data.terraform_remote_state.aws_analytical_env_infra.outputs.alb_fqdn}"]
   role_arn = {
     management = "arn:aws:iam::${local.account[local.management_account[local.environment]]}:role/${var.assume_role}"
   }
