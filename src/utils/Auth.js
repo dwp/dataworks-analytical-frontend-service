@@ -112,7 +112,7 @@ export class AuthHelper {
     }
 
     isFederated(user) {
-        const userIdentities = JSON.parse(user.attributes.identities);
+        const userIdentities = JSON.parse(user.attributes.identities || "[]");
         return userIdentities.filter(identity => identity.providerType === "SAML").length > 0
     }
 
