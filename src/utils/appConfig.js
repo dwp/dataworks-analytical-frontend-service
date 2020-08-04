@@ -26,3 +26,7 @@ export function getConfigOrDefault(key, defaultValue) {
     if (appConfig.hasOwnProperty(key)) return appConfig[key];
     return defaultValue;
 }
+
+export function isBrowserEnv() {
+    return typeof window !== "undefined" && !process.title.endsWith("node")
+}

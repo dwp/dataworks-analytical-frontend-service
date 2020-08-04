@@ -1,15 +1,14 @@
 import React, {useContext, useEffect, useState} from 'react';
 import './App.css';
-import {AmplifyAuthenticator} from "@aws-amplify/ui-react";
 import Header from "./components/presentational/Header";
 import Footer from "./components/presentational/Footer";
 import NavigationComponent from "./components/NavigationComponent";
 import {Hub} from "aws-amplify";
 import MainWrapper from "./components/presentational/MainWrapper";
 import {AuthContext} from "./utils/Auth";
-import CustomAuthWrapper from "./components/auth/CustomAuthWrapper";
 import {I18n} from 'aws-amplify';
 import {destroyEnvironment} from "./utils/api";
+import Authenticator from "./components/auth/Authenticator";
 
 const authScreenLabels = {
     en: {
@@ -64,10 +63,9 @@ function App() {
             <main id="content" role="main" className={"group"} style={{height: `calc(100% - (${heights.footer}px + ${heights.header}px))`, position: 'relative'}}>
                 <div className="article-container group" style={{height: '100%'}}>
                     <MainWrapper>
-                        <AmplifyAuthenticator>
-                            <CustomAuthWrapper headerText='Analytical environment sign in'/>
-                            {user ? <NavigationComponent/> : null}
-                        </AmplifyAuthenticator>
+                        <Authenticator>
+                            <NavigationComponent/>
+                        </Authenticator>
                     </MainWrapper>
                 </div>
             </main>
