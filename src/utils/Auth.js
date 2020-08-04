@@ -1,9 +1,31 @@
 import React from 'react'
 import {Auth, Hub} from 'aws-amplify';
-import {getConfig, isBrowserEnv} from "./appConfig";
+import {getConfig, isBrowserEnv, isMicrosoftBrowser} from "./appConfig";
 import {AUTH_STATE_CHANGE_EVENT, AuthState, TOAST_AUTH_ERROR_EVENT, UI_AUTH_CHANNEL} from "@aws-amplify/ui-components";
 
+
 if (isBrowserEnv()) {
+    /* Very inelegant hack to support Microsoft Edge. Because Microsoft does not like to support the same
+     standards as other browsers, its sessionStorage implementation will get cleared between page refreshes.
+     This fix overrides the fetch global object and grabs the needed PKCE key from localStorage, where it is
+     saved by the urlOpener, and attaches it to the oauth/tokens request body.
+     */
+    if (isMicrosoftBrowser()) {
+        const windowFetch = window.fetch
+        window.fetch = (url, config) => {
+            if (url === `https://${getConfig('REACT_APP_COGNITO_DOMAIN')}/oauth2/token`
+                && config.headers['Content-Type'] === 'application/x-www-form-urlencoded'
+                && !config.body.includes('code_verifier')) {
+                return windowFetch(url, {
+                    ...config,
+                    body: config.body + `&code_verifier=${encodeURIComponent(localStorage.getItem('oauth_pkce_key'))}`
+                })
+            }
+            return windowFetch(url, config);
+        }
+    }
+
+
     Auth.configure(
         {
             region: getConfig('REACT_APP_REGION'),
@@ -13,9 +35,26 @@ if (isBrowserEnv()) {
             authenticationFlowType: 'CUSTOM_AUTH',
             oauth: {
                 domain: getConfig('REACT_APP_COGNITO_DOMAIN'),
-                redirectSignIn: `${window.location.protocol}//${window.location.host}`,
-                redirectSignOut: `${window.location.protocol}//${window.location.host}`,
+                redirectSignIn: window.location.origin,
+                redirectSignOut: window.location.origin,
                 responseType: 'code',
+                /* Second part of Microsoft Edge fix, it overrides the urlOpener
+                  used by amplify to save the pkce key to localStorage before
+                  leaving the page for the initial OAuth authorization
+                */
+                urlOpener: (url) => {
+                    const oauth_pkce = sessionStorage.getItem('ouath_pkce_key');
+                    const oauth_state = sessionStorage.getItem('oauth_state');
+                    localStorage.setItem('oauth_pkce_key', oauth_pkce);
+                    localStorage.setItem('oauth_state', oauth_state);
+
+                    const windowProxy = window.open(url, '_self');
+                    if (windowProxy) {
+                        return Promise.resolve(windowProxy);
+                    } else {
+                        return Promise.reject();
+                    }
+                }
             }
         }
     );
