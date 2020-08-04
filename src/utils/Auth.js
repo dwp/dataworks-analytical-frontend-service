@@ -1,9 +1,9 @@
 import React from 'react'
 import {Auth, Hub} from 'aws-amplify';
-import {getConfig} from "./appConfig";
+import {getConfig, isBrowserEnv} from "./appConfig";
 import {AUTH_STATE_CHANGE_EVENT, AuthState, TOAST_AUTH_ERROR_EVENT, UI_AUTH_CHANNEL} from "@aws-amplify/ui-components";
 
-if (typeof window !== "undefined" && !process.title.endsWith("node")) {
+if (isBrowserEnv()) {
     Auth.configure(
         {
             region: getConfig('REACT_APP_REGION'),
