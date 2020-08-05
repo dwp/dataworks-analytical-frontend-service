@@ -3,7 +3,7 @@ import {AmplifyAuthenticator} from "@aws-amplify/ui-react";
 import {AuthContext} from "../../utils/Auth";
 import {Hub} from "aws-amplify";
 import CustomAuthWrapper from "./CustomAuthWrapper";
-import {isBrowserEnv} from "../../utils/appConfig";
+import {isBrowserEnv, isMicrosoftBrowser} from "../../utils/appConfig";
 import AdfsSignin from "./AdfsSignIn";
 
 const Authenticator = ({children}) => {
@@ -27,7 +27,7 @@ const Authenticator = ({children}) => {
     }, [authContext]);
 
 
-    if (isBrowserEnv() && 'customElements' in window) // check if WebComponents is supported (for Edge/IE)
+    if (isBrowserEnv() && !isMicrosoftBrowser())
         return (
             <AmplifyAuthenticator>
                 <CustomAuthWrapper headerText='Analytical environment sign in'/>

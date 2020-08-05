@@ -30,3 +30,7 @@ export function getConfigOrDefault(key, defaultValue) {
 export function isBrowserEnv() {
     return typeof window !== "undefined" && !process.title.endsWith("node")
 }
+
+export function isMicrosoftBrowser() {
+    return !!(document.documentMode || /Edge/.test(navigator.userAgent));
+}
