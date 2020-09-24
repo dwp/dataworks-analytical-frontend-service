@@ -8,6 +8,7 @@ resource aws_cognito_user_pool_client app_client {
   logout_urls                          = var.callback_urls
   supported_identity_providers         = ["COGNITO", var.adfs_identity_provider_name]
   refresh_token_validity               = 1
+  prevent_user_existence_errors        = "ENABLED"
   allowed_oauth_flows = [
     "code",
     "implicit"
