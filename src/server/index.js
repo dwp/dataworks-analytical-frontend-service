@@ -11,6 +11,7 @@ import templateApp from './template'
 import {connect, disconnect} from './api.js'
 import regeneratorRuntime from "regenerator-runtime";
 import {getTlsConfig} from "./serverConfig";
+import {apiCall} from './api';
 
 // include the library
 const dwpNodeLogger = require('@dwp/node-logger');
@@ -26,7 +27,7 @@ app.get('/connect', async (req, res) => {
     console.info('Connection request to Orchestration Service');
 
     try {
-        const url = await connect(req.query.id_token);
+        const url = await apiCall(req.query.id_token, 'connect');
         return res.send(url)
     } catch(e){
         res.status(500).send('Error occurred, cannot connect to Orchestration Service');
@@ -38,13 +39,24 @@ app.get('/connect', async (req, res) => {
 app.get('/disconnect', async (req, res) => {
     console.log('Disconnection request to Orchestration Service');
     try {
-        const response = await disconnect(req.query.id_token);
+        const response = await apiCall(req.query.id_token, 'disconnect');
         res.send(response);
     } catch (e){
         res.status(500).send("Error shutting down environments");
         logger.error(e.message);
     }
 });
+
+app.get('/verify-user', async (req, res) => {
+    console.log('Verify user request to Orchestration Service')
+    try {
+        const response = await apiCall(req.query.id_token, 'verify-user');
+        res.send(response);
+    } catch (e){
+        res.status(500).send("Error Error occurred, cannot connect to Orchestration Service to verify user");
+        logger.error(e.message);
+    }
+})
 
 app.get('/faq', (req, res) => {
     const faqFile = path.resolve('./build/faq.html');
