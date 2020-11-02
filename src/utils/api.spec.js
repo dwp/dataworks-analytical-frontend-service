@@ -74,7 +74,7 @@ describe('Verify user attributes in JWT function', () => {
         done();
     })    
     
-    it('Calls endpoint and redturns false, if user attributes aren`t in JWT', async(done) => {
+    it('Calls endpoint and returns false, if user attributes aren`t in JWT', async(done) => {
         mockFetch(404);
         const {AuthHelper} = mockAuthHelper();
         const result = await apiCall(AuthHelper(), "verify-user");

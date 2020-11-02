@@ -60,7 +60,7 @@ describe("<MainPage/>", () => {
             },
             preferredMFA: "SOFTWARE_TOKEN_MFA"
         }))
-        authMock.isFederated.mockImplementation(() => false)
+        authMock.isFederated.mockImplementation(() => true)
         mockApiCall.mockImplementation(() => false)
         jest.spyOn(React, 'useEffect').mockImplementation(React.useLayoutEffect)
         const wrapper = mount(<MockAuthProvider><MainPage nav={mockNav}/></MockAuthProvider>)

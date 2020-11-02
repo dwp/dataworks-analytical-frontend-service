@@ -4,9 +4,8 @@ const UserNotSetUpPage = () => {
 
 return (
         <div>
-            <h1>Your User Has Not Been Fully Set Up</h1>
-            <p>Please raise an issue in the <strong>#dataworks-aws-analytical-env-testing</strong> Slack channel.</p>
-            <p>Sorry for any inconvinience this has caused.</p>
+            <h1>Your user is not yet authorized to use this system, or is in the process of being setup.</h1>
+            <p>Please contact technical support if you believe this information to be incorrect.</p>
         </div>
     )
 }
