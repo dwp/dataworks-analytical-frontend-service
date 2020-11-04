@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import {Button, Spinner} from "react-mdl";
 import {Pages} from "../NavigationComponent";
 import {AuthContext} from "../../utils/Auth";
-import {createEnvironment} from "../../utils/api";
+import apiCall from "../../utils/api";
 
 const MainPage = ({nav}) => {
     const [isLoading, setIsLoading] = useState(false);
@@ -10,23 +10,33 @@ const MainPage = ({nav}) => {
     const authContext = React.useContext(AuthContext);
 
     React.useEffect(() => {
-        async function checkMfaSetup() {
+        async function userSetup() {
+            try{
+                const setup = await apiCall(authContext, "verify-user");
+                if (!setup) return nav.go(Pages.USER_NOT_SET_UP);
+            } catch (e) {
+                authContext.dispatchAuthToast('The Analytical Environment is unavailable. Please try again later.');
+                console.error(`Error connecting to OS: ${e}`);
+            }  
+        }
 
-            const user = await authContext.getCurrentUser()
+
+        async function checkMfaSetup() {
+            const user = await authContext.getCurrentUser();
             if (!authContext.isFederated(user) && user.preferredMFA !== 'SOFTWARE_TOKEN_MFA') {
                 return nav.go(Pages.SETUP_MFA);
             }
 
             if (isMfaSetup === false) setIsMfaSetup(true);
         }
-
         checkMfaSetup();
+        userSetup();
     });
 
     const connect = async () => {
         setIsLoading(true);
         try {
-            const desktopUrl = await createEnvironment(authContext);
+            const desktopUrl = await apiCall(authContext, "connect");
             nav.go(Pages.CONNECT, {desktopUrl})
         } catch (e) {
             authContext.dispatchAuthToast('Error encountered while provisioning environment. Please try again later.')

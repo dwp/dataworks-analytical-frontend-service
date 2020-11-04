@@ -2,7 +2,7 @@ import path from 'path'
 import { pactWith } from 'jest-pact';
 import { Pact } from '@pact-foundation/pact';
 import { like } from '@pact-foundation/pact/dsl/matchers';
-import { connect } from './api.js';
+import { apiCall } from './api.js';
 
 function catchAndContinue(err, done) {
   fail(err);
@@ -49,7 +49,7 @@ describe('Pact Test Suite', () => {
     })
  
     test('authorized token', (done) => {
-      connect('token')
+      apiCall('token', 'connect')
         .then(
            url => {
              expect(url).toBe('userContainerUrl/validUser/');
@@ -80,7 +80,7 @@ describe('Pact Test Suite', () => {
     })
 
     test('failure captured', (done) => {
-       connect('badtoken')
+       apiCall('badtoken', 'connect')
         .catch( error => {
           expect(error.status).toBe(401);
         })

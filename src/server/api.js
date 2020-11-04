@@ -8,38 +8,8 @@ function HttpApiException(message, status) {
     this.name = 'HttpApiException';
 }
 
-export async function connect(token) {
-
-    const url = (`${getConfig("REACT_APP_OS_URL")}/connect`);
-
-    const requestConfig = {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorisation': token
-        },
-        redirect: 'follow',
-        referrerPolicy: 'no-referrer',
-        body: JSON.stringify({})
-    }
-
-    const response = await fetch(url, requestConfig);
-
-    if (response.status === 200) {
-        return response.text();
-    }
-
-    let msg = await response.text();
-
-    throw new HttpApiException(
-        msg,
-        response.status
-    );
-}
-
-export async function disconnect(token) {
-
-    const url = (`${getConfig("REACT_APP_OS_URL")}/disconnect`);
+export async function apiCall(token, endpoint) {
+    const url = (`${getConfig("REACT_APP_OS_URL")}/${endpoint}`);
 
     const requestConfig = {
         method: 'POST',
@@ -53,7 +23,6 @@ export async function disconnect(token) {
     }
 
     const response = await fetch(url, requestConfig);
-
 
     if (response.status === 200) {
         return response.text();

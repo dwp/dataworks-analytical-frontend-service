@@ -1,6 +1,5 @@
-import {createEnvironment, destroyEnvironment} from "./api";
+import apiCall from "./api";
 import {mockAuthHelper, mockFetch} from "./testUtils";
-
 
 describe('Create environment function', () => {
     beforeEach(() => jest.clearAllMocks())
@@ -8,7 +7,7 @@ describe('Create environment function', () => {
     it('Successfully returns desktop url', async (done) => {
         mockFetch(200, 'envurl.local');
         const {AuthHelper, getCurrentUser} = mockAuthHelper();
-        const desktopUrl = await (createEnvironment(AuthHelper()))
+        const desktopUrl = await (apiCall(AuthHelper(), "connect"))
 
         expect(global.fetch).toBeCalledTimes(1);
         expect(getCurrentUser).toBeCalledTimes(1);
@@ -20,7 +19,7 @@ describe('Create environment function', () => {
         mockFetch(500, {message: 'Error encountered', error: "Internal Server Error"});
         const {AuthHelper} = mockAuthHelper();
 
-        await expect(createEnvironment(AuthHelper())).rejects.toEqual(new Error('500 Internal Server Error: Error encountered'));
+        await expect(apiCall(AuthHelper(), "connect")).rejects.toEqual(new Error('500 Internal Server Error: Error encountered'));
         done();
     });
 
@@ -28,7 +27,7 @@ describe('Create environment function', () => {
         const {AuthHelper, getCurrentUser} = mockAuthHelper();
         const err = new Error('Connection Error');
         jest.spyOn(global, 'fetch').mockImplementation(() => {throw err});
-        await expect(createEnvironment(AuthHelper())).rejects.toEqual(err);
+        await expect(apiCall(AuthHelper(), "connect")).rejects.toEqual(err);
         done();
     });
 });
@@ -39,7 +38,7 @@ describe('Destroy environment function', () => {
     it('Successfully destroys environment', async (done) => {
         mockFetch(200);
         const {AuthHelper} = mockAuthHelper();
-        await destroyEnvironment(AuthHelper());
+        await apiCall(AuthHelper(), "disconnect");
 
         expect(global.fetch).toBeCalledWith('/disconnect?id_token=token');
         done();
@@ -49,7 +48,7 @@ describe('Destroy environment function', () => {
         mockFetch(500, {message: 'Error encountered', error: "Internal Server Error"});
         const {AuthHelper} = mockAuthHelper();
 
-        await expect(destroyEnvironment(AuthHelper())).rejects.toEqual(new Error('500 Internal Server Error: Error encountered'));
+        await expect(apiCall(AuthHelper(), "disconnect")).rejects.toEqual(new Error('500 Internal Server Error: Error encountered'));
         done();
     });
 
@@ -57,7 +56,31 @@ describe('Destroy environment function', () => {
         const {AuthHelper } = mockAuthHelper();
         const err = new Error('Connection Error');
         jest.spyOn(global, 'fetch').mockImplementation(() => {throw err});
-        await expect(destroyEnvironment(AuthHelper())).rejects.toEqual(err);
+        await expect(apiCall(AuthHelper(), "disconnect")).rejects.toEqual(err);
         done();
     });
 });
+
+describe('Verify user attributes in JWT function', () => {
+    beforeEach(() => jest.clearAllMocks())
+
+    it('Calls endpoint and returns true if user attributes are in JWT', async(done) => {
+        mockFetch(200);
+        const {AuthHelper} = mockAuthHelper();
+        const result = await apiCall(AuthHelper(), "verify-user");
+
+        expect(result).toBe(true);
+        expect(global.fetch).toBeCalledWith('/verify-user?id_token=token');
+        done();
+    })    
+    
+    it('Calls endpoint and returns false, if user attributes aren`t in JWT', async(done) => {
+        mockFetch(204);
+        const {AuthHelper} = mockAuthHelper();
+        const result = await apiCall(AuthHelper(), "verify-user");
+
+        expect(result).toBe(false);
+        expect(global.fetch).toBeCalledWith('/verify-user?id_token=token');
+        done();
+    })
+})

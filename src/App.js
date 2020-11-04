@@ -7,7 +7,7 @@ import {Hub} from "aws-amplify";
 import MainWrapper from "./components/presentational/MainWrapper";
 import {AuthContext} from "./utils/Auth";
 import {I18n} from 'aws-amplify';
-import {destroyEnvironment} from "./utils/api";
+import apiCall from "./utils/api";
 import Authenticator from "./components/auth/Authenticator";
 
 const authScreenLabels = {
@@ -42,7 +42,7 @@ function App() {
 
     const disconnect = async () => {
         try {
-            await destroyEnvironment(authContext);
+            await apiCall(authContext, "disconnect");
         } catch (e) {
             console.error('Error disconnect from Orchestration Service');
         } finally {
