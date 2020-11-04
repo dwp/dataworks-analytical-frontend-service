@@ -6,7 +6,7 @@
     "@aws-amplify/ui-react": "^0.2.12",
     "@pact-foundation/pact-node": "^10.10.0",
     "aws-amplify": "^3.0.21",
-    "aws-sdk": "^2.656.0",
+    "aws-sdk": "^2.771.0",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "iframe-react": "^1.0.1",
