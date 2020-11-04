@@ -35,7 +35,7 @@ app.get('/connect', async (req, res) => {
 app.get('/disconnect', async (req, res) => {
     console.log('Disconnection request to Orchestration Service');
     try {
-        const response = await apiCall(req.query.id_token, 'connect');
+        const response = await apiCall(req.query.id_token, 'disconnect');
         res.send(response);
     } catch (e){
         res.status(500).send("Error shutting down environments");
