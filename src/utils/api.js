@@ -4,9 +4,15 @@ const apiCall = async (authContext, endpoint) => {
     const res = await fetch(`/${endpoint}?id_token=${jwtToken}`);
 
     if (res.status === 200){
-        if (endpoint === "connect")return `https://${await res.text()}?token=${jwtToken}`;    
-        if (endpoint === "disconnect" || endpoint === "verify-user") return true;
-    } else if (res.status === 404 && endpoint === "verify-user") return false;
+        switch (endpoint) {
+            case "connect":
+                return `https://${await res.text()}?token=${jwtToken}`;
+            case "verify-user":
+                return true;
+            default:
+                return;
+        }
+    } else if (res.status === 204 && endpoint === "verify-user") return false;
 
     const errRes = await res.json();
     throw new Error(`${res.status} ${errRes.error}: ${errRes.message}`);

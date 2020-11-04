@@ -1,17 +1,13 @@
 import path from 'path';
 import fs from 'fs';
-import express from 'express';
+import express, { response } from 'express';
 import http from 'http';
 import https from 'https';
 import "regenerator-runtime/runtime.js";
 
 import templateApp from './template'
-
-
-import {connect, disconnect} from './api.js'
-import regeneratorRuntime from "regenerator-runtime";
 import {getTlsConfig} from "./serverConfig";
-import {apiCall} from './api';
+import {apiCall} from './api.js';
 
 // include the library
 const dwpNodeLogger = require('@dwp/node-logger');
@@ -39,7 +35,7 @@ app.get('/connect', async (req, res) => {
 app.get('/disconnect', async (req, res) => {
     console.log('Disconnection request to Orchestration Service');
     try {
-        const response = await apiCall(req.query.id_token, 'disconnect');
+        const response = await apiCall(req.query.id_token, 'connect');
         res.send(response);
     } catch (e){
         res.status(500).send("Error shutting down environments");
@@ -51,10 +47,17 @@ app.get('/verify-user', async (req, res) => {
     console.log('Verify user request to Orchestration Service')
     try {
         const response = await apiCall(req.query.id_token, 'verify-user');
-        res.send(response);
+        res.send(response.text);
     } catch (e){
-        res.status(500).send("Error Error occurred, cannot connect to Orchestration Service to verify user");
-        logger.error(e.message);
+        if (e.status >= 500) {
+            res.status(500).send("Error occurred, cannot connect to Orchestration Service to verify user");
+            logger.error(e.message);
+        }
+        else {
+            res.status(e.status).send(`Connection established - ${e.status} response`);
+            logger.info(`Connection established - ${e.status} response`);
+        }
+        
     }
 })
 

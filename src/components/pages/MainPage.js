@@ -11,12 +11,18 @@ const MainPage = ({nav}) => {
 
     React.useEffect(() => {
         async function userSetup() {
-            const setup = await apiCall(authContext, "verify-user")
-            if (!setup) return nav.go(Pages.USER_NOT_SET_UP)}
+            try{
+                const setup = await apiCall(authContext, "verify-user");
+                if (!setup) return nav.go(Pages.USER_NOT_SET_UP);
+            } catch (e) {
+                authContext.dispatchAuthToast('The Analytical Environment is unavailable. Please try again later.');
+                console.error(`Error connecting to OS: ${e}`);
+            }  
+        }
 
 
         async function checkMfaSetup() {
-            const user = await authContext.getCurrentUser()
+            const user = await authContext.getCurrentUser();
             if (!authContext.isFederated(user) && user.preferredMFA !== 'SOFTWARE_TOKEN_MFA') {
                 return nav.go(Pages.SETUP_MFA);
             }
