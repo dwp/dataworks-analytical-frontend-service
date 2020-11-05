@@ -5,9 +5,16 @@ jobs:
     trigger: true
     passed:
       - qa
+  - .: (( inject meta.plan.create-aws-profiles ))
+    params:
+      AWS_ACC: ((aws_account.management-dev))
   - .: (( inject meta.plan.terraform-bootstrap ))
     params:
       DEPLOY_PATH: app
+  - .: (( inject meta.plan.terraform-output ))
+    params:
+      TF_WORKSPACE: integration
+  - .: (( inject meta.plan.set-cognito-client-options ))
   - .: (( inject meta.plan.terraform-apply ))
     config:
       run:

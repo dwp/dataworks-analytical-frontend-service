@@ -85,15 +85,15 @@ meta:
       config:
         run:
           path: sh
-          dir: analytical-frontend-service/terraform/deploy
+          dir: analytical-frontend-service/terraform/deploy/app
           args:
           - -exc
           - |
-            cp ../../../terraform-config/terraform.tf .
-            cp ../../../terraform-config/terraform.tfvars .
+            cp ../../../../terraform-config/terraform.tf .
+            cp ../../../../terraform-config/terraform.tfvars .
             terraform init
             terraform workspace show
-            terraform output -json > ../../../terraform-output/outputs.json
+            terraform output -json > ../../../../terraform-output/outputs.json
         inputs:
         - name: dataworks-analytical-frontend-service
         - name: terraform-config
@@ -107,35 +107,56 @@ meta:
         image_resource:
           type: docker-image
           source:
-            repository: ((docker-awscli.repository))
-            version: ((docker-awscli.version))
-            tag: ((docker-awscli.version))
+            repository: ((dataworks.docker_awscli_repository))
+            version: ((dataworks.docker_awscli_version))
+            tag: ((dataworks.docker_awscli_version))
         outputs:
           - name: .aws
         params:
-          AWS_ACCESS_KEY_ID: ((ci.aws_access_key_id))
-          AWS_SECRET_ACCESS_KEY: ((ci.aws_secret_access_key))
           AWS_PROFILE: ci
+          AWS_REGION: ((dataworks.aws_region))
         run:
           path: sh
           args:
           - -exc
           - |
-            cat <<EOF> .aws/credentials
-            [default]
-            aws_access_key_id = $AWS_ACCESS_KEY_ID
-            aws_secret_access_key = $AWS_SECRET_ACCESS_KEY
-            [${AWS_PROFILE}]
-            role_arn = arn:aws:iam::${AWS_ACC}:role/${AWS_PROFILE}
-            source_profile = default
-            EOF
             cat <<EOF> .aws/config
             [default]
-            region = eu-west-2
-            [profile ${AWS_PROFILE}]
-            region = eu-west-2
+            region = ${AWS_REGION}
+            role_arn = arn:aws:iam::${AWS_ACC}:role/ci
+            credential_source = Ec2InstanceMetadata
             s3 =
               max_concurrent_requests = 5
               signature_version = s3v4
               addressing_style = virtual
             EOF
+
+    set-cognito-client-options:
+      task: set-cognito-client-options
+      config:
+        platform: linux
+        image_resource:
+          type: docker-image
+          source:
+            repository: ((dataworks.docker_awscli_repository))
+            version: ((dataworks.docker_awscli_version))
+            tag: ((dataworks.docker_awscli_version))
+        inputs:
+          - name: .aws
+          - name: terraform-output
+        params:
+          ID_TOKEN_VALIDITY_TIME_HOURS: 12
+          ACCESS_TOKEN_VALIDITY_TIME_HOURS: 1
+          REFRESH_TOKEN_VALIDITY_TIME_DAYS: 1
+        run:
+          path: sh
+          args:
+            - -exc
+            - |
+              export AWS_CONFIG_FILE=$PWD/.aws/config
+
+              export USER_POOL_ID=$(jq -r .app_client.value.user_pool_id < terraform-output/outputs.json)
+              export APP_CLIENT_ID=$(jq -r .app_client.value.id < terraform-output/outputs.json)
+              aws cognito-idp update-user-pool-client --user-pool-id ${USER_POOL_ID} --client-id ${APP_CLIENT_ID} \
+                --id-token-validity ${ID_TOKEN_VALIDITY_TIME_HOURS} --access-token-validity ${ACCESS_TOKEN_VALIDITY_TIME_HOURS} --refresh-token-validity ${REFRESH_TOKEN_VALIDITY_TIME_DAYS} \
+                --token-validity-units AccessToken=hours,IdToken=hours,RefreshToken=days
