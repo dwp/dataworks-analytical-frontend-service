@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@aws-amplify/ui-react": "^0.2.23",
+    "@aws-amplify/ui-react": "^0.2.31",
     "@pact-foundation/pact-node": "^10.11.0",
     "aws-amplify": "^3.3.5",
     "aws-sdk": "^2.801.0",
