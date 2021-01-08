@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@aws-amplify/ui-react": "^0.2.31",
+    "@aws-amplify/ui-react": "^0.2.34",
     "@pact-foundation/pact-node": "^10.11.0",
-    "aws-amplify": "^3.3.11",
+    "aws-amplify": "^3.3.14",
     "aws-sdk": "^2.801.0",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
