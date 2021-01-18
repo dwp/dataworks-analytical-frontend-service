@@ -27,7 +27,7 @@ const ConnectPage = ({nav, desktopUrl, timeout, interval}) => {
 
     }
 
-    const timeOutAt = timeout ? Date.now() + timeout : Date.now() + 5 * 60 * 1000 // 5 minutes
+    const timeOutAt = timeout ? Date.now() + timeout : Date.now() + 7 * 60 * 1000 // 7 minutes
     const checkInterval = setInterval(checkIsEnvironmentReady, interval ? interval : 10 * 1000) // 10 seconds
     checkIsEnvironmentReady();
 
