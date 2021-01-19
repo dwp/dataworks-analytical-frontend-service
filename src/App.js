@@ -25,7 +25,7 @@ function App() {
 
     useEffect(() => {
         let updateUser = async (e) => {
-            if (e && e.payload.event === 'configured') return;
+            if (e && ['configured', 'tokenRefresh'].includes(e.payload.event)) return;
             try {
                 let user = await authContext.getCurrentUser();
                 setUser(user)
