@@ -14,9 +14,10 @@ npm install
 
 ### Setup the Application Environment
 
-The app needs some environment variables to run. A script is supplied for generating these based on the development environment.
+The app needs some environment variables to run. A script is supplied for generating these based on the development environment. Ensure you have a valid AWS token before proceeding.
 
 ```
+ export AWS_PROFILE="<your dataworks dev profile>"
 ./generate_local_env.sh
 ```
 

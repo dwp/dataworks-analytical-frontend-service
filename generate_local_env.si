@@ -8,12 +8,10 @@ set -euo pipefail
 cd "$(dirname "$0")"
 
 LATEST_AFE_QUERY='.taskDefinitionArns | sort | map(select(contains("analytical-frontend-svc")))[-1]'
-LATEST_TASK=$(aws --profile dataworks-development \
-               ecs list-task-definitions | \
+LATEST_TASK=$(aws ecs list-task-definitions | \
                jq -r "$LATEST_AFE_QUERY")
 
-ENV_JSON=$(aws --profile dataworks-development \
-           ecs describe-task-definition --task-definition "$LATEST_TASK" | \
+ENV_JSON=$(aws ecs describe-task-definition --task-definition "$LATEST_TASK" | \
            jq .taskDefinition.containerDefinitions[0].environment)
 
 echo "Cut and paste the variables generated below into your shell..."
