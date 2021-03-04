@@ -7,6 +7,11 @@ import 'react-mdl/extra/material.css';
 import 'react-mdl/extra/material.js';
 import {AuthProvider} from "./utils/Auth";
 
+// Putting this here ensures it only runs once and does not interfere with the
+// Cognito login process - which uses local storage.
+localStorage.clear();
+sessionStorage.clear();
+
 ReactDOM.hydrate(
     <BrowserRouter>
         <AuthProvider>
