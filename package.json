@@ -50,7 +50,7 @@
     "@babel/preset-env": "^7.9.5",
     "@babel/preset-react": "^7.9.4",
     "@dwp/node-logger": "^0.14.3",
-    "@pact-foundation/pact": "^9.11.0",
+    "@pact-foundation/pact": "9.14.2",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
     "@testing-library/react-hooks": "^3.3.0",
