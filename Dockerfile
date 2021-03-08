@@ -1,4 +1,4 @@
-FROM node:14.9-alpine
+FROM node:14.16-alpine
 ENV APP_NAME=dataworks-analytical-frontend-service
 ENV APP_HOME=/app
 ENV HTTPS=true

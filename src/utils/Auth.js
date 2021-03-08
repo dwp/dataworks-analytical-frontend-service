@@ -118,6 +118,10 @@ export class AuthHelper {
     }
 
     async signIn(username, password) {
+        // Ensure we have clear storage JUST before actually signing in
+        localStorage.clear();
+        sessionStorage.clear();
+
         return Auth.signIn(username, password);
     }
 

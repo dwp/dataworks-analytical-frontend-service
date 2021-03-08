@@ -47,6 +47,8 @@ function App() {
             console.error('Error disconnect from Orchestration Service');
         } finally {
             await authContext.signOut();
+            localStorage.clear();
+            sessionStorage.clear();
         }
     };
 
