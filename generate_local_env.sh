@@ -7,6 +7,8 @@ set -euo pipefail
 
 cd "$(dirname "$0")"
 
+echo "Using AWS profile $AWS_PROFILE..."
+
 LATEST_AFE_QUERY='.taskDefinitionArns | sort | map(select(contains("analytical-frontend-svc")))[-1]'
 LATEST_TASK=$(aws ecs list-task-definitions | \
                jq -r "$LATEST_AFE_QUERY")
