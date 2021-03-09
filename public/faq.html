@@ -59,6 +59,105 @@
                                 <dd>You need to select a location for your notebook - double click one of the folders on the left hand window to select it as your location.</dd>
                                 <dt><strong>Will I be able to keep my work in the git interface between sessions?</strong></dt>
                                 <dd>You need to commit and push your work to a repository for it to be persisted between sessions.</dd>
+                                <dt><strong>How do I change the font size of the DataWorks AWS platform in Microsoft Edge?</strong></dt>
+                                <dd>It is possible to resize text within individual applications e.g. Global Options for RStudio. To do this in RStudio, click on the ‘appearance tab’ and choose your required font size (as shown in the screenshot below).</dd>
+                                <dd><img src="/images/font_size.png" width="350" height="300" alt="Clipboard setting in Google Chrome"/></dd>
+                                <dd>To do this in JupyterHub, click on the settings menu and select ‘increase text editor font size’ (as shown in the screenshot below). These settings are also saved between sessions.</dd>
+                                <dd><img src="/images/font_size_2.png" width="350" height="300" alt="Clipboard setting in Google Chrome"/></dd>
+                                <dd>It is also possible to zoom in via Chrome’s zoom settings (as shown in the screenshot below).</dd>
+                                <dd><img src="/images/chrome_zoom.png" width="350" height="300" alt="Clipboard setting in Google Chrome"/></dd>
+                                <dd>Note: It is within future plans to introduce dynamic re-sizing of fonts.</dd>
+                                <dt><strong>How can I change the size of the AWS banner on Microsoft Edge?</strong></dt>
+                                <dd>To change the size of the AWS banner, you can adjust your zoom settings via Microsoft Edge (as shown in the screenshot below).</dd>
+                                <dd><img src="/images/banner_sizing.png" width="350" height="300" alt="Clipboard setting in Google Chrome"/></dd>
+                                <dt><strong>What do I do if I receive the error message ‘error encountered while provisioning the environment. Please try again later’? (as shown in the screenshot below)</strong></dt>
+                                <dd><img src="/images/error_while_provisioning.png" width="350" height="300" alt="Clipboard setting in Google Chrome"/></dd>
+                                <dd>When you receive this error, please refresh your webpage and click the ‘connect to the analytical environment’ button again.</dd>
+                                <dt><strong>What do I do if I receive an error message ‘The Analytical Environment is unavailable. Please try again later’?</strong></dt>
+                                <dd><img src="/images/unavailable.png" width="350" height="300" alt="Clipboard setting in Google Chrome"/></dd>
+                                <dd>When you receive this error, please refresh your webpage and click the ‘connect to the analytical environment’ button again.</dd>
+                                <dt><strong>Is the DataWorks AWS platform only accessed via remote desktop?</strong></dt>
+                                <dd>DataWorks is made available through a remote desktop solution. The environment is now configured to allow copy and paste into the environment and copy and paste out of the environment. The functionality to copy and paste out of the environment may be restricted in the long-term taking security considerations into account.</dd>
+                                <dd>The environment is based on a Linux operating system, and uses short-cut keys that you would find on a windows machine rather than a MacBook (e.g. CTRL + C for copy).</dd>
+                                <dt><strong>What do I do if I get the 404 error message ‘Error Starting Kernel’ when connecting to JupyterHub and clicking on the ‘Select Kernel’ dialogue box?</strong></dt>
+                                <dd><img src="/images/error_starting_kernel.png" width="350" height="300" alt="Clipboard setting in Google Chrome"/></dd>
+                                <dd>When you receive this error, please log out of the environment and sign back into the environment.</dd>
+                                <dt><strong>What do I do if my RProfile appears to be empty?</strong></dt>
+                                <dd>When your access to the AWS analytical environment is set up, your RProfile is copied into your home directory if you do not currently have an RProfile. If you receive the error message that your RProfile appears to be empty (as shown in the screenshot below), you need to replace your .RProfile with the one detailed in: /etc/skel/.RProfile.</dd>
+                                <dd><img src="/images/rprofile1.png" width="350" height="300" alt="Clipboard setting in Google Chrome"/></dd>
+                                <dd>Once you have replaced your .RProfile with this information, please ensure that you turn off the ‘saving of environmental variables’ via the Terminal (as shown in the screenshot below). Following this, please log out of the environment and sign back into the environment.</dd>
+                                <dd><img src="/images/rprofile2.png" width="350" height="300" alt="Clipboard setting in Google Chrome"/></dd>
+                                <dt><strong>What do I do if I get the error message that there is no get_spark() function in my environment?</strong></dt>
+                                <dd>If you receive this error message, try running: <span style="font-family:'Lucida Console', monospace">rm -f $HOME/.Rprofile</span> in the Rstudio terminal. Once complete, please log out of the environment and sign back into the environment.</dd>
+                                <dt><strong>What do I do if I get the 404 error message when launching JupyterHub and Jupyter Notebook?</strong></dt>
+                                <dd>This error message is caused by opening a Jupyter Notebook without first navigating to one of the S3 folder locations. To resolve this error message, navigate to one of the S3 folder locations (either the team folder or user folder). This will ensure that all work that is created is automatically saved into either your team folder or personal folder. Once you have navigated to one of the locations, please launch Jupyter Notebook via JupyterHub.</dd>
+                                <dt><strong>Is it temporary that copy and paste out of the environment is unavailable?</strong></dt>
+                                <dd>The environment is now configured to allow copy and paste in the environment and copy and paste out of the environment. This functionality may be restricted in the long-term taking security considerations into account.</dd>
+                                <dt><strong>How do I export data and save data as a CSV file?</strong></dt>
+                                <dd>The file transfer functionality has been enabled to allow current users to export data using the tools available on the analytical environment (e.g. Hue, RStudio and JupyterHub). Discussions are underway with the Data Security Team on how this functionality will be made available in the long-term and this will be reviewed during migration.</dd>
+                                <dd>Please read the ‘top tip guide’ via the DataWorks AWS SharePoint site here and Confluence page here.</dd>
+                                <dd><img src="/images/top_tip_guide.png" width="350" height="300" alt="Clipboard setting in Google Chrome"/></dd>
+                                <dt><strong>Will there be a timeframe that we can access the AWS environment, e.g. 8am-6pm?</strong></dt>
+                                <dd>The analytical environment can be accessed and used each day at any time outside of the maintenance window 00:00 – 04:00.</dd>
+                                <dt><strong>How do I delete files from the download folder in Hue once I have finished with them?</strong></dt>
+                                <dd>RStudio or the JupyterLab file explorer can be used to delete the files. Alternatively, you can run:</dd>
+                                <dd><span style="font-family:'Lucida Console', monospace">rm -rf ~/Downloads/*.csv</span> in the RStudio terminal to delete all csv files from the downloads folder. Please note that this exact statement needs to be ran without any additional spaces added. If an incorrect statement is ran, this can result in all csv files being deleted from your downloads folder.</dd>
+                                <dt><strong>What do I do if I get the Livy connection error message <span style="font-family:'Lucida Console', monospace">Error in livy_validate_master(master, config) : Failed to connect to Livy service at https://livy-proxy.dataworks.dwp.gov.uk. Livy operation is unauthorized. Try spark_connect with config = livy_config()</span>?</strong></dt>
+                                <dd>Please run the following command in RStudio to show the expiration date of your token:</dd>
+                                <dd>Please run the following command in RStudio to show the expiration date of your token:</dd>
+                                 <dd>
+                                    <p style="font-family:'Lucida Console', monospace">(strings <- strsplit(Sys.getenv("JWT_TOKEN"), ".", fixed = TRUE)[[1]])</p>
+                                    <p style="font-family:'Lucida Console', monospace">claimsJson <- rawToChar(base64enc::base64decode(strings[2], output=NULL))</p>
+                                    <p style="font-family:'Lucida Console', monospace">claims <- jsonlite::fromJSON(claimsJson)</p>
+                                    <p style="font-family:'Lucida Console', monospace">lubridate::as_datetime(as.numeric(claims["exp"]))</p>
+                                 </dd>
+                                <dd>If the date is in the past, you will need to restart your R session to get a new token. To do this, please visit the Go to File/Quit session to restart the session.</dd>
+                                <dt><strong>If my email address has recently changed to gov.uk, what happens to my login and access to the analytical environment?</strong></dt>
+                                <dd>If your email address has recently changed, you may receive the error message ‘Your user is not yet authorised to use this system, or is in the process of being set up’ (as shown in the screenshot below). If you receive this message, please post on either Mattermost or Slack and a member of the team will complete the set up for your new email address.</dd>
+                                <dd><img src="/images/not_yet_authorised.png" width="350" height="300" alt="Clipboard setting in Google Chrome"/></dd>
+                                <dt><strong>What can I do to speed up the time to load my user environment?</strong></dt>
+                                <dd>A top tip is to clear your browser data and remove cookies as this can speed up the time it takes for your session to load. If you are using a Surface Pro, clear your browser settings by visiting: edge://settings/clearBrowserData. If you are using a MacBook and Google Chrome, clear your browser settings in Google Chrome by following the steps below:</dd>
+                                <dd>
+                                    <ol>
+                                        <li>
+                                            Click ‘More’ at the top right of your browser
+                                        </li>
+                                        <li>
+                                            Click ‘More tools’ and Clear browsing data’.
+                                        </li>
+                                        <li>
+                                            Choose a time range, e.g. the previous hour or ‘all time’.
+                                        </li>
+                                        <li>
+                                            Select the types of information you would like to remove.
+                                        </li>
+                                        <li>
+                                            Click ‘Clear data’.
+                                        </li>
+                                    </ol>
+                                </dd>
+                                <dd>If you are using a MacBook and Safari, clear your browser settings by following the steps below:</dd>
+                                <dd>
+                                    <ol>
+                                        <li>
+                                            Visit the home screen, select Settings > Safari.
+                                        </li>
+                                        <li>
+                                            At the bottom of the setting screen, select ‘Clear cookies and data’ or ‘Clear cookies and Clear Cache’.
+                                        </li>
+                                        <li>
+                                            Select confirm when prompted to do so.
+                                        </li>
+                                    </ol>
+                                </dd>
+                                <dd>Please note that when you clear your browser data, it may result in any web applications being closed e.g. Mattermost or RStudio.</dd>
+                                <dt><strong>What do I do if I receive the error message: <span style="font-family:'Lucida Console', monospace">FAILED: ParseException line 1:50 mismatched input 's3' expecting StringLiteral near 'LOCATION' in database location specification</span> when writing to my personal database?</strong></dt>
+                                <dd>Please run the exact statement in Hue: <span style="font-family:'Lucida Console', monospace">CREATE DATABASE &lt;database_name&gt; LOCATION 's3://&lt;s3_bucket&gt;/home/&lt;full_username&gt;/databases/&lt;database_name&gt;’;</span>.</dd>
+                                <dt><strong>What happens if I can see more databases than expected when I login?</strong></dt>
+                                <dd>The RBAC (Role Based Access Control) model was deployed into the analytical environment on 19th February 2021. The aim of this is to ensure that you are able to see the same databases as you currently do on the Crown platform (note – only PDM data is currently available). A ticket has been raised following user feedback to investigate how to make the environment ‘less cluttered’ (DW- 5732) and the project team will provide an update on the progress of this ticket.</dd>
+                                <dt><strong>How do I recover tabs if I accidentally close them?</strong></dt>
+                                <dd>If you accidentally close a tab within the environment, you can reopen it by closing the browser which runs as part of the Remote Desktop solution. To do this, click on the 3 dots button (in the upper right side of the environment) and select ‘Exit’ (as shown in the screenshot below).</dd>
+                                <dd><img src="/images/reopen_tab.png" width="350" height="300" alt="Clipboard setting in Google Chrome"/></dd>
                                 <br />
                             </dl>
                         </div>
