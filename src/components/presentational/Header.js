@@ -21,7 +21,7 @@ const Header = ({user, handleSignOut}) => {
                     </div>
                 </div>
                 <div className="navBtns">
-                    <a id="faqNav" className="button" href="./faq">FAQ</a>
+                    <a id="faqNav" className="button" href="./faq" target="_blank">FAQ</a>
                     {user ? <SignOutButton handleSignOut={handleSignOut} /> : null}
                 </div>
             </div>

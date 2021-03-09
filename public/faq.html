@@ -10,6 +10,45 @@
             <title>DWP Analytics</title>
 <!--            <link href="/static/css/3.b6a8c48d.chunk.css" rel="stylesheet">-->
 <!--            <link href="/static/css/main.317a0afc.chunk.css" rel="stylesheet">-->
+            <script>
+                let showAnswer = (event) => {
+                    if (event.target.tagName === "IMG"){
+                    var expandButton = event.target.parentNode
+                  } else {
+                    var expandButton = event.target
+                  }
+                    if (expandButton.matches('.expand')) {
+                    dt = expandButton.parentNode
+                    var description = dt.nextElementSibling
+                    if (description.classList.contains('show')){
+                          description.classList.remove('show');
+                    } else {
+                         description.classList.add('show');
+                      }
+                    }
+                }
+            </script>
+            <style>
+                dt {
+                  margin: 1em;
+                }
+
+                .answer {
+                  display: none;
+                }
+                .expand {
+                    background: none;
+                    color: inherit;
+                    border: none;
+                    padding: 0;
+                    font: inherit;
+                    cursor: pointer;
+                    outline: inherit;
+                }
+                .show {
+                    display: block;
+                }
+            </style>
         </head>
         <body>
             <div id="root">
@@ -33,91 +72,139 @@
                 <main id="content" role="main" class="group" style="height:calc(100% - (0px + 0px));position:relative">
                     <div class="article-container group" style="height:100%">
                         <div style="height:100%;width:100%;margin:auto;display:flex;justify-content:center;align-items:center">
-                            <dl>
-                                <dt><strong>How do I change my password?</strong></dt>
-                                <dd>In order to change your password please follow the lost password procedure from the <a href="./">Home Page</a></dd>
-                                <dd>By following this procedure we are able to verify your identity through multiple methods prior to accepting a password change.</dd>
-                                <dt><strong>How do I return to the home page?</strong></dt>
-                                <dd>In order to return home please click the DataWorks Analytical Environment header</a></dd>
-                                <dt><strong>What are the password / passphrase requirements?</strong></dt>
-                                <dd>There are no requirements to include numerical values, special characters or capital letters within the password field.</dd>
-                                <dd>Instead, the entry must be at least 18 characters long. It may be easiest to include a memorable phrase.</dd>
-                                <dt><strong>What is multi factor authentication?</strong></dt>
-                                <dd>Multi Factor authentication adds an additional layer of security to your account.</dd>
-                                <dd>It ensures that to log onto DataWorks you need to rely on something you know (your passphrase) and something you have (the app linked to your phone).</dd>
-                                <dd>Please note: if you are logging onto DataWorks from the DWP network, then this does not apply as you will be authenticated by integration with DWP active directory. </dd>
-                                <dt><strong>What if I have lost my multi factor device?</strong></dt>
-                                <dd>If you have lost the device which is linked to your account for multi factor authentication, then you need to create a TechNow request for your account to be reset. </dd>
-                                <dd>Within the ticket please include that the system is DWP_DataWorks and that you are logging onto the AWS environment. </dd>
-                                <dt><strong>Why can't I paste into the analytical environment from my machine?</strong></dt>
-                                <dd>If you are unable to paste from your machine into your notebooks, you should check that your browser is set to <strong>Allow</strong> clipboard.</dd>
-                                <dd>Click on the padlock next to the URL and you should see the option to alter the settings:</dd>
-                                <dt><strong>Why can't I copy and paste within the environment?</strong></dt>
-                                <dd>If you're using a Mac, the environment runs on Linux so you will need to use 'control + c' and 'control + v' (not command) to copy and paste.</dd>
-                                <dd><img src="/images/clipboard-settings.png" width="350" height="300" alt="Clipboard setting in Google Chrome"/></dd>
-                                <dt><strong>I'm getting a 404 or 'path' error when trying to access notebooks</strong></dt>
-                                <dd>You need to select a location for your notebook - double click one of the folders on the left hand window to select it as your location.</dd>
-                                <dt><strong>Will I be able to keep my work in the git interface between sessions?</strong></dt>
-                                <dd>You need to commit and push your work to a repository for it to be persisted between sessions.</dd>
-                                <dt><strong>How do I change the font size of the DataWorks AWS platform in Microsoft Edge?</strong></dt>
-                                <dd>It is possible to resize text within individual applications e.g. Global Options for RStudio. To do this in RStudio, click on the ‘appearance tab’ and choose your required font size (as shown in the screenshot below).</dd>
-                                <dd><img src="/images/font_size.png" width="350" height="300" alt="Clipboard setting in Google Chrome"/></dd>
-                                <dd>To do this in JupyterHub, click on the settings menu and select ‘increase text editor font size’ (as shown in the screenshot below). These settings are also saved between sessions.</dd>
-                                <dd><img src="/images/font_size_2.png" width="350" height="300" alt="Clipboard setting in Google Chrome"/></dd>
-                                <dd>It is also possible to zoom in via Chrome’s zoom settings (as shown in the screenshot below).</dd>
-                                <dd><img src="/images/chrome_zoom.png" width="350" height="300" alt="Clipboard setting in Google Chrome"/></dd>
-                                <dd>Note: It is within future plans to introduce dynamic re-sizing of fonts.</dd>
-                                <dt><strong>How can I change the size of the AWS banner on Microsoft Edge?</strong></dt>
-                                <dd>To change the size of the AWS banner, you can adjust your zoom settings via Microsoft Edge (as shown in the screenshot below).</dd>
-                                <dd><img src="/images/banner_sizing.png" width="350" height="300" alt="Clipboard setting in Google Chrome"/></dd>
-                                <dt><strong>What do I do if I receive the error message ‘error encountered while provisioning the environment. Please try again later’? (as shown in the screenshot below)</strong></dt>
-                                <dd><img src="/images/error_while_provisioning.png" width="350" height="300" alt="Clipboard setting in Google Chrome"/></dd>
-                                <dd>When you receive this error, please refresh your webpage and click the ‘connect to the analytical environment’ button again.</dd>
-                                <dt><strong>What do I do if I receive an error message ‘The Analytical Environment is unavailable. Please try again later’?</strong></dt>
-                                <dd><img src="/images/unavailable.png" width="350" height="300" alt="Clipboard setting in Google Chrome"/></dd>
-                                <dd>When you receive this error, please refresh your webpage and click the ‘connect to the analytical environment’ button again.</dd>
-                                <dt><strong>Is the DataWorks AWS platform only accessed via remote desktop?</strong></dt>
-                                <dd>DataWorks is made available through a remote desktop solution. The environment is now configured to allow copy and paste into the environment and copy and paste out of the environment. The functionality to copy and paste out of the environment may be restricted in the long-term taking security considerations into account.</dd>
-                                <dd>The environment is based on a Linux operating system, and uses short-cut keys that you would find on a windows machine rather than a MacBook (e.g. CTRL + C for copy).</dd>
-                                <dt><strong>What do I do if I get the 404 error message ‘Error Starting Kernel’ when connecting to JupyterHub and clicking on the ‘Select Kernel’ dialogue box?</strong></dt>
-                                <dd><img src="/images/error_starting_kernel.png" width="350" height="300" alt="Clipboard setting in Google Chrome"/></dd>
-                                <dd>When you receive this error, please log out of the environment and sign back into the environment.</dd>
-                                <dt><strong>What do I do if my RProfile appears to be empty?</strong></dt>
-                                <dd>When your access to the AWS analytical environment is set up, your RProfile is copied into your home directory if you do not currently have an RProfile. If you receive the error message that your RProfile appears to be empty (as shown in the screenshot below), you need to replace your .RProfile with the one detailed in: /etc/skel/.RProfile.</dd>
-                                <dd><img src="/images/rprofile1.png" width="350" height="300" alt="Clipboard setting in Google Chrome"/></dd>
-                                <dd>Once you have replaced your .RProfile with this information, please ensure that you turn off the ‘saving of environmental variables’ via the Terminal (as shown in the screenshot below). Following this, please log out of the environment and sign back into the environment.</dd>
-                                <dd><img src="/images/rprofile2.png" width="350" height="300" alt="Clipboard setting in Google Chrome"/></dd>
-                                <dt><strong>What do I do if I get the error message that there is no get_spark() function in my environment?</strong></dt>
-                                <dd>If you receive this error message, try running: <span style="font-family:'Lucida Console', monospace">rm -f $HOME/.Rprofile</span> in the Rstudio terminal. Once complete, please log out of the environment and sign back into the environment.</dd>
-                                <dt><strong>What do I do if I get the 404 error message when launching JupyterHub and Jupyter Notebook?</strong></dt>
-                                <dd>This error message is caused by opening a Jupyter Notebook without first navigating to one of the S3 folder locations. To resolve this error message, navigate to one of the S3 folder locations (either the team folder or user folder). This will ensure that all work that is created is automatically saved into either your team folder or personal folder. Once you have navigated to one of the locations, please launch Jupyter Notebook via JupyterHub.</dd>
-                                <dt><strong>Is it temporary that copy and paste out of the environment is unavailable?</strong></dt>
-                                <dd>The environment is now configured to allow copy and paste in the environment and copy and paste out of the environment. This functionality may be restricted in the long-term taking security considerations into account.</dd>
-                                <dt><strong>How do I export data and save data as a CSV file?</strong></dt>
-                                <dd>The file transfer functionality has been enabled to allow current users to export data using the tools available on the analytical environment (e.g. Hue, RStudio and JupyterHub). Discussions are underway with the Data Security Team on how this functionality will be made available in the long-term and this will be reviewed during migration.</dd>
-                                <dd>Please read the ‘top tip guide’ via the DataWorks AWS SharePoint site here and Confluence page here.</dd>
-                                <dd><img src="/images/top_tip_guide.png" width="350" height="300" alt="Clipboard setting in Google Chrome"/></dd>
-                                <dt><strong>Will there be a timeframe that we can access the AWS environment, e.g. 8am-6pm?</strong></dt>
-                                <dd>The analytical environment can be accessed and used each day at any time outside of the maintenance window 00:00 – 04:00.</dd>
-                                <dt><strong>How do I delete files from the download folder in Hue once I have finished with them?</strong></dt>
-                                <dd>RStudio or the JupyterLab file explorer can be used to delete the files. Alternatively, you can run:</dd>
-                                <dd><span style="font-family:'Lucida Console', monospace">rm -rf ~/Downloads/*.csv</span> in the RStudio terminal to delete all csv files from the downloads folder. Please note that this exact statement needs to be ran without any additional spaces added. If an incorrect statement is ran, this can result in all csv files being deleted from your downloads folder.</dd>
-                                <dt><strong>What do I do if I get the Livy connection error message <span style="font-family:'Lucida Console', monospace">Error in livy_validate_master(master, config) : Failed to connect to Livy service at https://livy-proxy.dataworks.dwp.gov.uk. Livy operation is unauthorized. Try spark_connect with config = livy_config()</span>?</strong></dt>
-                                <dd>Please run the following command in RStudio to show the expiration date of your token:</dd>
-                                <dd>Please run the following command in RStudio to show the expiration date of your token:</dd>
-                                 <dd>
-                                    <p style="font-family:'Lucida Console', monospace">(strings <- strsplit(Sys.getenv("JWT_TOKEN"), ".", fixed = TRUE)[[1]])</p>
-                                    <p style="font-family:'Lucida Console', monospace">claimsJson <- rawToChar(base64enc::base64decode(strings[2], output=NULL))</p>
-                                    <p style="font-family:'Lucida Console', monospace">claims <- jsonlite::fromJSON(claimsJson)</p>
-                                    <p style="font-family:'Lucida Console', monospace">lubridate::as_datetime(as.numeric(claims["exp"]))</p>
-                                 </dd>
-                                <dd>If the date is in the past, you will need to restart your R session to get a new token. To do this, please visit the Go to File/Quit session to restart the session.</dd>
-                                <dt><strong>If my email address has recently changed to gov.uk, what happens to my login and access to the analytical environment?</strong></dt>
-                                <dd>If your email address has recently changed, you may receive the error message ‘Your user is not yet authorised to use this system, or is in the process of being set up’ (as shown in the screenshot below). If you receive this message, please post on either Mattermost or Slack and a member of the team will complete the set up for your new email address.</dd>
-                                <dd><img src="/images/not_yet_authorised.png" width="350" height="300" alt="Clipboard setting in Google Chrome"/></dd>
-                                <dt><strong>What can I do to speed up the time to load my user environment?</strong></dt>
-                                <dd>A top tip is to clear your browser data and remove cookies as this can speed up the time it takes for your session to load. If you are using a Surface Pro, clear your browser settings by visiting: edge://settings/clearBrowserData. If you are using a MacBook and Google Chrome, clear your browser settings in Google Chrome by following the steps below:</dd>
-                                <dd>
+                            <dl style="height:100%;width:80%;padding-top:2em;margin:auto;">
+                                <dt><strong>How do I change my password?</strong> <button class="expand" onClick="showAnswer(event)"><img src="/images/down_arrow.png" width="10" height="10" alt="Show Answer"></button></dt>
+                                <dd class="answer">
+                                    <p>In order to change your password please follow the lost password procedure from the <a href="./">Home Page</a></p>
+                                    <p>By following this procedure we are able to verify your identity through multiple methods prior to accepting a password change.</p>
+                                </dd>
+                                <dt><strong>How do I return to the home page?</strong> <button class="expand" onClick="showAnswer(event)"><img src="/images/down_arrow.png" width="10" height="10" alt="Show Answer"></button></dt>
+                                <dd class="answer">
+                                    <p>In order to return home please click the DataWorks Analytical Environment header</a></p>
+                                </dd>
+                                <dt><strong>What are the password / passphrase requirements?</strong> <button class="expand" onClick="showAnswer(event)"><img src="/images/down_arrow.png" width="10" height="10" alt="Show Answer"></button></dt>
+                                <dd class="answer">
+                                    <p>There are no requirements to include numerical values, special characters or capital letters within the password field.</p>
+                                    <p>Instead, the entry must be at least 18 characters long. It may be easiest to include a memorable phrase.</p>
+                                </dd>
+                                <dt><strong>What is multi factor authentication?</strong> <button class="expand" onClick="showAnswer(event)"><img src="/images/down_arrow.png" width="10" height="10" alt="Show Answer"></button></dt>
+                                <dd class="answer">
+                                    <p>Multi Factor authentication adds an additional layer of security to your account.</p>
+                                    <p>It ensures that to log onto DataWorks you need to rely on something you know (your passphrase) and something you have (the app linked to your phone).</p>
+                                    <p>Please note: if you are logging onto DataWorks from the DWP network, then this does not apply as you will be authenticated by integration with DWP active directory. </p>
+                                </dd>
+                                <dt><strong>What if I have lost my multi factor device?</strong> <button class="expand" onClick="showAnswer(event)"><img src="/images/down_arrow.png" width="10" height="10" alt="Show Answer"></button></dt>
+                                <dd class="answer">
+                                    <p>If you have lost the device which is linked to your account for multi factor authentication, then you need to create a TechNow request for your account to be reset. </p>
+                                    <p>Within the ticket please include that the system is DWP_DataWorks and that you are logging onto the AWS environment. </p>
+                                </dd>
+                                <dt><strong>Why can't I paste into the analytical environment from my machine?</strong> <button class="expand" onClick="showAnswer(event)"><img src="/images/down_arrow.png" width="10" height="10" alt="Show Answer"></button></dt>
+                                <dd class="answer">
+                                    <p>If you are unable to paste from your machine into your notebooks, you should check that your browser is set to <strong>Allow</strong> <button class="expand" onClick="showAnswer(event)"><img src="/images/down_arrow.png" width="10" height="10" alt="Show Answer"></button> clipboard.</p>
+                                    <p>Click on the padlock next to the URL and you should see the option to alter the settings:</p>
+                                </dd>
+                                <dt><strong>Why can't I copy and paste within the environment?</strong> <button class="expand" onClick="showAnswer(event)"><img src="/images/down_arrow.png" width="10" height="10" alt="Show Answer"></button></dt>
+                                <dd class="answer">
+                                    <p>If you're using a Mac, the environment runs on Linux so you will need to use 'control + c' and 'control + v' (not command) to copy and paste.</p>
+                                    <p><img src="/images/clipboard-settings.png" width="350" height="300" alt="Clipboard setting in Google Chrome"/></p>
+                                </dd>
+                                <dt><strong>I'm getting a 404 or 'path' error when trying to access notebooks</strong> <button class="expand" onClick="showAnswer(event)"><img src="/images/down_arrow.png" width="10" height="10" alt="Show Answer"></button></dt>
+                                <dd class="answer">
+                                    <p>You need to select a location for your notebook - double click one of the folders on the left hand window to select it as your location.</p>
+                                </dd>
+                                <dt><strong>Will I be able to keep my work in the git interface between sessions?</strong> <button class="expand" onClick="showAnswer(event)"><img src="/images/down_arrow.png" width="10" height="10" alt="Show Answer"></button></dt>
+                                <dd class="answer">
+                                    <p>You need to commit and push your work to a repository for it to be persisted between sessions.</p>
+                                </dd>
+                                <dt><strong>How do I change the font size of the DataWorks AWS platform in Microsoft Edge?</strong> <button class="expand" onClick="showAnswer(event)"><img src="/images/down_arrow.png" width="10" height="10" alt="Show Answer"></button></dt>
+                                <dd class="answer">
+                                    <p>It is possible to resize text within individual applications e.g. Global Options for RStudio. To do this in RStudio, click on the ‘appearance tab’ and choose your required font size (as shown in the screenshot below).</p>
+                                    <p><img src="/images/font_size.png" width="350" height="300" alt="Clipboard setting in Google Chrome"/></p>
+                                    <p>To do this in JupyterHub, click on the settings menu and select ‘increase text editor font size’ (as shown in the screenshot below). These settings are also saved between sessions.</p>
+                                    <p><img src="/images/font_size_2.png" width="350" height="300" alt="Clipboard setting in Google Chrome"/></p>
+                                    <p>It is also possible to zoom in via Chrome’s zoom settings (as shown in the screenshot below).</p>
+                                    <p><img src="/images/chrome_zoom.png" width="350" height="300" alt="Clipboard setting in Google Chrome"/></p>
+                                    <p>Note: It is within future plans to introduce dynamic re-sizing of fonts.</p>
+                                </dd>
+                                <dt><strong>How can I change the size of the AWS banner on Microsoft Edge?</strong> <button class="expand" onClick="showAnswer(event)"><img src="/images/down_arrow.png" width="10" height="10" alt="Show Answer"></button></dt>
+                                <dd class="answer">
+                                    <p>To change the size of the AWS banner, you can adjust your zoom settings via Microsoft Edge (as shown in the screenshot below).</p>
+                                    <p><img src="/images/banner_sizing.png" width="350" height="150" alt="Clipboard setting in Google Chrome"/></p>
+                                </dd>
+                                <dt><strong>What do I do if I receive the error message ‘error encountered while provisioning the environment. Please try again later’? (as shown in the screenshot below)</strong> <button class="expand" onClick="showAnswer(event)"><img src="/images/down_arrow.png" width="10" height="10" alt="Show Answer"></button></dt>
+                                <dd class="answer">
+                                    <p><img src="/images/error_while_provisioning.png" width="350" height="300" alt="Clipboard setting in Google Chrome"/></p>
+                                    <p>When you receive this error, please refresh your webpage and click the ‘connect to the analytical environment’ button again.</p>
+                                </dd>
+                                <dt><strong>What do I do if I receive an error message ‘The Analytical Environment is unavailable. Please try again later’?</strong> <button class="expand" onClick="showAnswer(event)"><img src="/images/down_arrow.png" width="10" height="10" alt="Show Answer"></button></dt>
+                                <dd class="answer">
+                                    <p><img src="/images/unavailable.png" width="350" height="300" alt="Clipboard setting in Google Chrome"/></p>
+                                    <p>When you receive this error, please refresh your webpage and click the ‘connect to the analytical environment’ button again.</p>
+                                </dd>
+                                <dt><strong>Is the DataWorks AWS platform only accessed via remote desktop?</strong> <button class="expand" onClick="showAnswer(event)"><img src="/images/down_arrow.png" width="10" height="10" alt="Show Answer"></button></dt>
+                                <dd class="answer">
+                                    <p>DataWorks is made available through a remote desktop solution. The environment is now configured to allow copy and paste into the environment and copy and paste out of the environment. The functionality to copy and paste out of the environment may be restricted in the long-term taking security considerations into account.</p>
+                                    <p>The environment is based on a Linux operating system, and uses short-cut keys that you would find on a windows machine rather than a MacBook (e.g. CTRL + C for copy).</p>
+                                </dd>
+                                <dt><strong>What do I do if I get the 404 error message ‘Error Starting Kernel’ when connecting to JupyterHub and clicking on the ‘Select Kernel’ dialogue box?</strong> <button class="expand" onClick="showAnswer(event)"><img src="/images/down_arrow.png" width="10" height="10" alt="Show Answer"></button></dt>
+                                <dd class="answer">
+                                    <p><img src="/images/error_starting_kernel.png" width="350" height="100" alt="Clipboard setting in Google Chrome"/></p>
+                                    <p>When you receive this error, please log out of the environment and sign back into the environment.</p>
+                                </dd>
+                                <dt><strong>What do I do if my RProfile appears to be empty?</strong> <button class="expand" onClick="showAnswer(event)"><img src="/images/down_arrow.png" width="10" height="10" alt="Show Answer"></button></dt>
+                                <dd class="answer">
+                                    <p>When your access to the AWS analytical environment is set up, your RProfile is copied into your home directory if you do not currently have an RProfile. If you receive the error message that your RProfile appears to be empty (as shown in the screenshot below), you need to replace your .RProfile with the one detailed in: /etc/skel/.RProfile.</p>
+                                    <p><img src="/images/rprofile1.png" width="350" height="80" alt="Clipboard setting in Google Chrome"/></p>
+                                    <p>Once you have replaced your .RProfile with this information, please ensure that you turn off the ‘saving of environmental variables’ via the Terminal (as shown in the screenshot below). Following this, please log out of the environment and sign back into the environment.</p>
+                                    <p><img src="/images/rprofile2.png" width="350" height="300" alt="Clipboard setting in Google Chrome"/></p>
+                                </dd>
+                                <dt><strong>What do I do if I get the error message that there is no get_spark() function in my environment?</strong> <button class="expand" onClick="showAnswer(event)"><img src="/images/down_arrow.png" width="10" height="10" alt="Show Answer"></button></dt>
+                                <dd class="answer">
+                                    <p>If you receive this error message, try running: <span style="font-family:'Lucida Console', monospace">rm -f $HOME/.Rprofile</span> in the Rstudio terminal. Once complete, please log out of the environment and sign back into the environment.</p>
+                                </dd>
+                                <dt><strong>What do I do if I get the 404 error message when launching JupyterHub and Jupyter Notebook?</strong> <button class="expand" onClick="showAnswer(event)"><img src="/images/down_arrow.png" width="10" height="10" alt="Show Answer"></button></dt>
+                                <dd class="answer">
+                                    <p>This error message is caused by opening a Jupyter Notebook without first navigating to one of the S3 folder locations. To resolve this error message, navigate to one of the S3 folder locations (either the team folder or user folder). This will ensure that all work that is created is automatically saved into either your team folder or personal folder. Once you have navigated to one of the locations, please launch Jupyter Notebook via JupyterHub.</p>
+                                </dd>
+                                <dt><strong>Is it temporary that copy and paste out of the environment is unavailable?</strong> <button class="expand" onClick="showAnswer(event)"><img src="/images/down_arrow.png" width="10" height="10" alt="Show Answer"></button></dt>
+                                <dd class="answer">
+                                    <p>The environment is now configured to allow copy and paste in the environment and copy and paste out of the environment. This functionality may be restricted in the long-term taking security considerations into account.</p>
+                                </dd>
+                                <dt><strong>How do I export data and save data as a CSV file?</strong> <button class="expand" onClick="showAnswer(event)"><img src="/images/down_arrow.png" width="10" height="10" alt="Show Answer"></button></dt>
+                                <dd class="answer">
+                                    <p>The file transfer functionality has been enabled to allow current users to export data using the tools available on the analytical environment (e.g. Hue, RStudio and JupyterHub). Discussions are underway with the Data Security Team on how this functionality will be made available in the long-term and this will be reviewed during migration.</p>
+                                    <p>Please read the ‘top tip guide’ via the DataWorks AWS SharePoint site here and Confluence page here.</p>
+                                    <p><img src="/images/top_tip_guide.png" width="350" height="300" alt="Clipboard setting in Google Chrome"/></p>
+                                </dd>
+                                <dt><strong>Will there be a timeframe that we can access the AWS environment, e.g. 8am-6pm?</strong> <button class="expand" onClick="showAnswer(event)"><img src="/images/down_arrow.png" width="10" height="10" alt="Show Answer"></button></dt>
+                                <dd class="answer">
+                                    <p>The analytical environment can be accessed and used each day at any time outside of the maintenance window 00:00 – 04:00.</p>
+                                </dd>
+                                <dt><strong>How do I delete files from the download folder in Hue once I have finished with them?</strong> <button class="expand" onClick="showAnswer(event)"><img src="/images/down_arrow.png" width="10" height="10" alt="Show Answer"></button></dt>
+                                <dd class="answer">
+                                    <p>RStudio or the JupyterLab file explorer can be used to delete the files. Alternatively, you can run:</p>
+                                    <p><span style="font-family:'Lucida Console', monospace">rm -rf ~/Downloads/*.csv</span> in the RStudio terminal to delete all csv files from the downloads folder. Please note that this exact statement needs to be ran without any additional spaces added. If an incorrect statement is ran, this can result in all csv files being deleted from your downloads folder.</p>
+                                </dd>
+                                <dt><strong>What do I do if I get the Livy connection error message <span style="font-family:'Lucida Console', monospace">Error in livy_validate_master(master, config) : Failed to connect to Livy service at https://livy-proxy.dataworks.dwp.gov.uk. Livy operation is unauthorized. Try spark_connect with config = livy_config()</span>?</strong> <button class="expand" onClick="showAnswer(event)"><img src="/images/down_arrow.png" width="10" height="10" alt="Show Answer"></button></dt>
+                                <dd class="answer">
+                                    <p>Please run the following command in RStudio to show the expiration date of your token:</p>
+                                    <p>Please run the following command in RStudio to show the expiration date of your token:</p>
+                                     <p>
+                                        <p style="font-family:'Lucida Console', monospace">(strings <- strsplit(Sys.getenv("JWT_TOKEN"), ".", fixed = TRUE)[[1]])</p>
+                                        <p style="font-family:'Lucida Console', monospace">claimsJson <- rawToChar(base64enc::base64decode(strings[2], output=NULL))</p>
+                                        <p style="font-family:'Lucida Console', monospace">claims <- jsonlite::fromJSON(claimsJson)</p>
+                                        <p style="font-family:'Lucida Console', monospace">lubridate::as_datetime(as.numeric(claims["exp"]))</p>
+                                     </p>
+                                    <p>If the date is in the past, you will need to restart your R session to get a new token. To do this, please visit the Go to File/Quit session to restart the session.</p>
+                                </dd>
+                                <dt><strong>If my email address has recently changed to gov.uk, what happens to my login and access to the analytical environment?</strong> <button class="expand" onClick="showAnswer(event)"><img src="/images/down_arrow.png" width="10" height="10" alt="Show Answer"></button></dt>
+                                <dd class="answer">
+                                    <p>If your email address has recently changed, you may receive the error message ‘Your user is not yet authorised to use this system, or is in the process of being set up’ (as shown in the screenshot below). If you receive this message, please post on either Mattermost or Slack and a member of the team will complete the set up for your new email address.</p>
+                                    <p><img src="/images/not_yet_authorised.png" width="400" height="200" alt="Clipboard setting in Google Chrome"/></p>
+                                </dd>
+                                <dt><strong>What can I do to speed up the time to load my user environment?</strong> <button class="expand" onClick="showAnswer(event)"><img src="/images/down_arrow.png" width="10" height="10" alt="Show Answer"></button></dt>
+                                <dd class="answer">
+                                    <p>A top tip is to clear your browser data and remove cookies as this can speed up the time it takes for your session to load. If you are using a Surface Pro, clear your browser settings by visiting: edge://settings/clearBrowserData. If you are using a MacBook and Google Chrome, clear your browser settings in Google Chrome by following the steps below:</p>
                                     <ol>
                                         <li>
                                             Click ‘More’ at the top right of your browser
@@ -135,9 +222,7 @@
                                             Click ‘Clear data’.
                                         </li>
                                     </ol>
-                                </dd>
-                                <dd>If you are using a MacBook and Safari, clear your browser settings by following the steps below:</dd>
-                                <dd>
+                                    <p>If you are using a MacBook and Safari, clear your browser settings by following the steps below:</p>
                                     <ol>
                                         <li>
                                             Visit the home screen, select Settings > Safari.
@@ -149,15 +234,21 @@
                                             Select confirm when prompted to do so.
                                         </li>
                                     </ol>
+                                    <p>Please note that when you clear your browser data, it may result in any web applications being closed e.g. Mattermost or RStudio.</p>
                                 </dd>
-                                <dd>Please note that when you clear your browser data, it may result in any web applications being closed e.g. Mattermost or RStudio.</dd>
-                                <dt><strong>What do I do if I receive the error message: <span style="font-family:'Lucida Console', monospace">FAILED: ParseException line 1:50 mismatched input 's3' expecting StringLiteral near 'LOCATION' in database location specification</span> when writing to my personal database?</strong></dt>
-                                <dd>Please run the exact statement in Hue: <span style="font-family:'Lucida Console', monospace">CREATE DATABASE &lt;database_name&gt; LOCATION 's3://&lt;s3_bucket&gt;/home/&lt;full_username&gt;/databases/&lt;database_name&gt;’;</span>.</dd>
-                                <dt><strong>What happens if I can see more databases than expected when I login?</strong></dt>
-                                <dd>The RBAC (Role Based Access Control) model was deployed into the analytical environment on 19th February 2021. The aim of this is to ensure that you are able to see the same databases as you currently do on the Crown platform (note – only PDM data is currently available). A ticket has been raised following user feedback to investigate how to make the environment ‘less cluttered’ (DW- 5732) and the project team will provide an update on the progress of this ticket.</dd>
-                                <dt><strong>How do I recover tabs if I accidentally close them?</strong></dt>
-                                <dd>If you accidentally close a tab within the environment, you can reopen it by closing the browser which runs as part of the Remote Desktop solution. To do this, click on the 3 dots button (in the upper right side of the environment) and select ‘Exit’ (as shown in the screenshot below).</dd>
-                                <dd><img src="/images/reopen_tab.png" width="350" height="300" alt="Clipboard setting in Google Chrome"/></dd>
+                                <dt><strong>What do I do if I receive the error message: <span style="font-family:'Lucida Console', monospace">FAILED: ParseException line 1:50 mismatched input 's3' expecting StringLiteral near 'LOCATION' in database location specification</span> when writing to my personal database?</strong> <button class="expand" onClick="showAnswer(event)"><img src="/images/down_arrow.png" width="10" height="10" alt="Show Answer"></button></dt>
+                                <dd class="answer">
+                                    <p>Please run the exact statement in Hue: <span style="font-family:'Lucida Console', monospace">CREATE DATABASE &lt;database_name&gt; LOCATION 's3://&lt;s3_bucket&gt;/home/&lt;full_username&gt;/databases/&lt;database_name&gt;’;</span>.</p>
+                                </dd>
+                                <dt><strong>What happens if I can see more databases than expected when I login?</strong> <button class="expand" onClick="showAnswer(event)"><img src="/images/down_arrow.png" width="10" height="10" alt="Show Answer"></button></dt>
+                                <dd class="answer">
+                                    <p>The RBAC (Role Based Access Control) model was deployed into the analytical environment on 19th February 2021. The aim of this is to ensure that you are able to see the same databases as you currently do on the Crown platform (note – only PDM data is currently available). A ticket has been raised following user feedback to investigate how to make the environment ‘less cluttered’ (DW- 5732) and the project team will provide an update on the progress of this ticket.</p>
+                                </dd>
+                                <dt><strong>How do I recover tabs if I accidentally close them?</strong> <button class="expand" onClick="showAnswer(event)"><img src="/images/down_arrow.png" width="10" height="10" alt="Show Answer"></button></dt>
+                                <dd class="answer">
+                                    <p>If you accidentally close a tab within the environment, you can reopen it by closing the browser which runs as part of the Remote Desktop solution. To do this, click on the 3 dots button (in the upper right side of the environment) and select ‘Exit’ (as shown in the screenshot below).</p>
+                                    <p><img src="/images/reopen_tab.png" width="350" height="300" alt="Clipboard setting in Google Chrome"/></p>
+                                </dd>
                                 <br />
                             </dl>
                         </div>
@@ -183,5 +274,6 @@
                     </div>
                 </footer>
             </div>
+
         </body>
 </html>
