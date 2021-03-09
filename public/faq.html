@@ -11,20 +11,16 @@
 <!--            <link href="/static/css/3.b6a8c48d.chunk.css" rel="stylesheet">-->
 <!--            <link href="/static/css/main.317a0afc.chunk.css" rel="stylesheet">-->
             <script>
-                let showAnswer = (event) => {
-                    if (event.target.tagName === "IMG"){
-                    var expandButton = event.target.parentNode
-                  } else {
-                    var expandButton = event.target
-                  }
+                const showAnswer = (event) => {
+                    const expandButton = event.target.tagName === "IMG" ? event.target.parentNode : event.target
                     if (expandButton.matches('.expand')) {
-                    dt = expandButton.parentNode
-                    var description = dt.nextElementSibling
-                    if (description.classList.contains('show')){
-                          description.classList.remove('show');
-                    } else {
-                         description.classList.add('show');
-                      }
+                        const dt = expandButton.parentNode
+                        const description = dt.nextElementSibling
+                        if (description.classList.contains('show')){
+                           description.classList.remove('show');
+                        } else {
+                           description.classList.add('show');
+                        }
                     }
                 }
             </script>
