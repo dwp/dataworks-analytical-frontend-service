@@ -27,7 +27,7 @@ Copy and paste the output export commands into your shell to set the environment
 
 Make your changes, then...
 
-* Start the dev server using ```npm start dev```
+* Start the dev server using ```npm run dev```
 * Wait for the application to build - this takes some time.
 * If ```index.html``` is missing, you didn't wait long enough.
 * CTRL-C to exit.
@@ -46,4 +46,4 @@ This image requires the following environment variables at runtime:
 | REACT_APP_ENV    | Where we are deploying | development |
 | ALLOW_HTTP (Optional)    | Allow the server to accept HTTP requests  | true |
 
-This list is not complete however the ```generate_local_env.sh``` script wil generate all required variables.
+This list is not complete however the ```generate_local_env.sh``` script will generate all required variables.
