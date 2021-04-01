@@ -3,11 +3,14 @@ const apiCall = async (authContext, endpoint, body) => {
     const jwtToken = user.signInUserSession.idToken.jwtToken;
     var req;
 
+    // if we have a body, this must be a POST
     if (body !== undefined) {
         const bodyWithToken = JSON.stringify(Object.assign({}, body, {id_token: jwtToken}));
         const headers =  {'Content-Type': 'application/json'}
+        // for a post, fetch requires we supply a Request object
         req = new Request(`/${endpoint}`, {method: 'POST', body: bodyWithToken, headers: headers});
     } else {
+        // fetch is happy with just a string for get
         req = `/${endpoint}?id_token=${jwtToken}`;
     }
     

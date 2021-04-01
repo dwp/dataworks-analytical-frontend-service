@@ -36,6 +36,7 @@ const MainPage = ({nav}) => {
     const connect = async () => {
         setIsLoading(true);
         try {
+            // in this context, screenHeight and screenWidth refer to the VNC screen being setup, which can be any dimensions and aspect ratio
             const desktopUrl = await apiCall(authContext, "connect", {screenHeight: window.innerHeight, screenWidth: window.innerWidth});
             nav.go(Pages.CONNECT, {desktopUrl});
         } catch (e) {
