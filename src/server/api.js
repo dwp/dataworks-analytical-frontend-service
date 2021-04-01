@@ -27,8 +27,6 @@ export async function apiCall(token, endpoint, body={}) {
         body: JSON.stringify(body)
     }
 
-    console.log(JSON.stringify(requestConfig));
-
     const response = await fetch(url, requestConfig);
 
     if (response.status === 200) {
