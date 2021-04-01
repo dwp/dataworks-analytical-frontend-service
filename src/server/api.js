@@ -8,9 +8,14 @@ function HttpApiException(message, status) {
     this.name = 'HttpApiException';
 }
 
-export async function apiCall(token, endpoint) {
+export async function apiCall(token, endpoint, body={}) {
     const url = (`${getConfig("REACT_APP_OS_URL")}/${endpoint}`);
 
+    // We only want the token in the header
+    if ('id_token' in body) {
+        delete body.id_token;
+    }
+    
     const requestConfig = {
         method: 'POST',
         headers: {
@@ -19,7 +24,7 @@ export async function apiCall(token, endpoint) {
         },
         redirect: 'follow',
         referrerPolicy: 'no-referrer',
-        body: JSON.stringify({})
+        body: JSON.stringify(body)
     }
 
     const response = await fetch(url, requestConfig);

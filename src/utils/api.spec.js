@@ -7,7 +7,7 @@ describe('Create environment function', () => {
     it('Successfully returns desktop url', async (done) => {
         mockFetch(200, 'envurl.local');
         const {AuthHelper, getCurrentUser} = mockAuthHelper();
-        const desktopUrl = await (apiCall(AuthHelper(), "connect"))
+        const desktopUrl = await (apiCall(AuthHelper(), "connect", {screenWidth: 1024, screenHeight: 768}))
 
         expect(global.fetch).toBeCalledTimes(1);
         expect(getCurrentUser).toBeCalledTimes(1);
