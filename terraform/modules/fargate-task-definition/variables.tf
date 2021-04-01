@@ -21,6 +21,12 @@ variable "container_image" {
   description = "(Required) The image used to start the container."
 }
 
+variable "container_image_tag" {
+  type        = string
+  description = "(Optional) The image tag used to start the container."
+  default     = "latest"
+}
+
 variable "container_name" {
   type        = string
   description = "(Required) The name of the container. Up to 255 characters ([a-z], [A-Z], [0-9], -, _ allowed)"

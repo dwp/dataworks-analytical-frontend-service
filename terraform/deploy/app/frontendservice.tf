@@ -6,6 +6,7 @@ module "ecs-fargate-task-definition" {
   name_prefix                  = var.name_prefix
   container_name               = var.container_name
   container_image              = local.container_image
+  container_image_tag          = var.container_image_tag[local.environment]
   container_port               = var.container_port
   container_cpu                = var.container_cpu
   container_memory             = var.container_memory

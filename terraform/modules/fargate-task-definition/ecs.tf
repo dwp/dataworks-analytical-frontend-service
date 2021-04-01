@@ -2,7 +2,7 @@ data "aws_ecr_image" "ecr_image" {
   provider = aws.management
 
   repository_name = var.repository_name
-  image_tag       = "latest"
+  image_tag       = var.container_image_tag
 }
 
 module "container_definition" {
