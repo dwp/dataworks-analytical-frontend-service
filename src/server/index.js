@@ -24,7 +24,7 @@ app.post('/connect', async (req, res) => {
     console.info('Connection request to Orchestration Service');
 
     try {
-        const url = await apiCall(req.query.id_token, 'connect', req.body);
+        const url = await apiCall(req.body.id_token, 'connect', req.body);
         return res.send(url)
     } catch(e){
         res.status(500).send('Error occurred, cannot connect to Orchestration Service');
