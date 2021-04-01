@@ -13,7 +13,7 @@ export async function apiCall(token, endpoint, body={}) {
 
     // We only want the token in the header
     if ('id_token' in body) {
-        delete(body['id_token'])
+        delete body.id_token;
     }
     
     const requestConfig = {
