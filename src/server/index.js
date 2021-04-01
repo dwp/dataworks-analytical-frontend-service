@@ -18,12 +18,13 @@ const port = process.env.PORT || 3006;
 const app = express();
 
 app.use(express.static('./build', {index: false}));
+app.use(express.json());
 
-app.get('/connect', async (req, res) => {
+app.post('/connect', async (req, res) => {
     console.info('Connection request to Orchestration Service');
 
     try {
-        const url = await apiCall(req.query.id_token, 'connect');
+        const url = await apiCall(req.query.id_token, 'connect', req.body);
         return res.send(url)
     } catch(e){
         res.status(500).send('Error occurred, cannot connect to Orchestration Service');
