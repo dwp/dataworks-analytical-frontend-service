@@ -5,16 +5,28 @@ ignore:
   SNYK-JS-NODENOTIFIER-1035794:
     - '*':
         reason: fixed in major update of package but this breaks the tests - ticket raised to fix
-        expires: 2021-02-07T00:00:00.000Z
+        expires: 2021-08-07T00:00:00.000Z
   SNYK-JS-AXIOS-1038255:
     - '*':
         reason: Ticket raised to investigate login issues caused by new aws-amplify versions (DW-5461)
-        expires: 2021-02-18T00:00:00.000Z
+        expires: 2021-08-18T00:00:00.000Z
   SNYK-JS-AWSSDKSHAREDINIFILELOADER-1049304:
     - '*':
         reason: Ticket raised to investigate login issues caused by new aws-amplify versions (DW-5461)
-        expires: 2021-02-18T00:00:00.000Z
+        expires: 2021-08-18T00:00:00.000Z
   SNYK-JS-CACHEBASE-1054631:
     - '*':
         reason: Ticket raised to investigate login issues caused by new aws-amplify versions (DW-5461)
-        expires: 2021-02-18T00:00:00.000Z
+        expires: 2021-08-18T00:00:00.000Z
+  SNYK-JS-IMMER-1019369:
+    - '*':
+        reason: Ticket raised to investigate login issues caused by new aws-amplify versions (DW-5461)
+        expires: 2021-08-18T00:00:00.000Z
+  SNYK-JS-SSRI-1085630:
+    - '*':
+        reason: fixed in major update of package but this breaks the tests - ticket raised to fix
+        expires: 2021-08-07T00:00:00.000Z
+  SNYK-JS-LODASHTEMPLATE-1088054:
+    - '*':
+        reason: fixed in major update of package but this breaks the tests - ticket raised to fix
+        expires: 2021-08-07T00:00:00.000Z
