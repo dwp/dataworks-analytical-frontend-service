@@ -85,7 +85,7 @@ meta:
       config:
         run:
           path: sh
-          dir: analytical-frontend-service/terraform/deploy/app
+          dir: dataworks-analytical-frontend-service/terraform/deploy/app
           args:
           - -exc
           - |
