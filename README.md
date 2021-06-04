@@ -1,5 +1,21 @@
 # Dataworks Analytical Frontend Service
-Frontend service providing user authentication and interface with orchestration service,
+Frontend service providing user authentication and interface with orchestration service.
+
+The Analytical Frontend Service is the first point of interaction between analytical users and the Analytical Environment. It has 2 main goals:
+
+1. User authentication
+2. Request provisioning and deprovisioning of tooling environments
+
+The app uses an Express.js server to handle Server Side Rendering (to inject runtime configuration) and to act as a proxy for requests to the Orchestration Service ([GitHub](https://github.com/dwp/orchestration-service/)).
+
+## Authentication
+AWS cognito is used as the authentication provider. The Cognito User Pool and app client must support the `CUSTOM_AUTH` and `USER_SRP_AUTH` flows. 
+
+AWS Amplify components are used for to handle the authentication flow. However, due to implementation oversights in the Amplify library, custom components have been created for some of the auth steps (see PRs #32 and #45 ).
+
+Direct login with username and password is not supported on Internet Explorer and older versions of Microsoft Edge (before the switch to Chromium) due to missing/incorrect implementation for the Web Components standard used by AWS Amplify auth components. 
+
+Additionally, the app uses an inelegant fix (documented in PR #70) to support ADFS login in Internet Explorer and non-chromium Edge. The fix hooks onto internal AWS Amplify Auth configuration that is not supported in later versions of the Amplify library. This will have to be addressed in the future before upgrading the library.
 
 ## Running Locally
 
