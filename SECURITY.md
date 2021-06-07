@@ -31,6 +31,6 @@ Project was removed from and re-added to Snyk to update manifests. Code Analysis
 
 In general, items that have been adjusted to LOW are likely to be ignored.
 
-N.B. Due to limitations in Snyk, some vulnerabilties cannot be ignored through the snyk file, so the console has been used to ignore all of these items. Due to console limitations on ignore time, they are all ignored permanently. Manual review will be required.
+N.B. Due to limitations in Snyk, some vulnerabilties cannot be ignored through the snyk file, so the console has been used to ignore all of these items. Due to console limitations on ignore time, they are all ignored permanently in Snyk. They are still tracked here, and manual review will be required at the date shown.
 
-N.B. We only consider medium and high vulnerabilties, lows are lef for now except in exceptional circumstances.t
+N.B. We only consider medium and high vulnerabilties, lows are left for now except in exceptional circumstances.
