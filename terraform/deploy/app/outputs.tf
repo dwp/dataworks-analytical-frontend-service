@@ -1,7 +1,5 @@
-output fe_service {
-  value = module.ecs-fargate-service
-}
-
 output "app_client" {
-  value = module.cognito-app.outputs.app_client
+  value = {
+      user_pool_id = module.cognito-app.outputs.app_client.user_pool_id
+  }
 }
