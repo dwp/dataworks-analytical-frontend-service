@@ -46,7 +46,10 @@ variable "container_cpu" {
 }
 
 variable "container_depends_on" {
-  type        = list(string)
+  type        = list(object({
+    containerName = string
+    condition     = string
+  }))
   description = "(Optional) The dependencies defined for container startup and shutdown. A container can contain multiple dependencies. When a dependency is defined for container startup, for container shutdown it is reversed"
   default     = null
 }
@@ -147,7 +150,7 @@ variable "mount_points" {
     sourceVolume  = string
   }))
   description = "(Optional) Container mount points. This is a list of maps, where each map should contain a `containerPath` and `sourceVolume`"
-  default     = null
+  default     = []
 }
 
 
