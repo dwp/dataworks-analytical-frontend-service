@@ -7,7 +7,7 @@ data "aws_ecr_image" "ecr_image" {
 
 module "container_definition" {
   source  = "cloudposse/ecs-container-definition/aws"
-  version = "0.21.0"
+  version = "0.49.0"
 
   container_name               = var.container_name
   container_image              = "${var.container_image}@${data.aws_ecr_image.ecr_image.image_digest}"
@@ -41,7 +41,7 @@ module "container_definition" {
 
 resource "aws_ecs_task_definition" "td" {
   family                = "${var.name_prefix}-td"
-  container_definitions = module.container_definition.json
+  container_definitions = module.container_definition.json_map_encoded_list
   execution_role_arn    = aws_iam_role.ecs_task_execution_role.arn
   task_role_arn         = aws_iam_role.ecs_task_role.arn
   network_mode          = "awsvpc"
