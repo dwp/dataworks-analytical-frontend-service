@@ -25,4 +25,11 @@ resource aws_cognito_user_pool_client app_client {
     "ALLOW_USER_SRP_AUTH",
     "ALLOW_USER_PASSWORD_AUTH",
   ]
+
+  lifecycle {
+      ignore_changes = [
+          access_token_validity,
+          token_validity_units
+      ]
+  }
 }
