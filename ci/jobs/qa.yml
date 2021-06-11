@@ -12,7 +12,6 @@ jobs:
   - .: (( inject meta.plan.terraform-output ))
     params:
       TF_WORKSPACE: qa
-  - .: (( inject meta.plan.set-cognito-client-options ))
   - .: (( inject meta.plan.terraform-apply ))
     config:
       run:
@@ -25,3 +24,4 @@ jobs:
         dir: 'dataworks-analytical-frontend-service/terraform/deploy/app'
       params:
         TF_WORKSPACE: qa
+  - .: (( inject meta.plan.set-cognito-client-options ))
