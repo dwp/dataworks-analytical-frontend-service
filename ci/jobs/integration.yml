@@ -14,6 +14,9 @@ jobs:
   - .: (( inject meta.plan.terraform-output ))
     params:
       TF_WORKSPACE: integration
+  # The following task should be done BEFORE the terraform apply
+  # as it will overwrite app client settings
+  - .: (( inject meta.plan.set-cognito-client-options ))
   - .: (( inject meta.plan.terraform-apply ))
     config:
       run:
@@ -26,5 +29,3 @@ jobs:
         dir: 'dataworks-analytical-frontend-service/terraform/deploy/app'
     params:
       TF_WORKSPACE: integration
-  - .: (( inject meta.plan.set-cognito-client-options ))
-
