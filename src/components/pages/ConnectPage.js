@@ -37,10 +37,10 @@ const ConnectPage = ({nav, url, redirect, timeout, interval}) => {
             flexDirection: 'column',
             alignItems: 'center',
         }}>
-            { redirect == false &&
+            { redirect === false &&
             <h3>Waiting for Analytical Environment to be provisioned</h3>
             }
-            { redirect == true &&
+            { redirect === true &&
             <h3>Trying to connect you to existing provisioned environment.</h3>
             }
             <ProgressBar indeterminate/>
