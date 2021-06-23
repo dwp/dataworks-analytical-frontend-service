@@ -19,6 +19,11 @@ const provider = new Pact({
 
 describe('Pact Test Suite', () => {
 
+  const EXPECTED_BODY = {
+    url: "userContainerUrl/validUser/",
+    redirect: false
+  }
+
   beforeAll((done) => { 
     provider.setup()
     .then( opts =>  {
@@ -40,8 +45,8 @@ describe('Pact Test Suite', () => {
         },
         willRespondWith: {
           status: 200,
-          headers: { 'Content-Type':'text/plain' },
-          body: like('userContainerUrl/validUser/')
+          headers: { 'Content-Type':'application/json' },
+          body: EXPECTED_BODY
         }
       }).then(() => {
          done();
@@ -51,8 +56,11 @@ describe('Pact Test Suite', () => {
     test('authorized token', (done) => {
       apiCall('token', 'connect')
         .then(
-           url => {
-             expect(url).toBe('userContainerUrl/validUser/');
+           ret => {
+             console.log("Return value is " + ret);
+             var retObj = JSON.parse(ret)
+             expect(retObj.url).toBe('userContainerUrl/validUser/');
+             expect(retObj.redirect).toBe(false)
            },
            error => {
              console.log("Unexpected error from test: " + JSON.stringify(error));
@@ -74,7 +82,7 @@ describe('Pact Test Suite', () => {
         },
         willRespondWith: {
           status: 401,
-          headers: { 'Content-Type':'text/plain' }
+          headers: { 'Content-Type':'application/json' }
         }
       }).then(() => done()).catch((err) => catchAndContinue(err, done));
     })

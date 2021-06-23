@@ -30,7 +30,7 @@ export async function apiCall(token, endpoint, body={}) {
     const response = await fetch(url, requestConfig);
 
     if (response.status === 200) {
-        return response.text();
+        return response.json();
     }
 
     let msg = await response.text();

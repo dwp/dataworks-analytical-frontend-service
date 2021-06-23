@@ -19,10 +19,10 @@ describe("<ConnectPage/>", () => {
     it("Navigates to DESKTOP page when 200 received", async (done) => {
         mockFetch(200);
         const desktopUrl = "http://test.url?token=token"
-        const wrapper = mount(<ConnectPage desktopUrl={desktopUrl} nav={mockNav}/>);
+        const wrapper = mount(<ConnectPage url={desktopUrl} nav={mockNav}/>);
 
         process.nextTick(() => {
-            expect(mockNav.go).toBeCalledWith(Pages.DESKTOP, {desktopUrl});
+            expect(mockNav.go).toBeCalledWith(Pages.DESKTOP, { url: desktopUrl });
             done();
         })
     });
@@ -32,7 +32,7 @@ describe("<ConnectPage/>", () => {
         const desktopUrl = "http://test.url?token=token"
         const wrapper = mount(
             <MockAuthProvider>
-                <ConnectPage desktopUrl={desktopUrl} nav={mockNav} timeout={-1000 * 10000} interval={0}/>
+                <ConnectPage url={desktopUrl} nav={mockNav} timeout={-1000 * 10000} interval={0}/>
             </MockAuthProvider>);
 
         process.nextTick(() => {

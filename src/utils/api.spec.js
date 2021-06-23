@@ -5,18 +5,18 @@ describe('Create environment function', () => {
     beforeEach(() => jest.clearAllMocks())
 
     it('Successfully returns desktop url', async (done) => {
-        mockFetch(200, 'envurl.local');
+        mockFetch(200, '{ "url": "envurl.local" }');
         const {AuthHelper, getCurrentUser} = mockAuthHelper();
         const desktopUrl = await (apiCall(AuthHelper(), "connect", {screenWidth: 1024, screenHeight: 768}))
 
         expect(global.fetch).toBeCalledTimes(1);
         expect(getCurrentUser).toBeCalledTimes(1);
-        expect(desktopUrl).toEqual('https://envurl.local?token=token')
+        expect(desktopUrl.url).toEqual('https://envurl.local?token=token')
         done();
     });
 
     it('Throws on backend error', async (done) => {
-        mockFetch(500, {message: 'Error encountered', error: "Internal Server Error"});
+        mockFetch(500, '{ "message": "Error encountered", "error": "Internal Server Error"}');
         const {AuthHelper} = mockAuthHelper();
 
         await expect(apiCall(AuthHelper(), "connect")).rejects.toEqual(new Error('500 Internal Server Error: Error encountered'));
@@ -45,7 +45,7 @@ describe('Destroy environment function', () => {
     });
 
     it('Throws on backend error', async (done) => {
-        mockFetch(500, {message: 'Error encountered', error: "Internal Server Error"});
+        mockFetch(500, '{"message": "Error encountered", "error": "Internal Server Error"}');
         const {AuthHelper} = mockAuthHelper();
 
         await expect(apiCall(AuthHelper(), "disconnect")).rejects.toEqual(new Error('500 Internal Server Error: Error encountered'));

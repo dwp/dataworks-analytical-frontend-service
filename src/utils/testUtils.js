@@ -3,7 +3,7 @@ import {AuthContext} from "./Auth";
 export const mockFetch = (statusCode, body) => {
     const mockFetchPromise = Promise.resolve({
         status: statusCode,
-        json: () => Promise.resolve(body),
+        json: () => Promise.resolve(JSON.parse(body)),
         text: () => Promise.resolve(body)
     });
     jest.spyOn(global, 'fetch').mockImplementation(() => mockFetchPromise);

@@ -63,3 +63,13 @@ This image requires the following environment variables at runtime:
 | ALLOW_HTTP (Optional)    | Allow the server to accept HTTP requests  | true |
 
 This list is not complete however the ```generate_local_env.sh``` script will generate all required variables.
+
+### API Calls
+Since the express applications runs as a Single Page application within the users browser environments, the API calls it performs go
+to the node.js Express backend, which in turn use node.js Rest calls to the Orchestration service.
+
+So an API call in a React page calls into src/utils/api.js (which is located in the users browser javascript environment)
+This in turn builds a request to call the Express node.js backend api, whose endpoints are located in src/server/.
+The endpoints are defined in src/server/index.js and these in turn use the src/server/api.js layer to call into the Orchestration Service.
+
+So we have React Page -> utils/api.js -> server/index.js -> server/api.js -> Internal service (Orchestration Service)
