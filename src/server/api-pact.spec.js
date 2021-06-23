@@ -58,9 +58,8 @@ describe('Pact Test Suite', () => {
         .then(
            ret => {
              console.log("Return value is " + ret);
-             var retObj = JSON.parse(ret)
-             expect(retObj.url).toBe('userContainerUrl/validUser/');
-             expect(retObj.redirect).toBe(false)
+             expect(ret.url).toBe('userContainerUrl/validUser/');
+             expect(ret.redirect).toBe(false)
            },
            error => {
              console.log("Unexpected error from test: " + JSON.stringify(error));
