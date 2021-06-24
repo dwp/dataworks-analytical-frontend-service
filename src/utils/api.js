@@ -19,7 +19,9 @@ const apiCall = async (authContext, endpoint, body) => {
     if (res.status === 200){
         switch (endpoint) {
             case "connect":
-                return `https://${await res.text()}?token=${jwtToken}`;
+                var obj = await res.json();
+                obj.url = `https://${obj.url}?token=${jwtToken}`;
+                return obj;
             case "verify-user":
                 return true;
             default:

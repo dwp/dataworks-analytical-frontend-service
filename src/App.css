@@ -66,6 +66,10 @@ h1{
     text-align: center;
 }
 
+amplify-authenticator {
+    z-index: 1;
+}
+
 #logo.content {
     display: inline-flex;
 }

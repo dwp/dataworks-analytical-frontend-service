@@ -37,8 +37,8 @@ const MainPage = ({nav}) => {
         setIsLoading(true);
         try {
             // in this context, screenHeight and screenWidth refer to the VNC screen being setup, which can be any dimensions and aspect ratio
-            const desktopUrl = await apiCall(authContext, "connect", {screenHeight: window.innerHeight, screenWidth: window.innerWidth});
-            nav.go(Pages.CONNECT, {desktopUrl});
+            const connInfo = await apiCall(authContext, "connect", {screenHeight: window.innerHeight, screenWidth: window.innerWidth});
+            nav.go(Pages.CONNECT, {...connInfo});
         } catch (e) {
             authContext.dispatchAuthToast('Error encountered while provisioning environment. Please try again later.');
             console.error(`Error connecting to OS: ${e}`);
