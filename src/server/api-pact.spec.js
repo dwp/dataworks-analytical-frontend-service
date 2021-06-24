@@ -81,7 +81,7 @@ describe('Pact Test Suite', () => {
         },
         willRespondWith: {
           status: 401,
-          headers: { 'Content-Type':'application/json' }
+          headers: { 'Content-Type':'text/plain' }
         }
       }).then(() => done()).catch((err) => catchAndContinue(err, done));
     })
