@@ -22,7 +22,7 @@ describe("<ConnectPage/>", () => {
         const wrapper = mount(<ConnectPage url={desktopUrl} nav={mockNav}/>);
 
         process.nextTick(() => {
-            expect(mockNav.go).toBeCalledWith(Pages.DESKTOP, { url: desktopUrl });
+            expect(mockNav.go).toBeCalledWith(Pages.DESKTOP, { desktopUrl: desktopUrl });
             done();
         })
     });

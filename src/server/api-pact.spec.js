@@ -57,7 +57,7 @@ describe('Pact Test Suite', () => {
       apiCall('token', 'connect')
         .then(
            ret => {
-             console.log("Return value is " + ret);
+             console.log("Return value is " + JSON.stringify(ret));
              expect(ret.url).toBe('userContainerUrl/validUser/');
              expect(ret.redirect).toBe(false)
            },
@@ -90,6 +90,57 @@ describe('Pact Test Suite', () => {
        apiCall('badtoken', 'connect')
         .catch( error => {
           expect(error.status).toBe(401);
+        })
+        .then( () => { done()} );
+    })
+  })
+
+  describe('verify good user', () => {
+    beforeEach((done) => {
+      provider.addInteraction({
+        state: 'I am waiting to verify a user who is correctly setup',
+        uponReceiving: 'Verify request for good user',
+        withRequest: {
+          method: 'GET',
+          path: '/verify-user',
+          headers: { Authorisation: 'anytoken' },
+        },
+        willRespondWith: {
+          status: 200
+        }
+      }).then(() => done()).catch((err) => catchAndContinue(err, done));
+    })
+
+    test('success captured', (done) => {
+       apiCall('anytoken', 'verify-user')
+        .catch( error => {
+          console.log("Unexpected error from test: " + JSON.stringify(error));
+        })
+        .then( () => { done()} );
+    })
+  })
+ 
+  describe('verify bad user', () => {
+    beforeEach((done) => {
+      provider.addInteraction({
+        state: 'I am waiting to verify a user who is incorrectly setup',
+        uponReceiving: 'Verify request for bad user',
+        withRequest: {
+          method: 'GET',
+          path: '/verify-user',
+          headers: { Authorisation: 'anytoken2' },
+        },
+        willRespondWith: {
+          status: 204
+        }
+      }).then(() => done()).catch((err) => catchAndContinue(err, done));
+    })
+
+    test('failure captured', (done) => {
+       apiCall('anytoken2', 'verify-user')
+        .catch( error => {
+          console.log("Received error " + JSON.stringify(error));
+          expect(error.status).toBe(204);
         })
         .then( () => { done()} );
     })
