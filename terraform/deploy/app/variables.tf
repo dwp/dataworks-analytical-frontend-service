@@ -282,10 +282,10 @@ variable "lb_health_check_path" {
 }
 
 variable "container_image_tag" {
-  description = "(Optional) Override the orchestration engine docker image tag version in each environment"
+  description = "(Optional) Override the front-end service docker image tag version in each environment"
   type        = map
   default = {
-    development = "0.0.81"
+    development = "0.0.98"
     qa          = "0.0.81"
     integration = "0.0.81"
     preprod     = "0.0.81"
