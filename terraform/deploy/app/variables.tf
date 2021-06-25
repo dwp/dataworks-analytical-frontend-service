@@ -54,7 +54,7 @@ variable "container_cpu" {
   default     = 512 # .5 vCPU
 }
 variable "container_depends_on" {
-  type        = list(object({
+  type = list(object({
     containerName = string
     condition     = string
   }))
@@ -285,7 +285,7 @@ variable "container_image_tag" {
   description = "(Optional) Override the front-end service docker image tag version in each environment"
   type        = map
   default = {
-    development = "0.0.98"
+    development = "0.0.100"
     qa          = "0.0.81"
     integration = "0.0.81"
     preprod     = "0.0.81"

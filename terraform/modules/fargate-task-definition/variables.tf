@@ -46,7 +46,7 @@ variable "container_cpu" {
 }
 
 variable "container_depends_on" {
-  type        = list(object({
+  type = list(object({
     containerName = string
     condition     = string
   }))
