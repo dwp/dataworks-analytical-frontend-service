@@ -27,10 +27,10 @@ resource aws_cognito_user_pool_client app_client {
   ]
 
   lifecycle {
-      ignore_changes = [
-          access_token_validity,
-          token_validity_units,
-          id_token_validity
-      ]
+    ignore_changes = [
+      access_token_validity,
+      token_validity_units,
+      id_token_validity
+    ]
   }
 }
