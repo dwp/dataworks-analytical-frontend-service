@@ -8,6 +8,18 @@ function HttpApiException(message, status) {
     this.name = 'HttpApiException';
 }
 
+const method_lookup = { 
+    'connect'     : 'POST',
+    'disconnect'  : 'POST',
+    'verify-user' : 'GET'
+}
+
+const content_lookup = {
+    'connect'     : 'json',
+    'disconnect'  : 'text',
+    'verify-user' : 'text'
+}
+
 export async function apiCall(token, endpoint, body={}) {
     const url = (`${getConfig("REACT_APP_OS_URL")}/${endpoint}`);
 
@@ -16,21 +28,33 @@ export async function apiCall(token, endpoint, body={}) {
         delete body.id_token;
     }
     
-    const requestConfig = {
-        method: 'POST',
+    var methodType = method_lookup[endpoint] || 'GET';
+
+    if (body && Object.keys(body).length > 0) {
+        var methodType = 'POST'
+    }
+
+    var requestConfig = {
+        method: methodType,
         headers: {
             'Content-Type': 'application/json',
             'Authorisation': token
         },
         redirect: 'follow',
         referrerPolicy: 'no-referrer',
-        body: JSON.stringify(body)
+    }
+    if (methodType === 'POST') {
+        requestConfig.body = JSON.stringify(body);
     }
 
     const response = await fetch(url, requestConfig);
 
     if (response.status === 200) {
-        return response.json();
+        if (content_lookup[endpoint] === 'json') {
+            return response.json();
+        } else {
+            return response.text();
+        }
     }
 
     let msg = await response.text();

@@ -10,7 +10,8 @@ const ConnectPage = ({nav, url, redirect, timeout, interval}) => {
             const status = await fetch(url).then(res => res.status);
             if (status === 200) {
                 clearInterval(checkInterval);
-                return nav.go(Pages.DESKTOP, {url})
+                console.log("Connecting to desktop");
+                return nav.go(Pages.DESKTOP, {desktopUrl:url})
             }
 
             if (Date.now() > timeOutAt) {
