@@ -7,6 +7,7 @@ import os
 import sys
 import yaml
 import json
+import glob
 
 
 def main():
@@ -35,14 +36,14 @@ def main():
     config_data['terraform'] = json.loads(
         response['SecretBinary'])["terraform"]
 
-    with open('terraform/deploy/app/terraform.tf.j2') as in_template:
-        template = jinja2.Template(in_template.read())
-    with open('terraform/deploy/app/terraform.tf', 'w+') as terraform_tf:
-        terraform_tf.write(template.render(config_data))
-    with open('terraform/deploy/app/terraform.tfvars.j2') as in_template:
-        template = jinja2.Template(in_template.read())
-    with open('terraform/deploy/app/terraform.tfvars', 'w+') as terraform_tfvars:
-        terraform_tfvars.write(template.render(config_data))
+    j2_files = glob.glob('**/*.j2', recursive=True)
+
+    for template_path in j2_files:
+        out_path = template_path.replace('.j2', '')
+        with open(template_path) as in_template:
+            template = jinja2.Template(in_template.read())
+        with open(out_path, 'w+') as out_file:
+            out_file.write(template.render(config_data))
 
     print("Terraform config successfully created")
 

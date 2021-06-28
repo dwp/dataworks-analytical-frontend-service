@@ -2,7 +2,7 @@ terraform {
   required_version = "{{terraform.terraform_13_version}}"
 
   backend "s3" {
-    bucket         = "{{terraform.terraform.terraform.state_file_region}}"
+    bucket         = "{{terraform.state_file_region}}"
     key            = "terraform/dataworks/analytical-frontend-service.tfstate"
     region         = "{{terraform.state_file_region}}"
     encrypt        = true
@@ -16,7 +16,7 @@ data "terraform_remote_state" "aws_analytical_env_cognito" {
   workspace = local.management_workspace[local.management_account[local.environment]]
 
   config = {
-    bucket         = "{{terraform.terraform.terraform.state_file_region}}"
+    bucket         = "{{terraform.state_file_region}}"
     key            = "terraform/dataworks/aws-analytical-environment_cognito.tfstate"
     region         = "{{terraform.state_file_region}}"
     encrypt        = true
@@ -30,7 +30,7 @@ data "terraform_remote_state" "aws_analytical_env_infra" {
   workspace = terraform.workspace
 
   config = {
-    bucket         = "{{terraform.terraform.terraform.state_file_region}}"
+    bucket         = "{{terraform.state_file_region}}"
     key            = "terraform/dataworks/aws-analytical-environment_infra.tfstate"
     region         = "{{terraform.state_file_region}}"
     encrypt        = true
@@ -44,7 +44,7 @@ data "terraform_remote_state" "orchestration-service" {
   workspace = terraform.workspace
 
   config = {
-    bucket         = "{{terraform.terraform.terraform.state_file_region}}"
+    bucket         = "{{terraform.state_file_region}}"
     key            = "terraform/dataworks/orchestration-service.tfstate"
     region         = "{{terraform.state_file_region}}"
     encrypt        = true
