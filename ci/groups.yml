@@ -6,6 +6,11 @@ groups:
   - integration
   - preprod
   - production
+
 - name: pull-request
   jobs:
   - dataworks-analytical-frontend-service-pr
+
+- name: update-pipeline
+  jobs:
+  - update-pipeline
