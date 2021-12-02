@@ -14,6 +14,14 @@ const dwpNodeLogger = require('@dwp/node-logger');
 
 const logger = dwpNodeLogger('web');
 
+const prometheus = require('express-prom-bundle')
+const metricsMiddleware = prometheus({
+    includeMethod: true,
+    includePath: true,
+    promClient: { collectDefaultMetrics: {} }
+})
+
+
 const port = process.env.PORT || 3006;
 const app = express();
 
@@ -74,6 +82,8 @@ app.get('/faq', (req, res) => {
         return res.send(data);
     });
 });
+
+app.use(metricsMiddleware);
 
 app.get('/', (req, res) => {
     const indexFile = path.resolve('./build/index.html');
