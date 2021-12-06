@@ -14,12 +14,11 @@ const dwpNodeLogger = require('@dwp/node-logger');
 
 const logger = dwpNodeLogger('web');
 
-const prometheus = require('express-prom-bundle')
-const metricsMiddleware = prometheus({
-    includeMethod: true,
-    includePath: true,
-    promClient: { collectDefaultMetrics: {} }
-})
+const prometheus = require('prom-client')
+const collectDefaultMetrics = prometheus.collectDefaultMetrics;
+const Registry = prometheus.Registry;
+const register = new Registry();
+collectDefaultMetrics({ register });
 
 
 const port = process.env.PORT || 3006;
@@ -27,6 +26,16 @@ const app = express();
 
 app.use(express.static('./build', {index: false}));
 app.use(express.json());
+
+app.get('/metrics', (req, res) => {
+    try {
+        res.setHeader('Content-Type', register.contentType)
+        res.end(register.metrics())
+    } catch(e){
+        res.status(500).send('Error occurred, cannot return metrics.')
+        logger.error(e.message)
+    }
+})
 
 app.post('/connect', async (req, res) => {
     console.info('Connection request to Orchestration Service');
@@ -82,8 +91,6 @@ app.get('/faq', (req, res) => {
         return res.send(data);
     });
 });
-
-app.use(metricsMiddleware);
 
 app.get('/', (req, res) => {
     const indexFile = path.resolve('./build/index.html');
