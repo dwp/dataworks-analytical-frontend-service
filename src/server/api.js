@@ -1,5 +1,5 @@
 import {getConfig} from "../utils/appConfig";
-import {incHttpGauge} from "./metrics"
+import {httpGauge} from "./metrics"
 
 import fetch from "node-fetch";
 
@@ -50,7 +50,7 @@ export async function apiCall(token, endpoint, body={}) {
 
     const response = await fetch(url, requestConfig);
 
-    incHttpGauge(methodType, response.status)
+    httpGauge.labels('orchestration-service', methodType, response.status).inc()
 
     if (response.status === 200) {
         if (content_lookup[endpoint] === 'json') {
