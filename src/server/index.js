@@ -27,7 +27,7 @@ app.get('/metrics', (req, res) => {
         res.setHeader('Content-Type', register.contentType)
         res.end(register.metrics())
     } catch(e){
-        res.status(500).send('Error occurred, cannot return metrics.')
+        res.status(500).send('Error occurred, cannot return metrics')
         logger.error(e.message)
     }
 })
