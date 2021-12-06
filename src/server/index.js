@@ -8,18 +8,13 @@ import "regenerator-runtime/runtime.js";
 import templateApp from './template'
 import {getTlsConfig} from "./serverConfig";
 import {apiCall} from './api.js';
+import {register} from './metrics'
+
 
 // include the library
 const dwpNodeLogger = require('@dwp/node-logger');
 
 const logger = dwpNodeLogger('web');
-
-const prometheus = require('prom-client')
-const collectDefaultMetrics = prometheus.collectDefaultMetrics;
-const Registry = prometheus.Registry;
-const register = new Registry();
-collectDefaultMetrics({ register });
-
 
 const port = process.env.PORT || 3006;
 const app = express();
