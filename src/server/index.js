@@ -8,6 +8,8 @@ import "regenerator-runtime/runtime.js";
 import templateApp from './template'
 import {getTlsConfig} from "./serverConfig";
 import {apiCall} from './api.js';
+import {register} from './metrics'
+
 
 // include the library
 const dwpNodeLogger = require('@dwp/node-logger');
@@ -19,6 +21,16 @@ const app = express();
 
 app.use(express.static('./build', {index: false}));
 app.use(express.json());
+
+app.get('/metrics', (req, res) => {
+    try {
+        res.setHeader('Content-Type', register.contentType)
+        res.end(register.metrics())
+    } catch(e){
+        res.status(500).send('Error occurred, cannot return metrics')
+        logger.error(e.message)
+    }
+})
 
 app.post('/connect', async (req, res) => {
     console.info('Connection request to Orchestration Service');
