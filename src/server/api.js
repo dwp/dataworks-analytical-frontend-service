@@ -2,6 +2,7 @@ import {getConfig} from "../utils/appConfig";
 import {httpRequestsTotalGauge} from "./metrics"
 
 import fetch from "node-fetch";
+import {AbortController} from 'abort-controller'
 
 function HttpApiException(message, status) {
     this.message = message;
@@ -21,7 +22,13 @@ const content_lookup = {
     'verify-user' : 'text'
 }
 
-export async function apiCall(token, endpoint, body={}) {
+export const Timeout = (time) => {
+    let controller = new AbortController();
+    setTimeout(() => controller.abort(), time * 1000);
+    return controller;
+};
+
+export async function apiCall(token, endpoint, body={}, timeout=300) {
     const url = (`${getConfig("REACT_APP_OS_URL")}/${endpoint}`);
 
     // We only want the token in the header
@@ -43,12 +50,24 @@ export async function apiCall(token, endpoint, body={}) {
         },
         redirect: 'follow',
         referrerPolicy: 'no-referrer',
+        signal: Timeout(timeout).signal
     }
     if (methodType === 'POST') {
         requestConfig.body = JSON.stringify(body);
     }
 
-    const response = await fetch(url, requestConfig);
+    const response = await fetch(url, requestConfig).catch(e => {
+        if (e.name === 'AbortError') {
+            let errorCode = 504
+            httpRequestsTotalGauge.labels('orchestration-service', methodType, errorCode.toString()).inc()
+            throw new HttpApiException(
+                "request timed out",
+                errorCode
+            );
+        }
+    }).finally(() => {
+        clearTimeout(timeout);
+    });
 
     httpRequestsTotalGauge.labels('orchestration-service', methodType, response.status).inc()
 
