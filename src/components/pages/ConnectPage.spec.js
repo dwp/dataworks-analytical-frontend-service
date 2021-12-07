@@ -28,6 +28,23 @@ describe("<ConnectPage/>", () => {
     });
 
     it("Dispatches error toast and navigates to Main Page when timeout reached", async (done) => {
+        mockFetch(500);
+        const desktopUrl = "http://test.url?token=token"
+        const wrapper = mount(
+            <MockAuthProvider>
+                <ConnectPage url={desktopUrl} nav={mockNav} timeout={-1000 * 10000} interval={0}/>
+            </MockAuthProvider>);
+
+        process.nextTick(() => {
+            expect(global.fetch).toBeCalledTimes(1);
+            expect(mockNav.go).toBeCalledWith(Pages.MAIN);
+            expect(authMock.dispatchAuthToast).toBeCalledTimes(1);
+            done();
+        });
+
+    });
+
+    it("Dispatches error toast and navigates to Main Page when Gateway Timeout thrown", async (done) => {
         mockFetch(504);
         const desktopUrl = "http://test.url?token=token"
         const wrapper = mount(

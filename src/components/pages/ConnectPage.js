@@ -9,15 +9,18 @@ const ConnectPage = ({nav, url, redirect, timeout, interval}) => {
         try {
             const status = await fetch(url).then(res => res.status);
             if (status === 200) {
+                clearInterval(checkInterval);
                 console.log("Connecting to desktop");
                 return nav.go(Pages.DESKTOP, {desktopUrl:url})
             }
 
-            if (status === 504) {
+            if (status === 504 || Date.now() > timeOutAt) {
+                clearInterval(checkInterval);
                 authContext.dispatchAuthToast('Timeout reached while trying to connect to the Analytical Environment. Please try again later.');
                 return nav.go(Pages.MAIN);
             }
         } catch (e) {
+            clearInterval(checkInterval);
             authContext.dispatchAuthToast('Error occurred when trying to connect to Analytical Environment. Please try again later.');
             console.error(JSON.stringify(e));
             return nav.go(Pages.MAIN);
@@ -25,6 +28,8 @@ const ConnectPage = ({nav, url, redirect, timeout, interval}) => {
 
     }
 
+    const timeOutAt = timeout ? Date.now() + timeout : Date.now() + 7 * 60 * 1000 // 7 minutes
+    const checkInterval = setInterval(checkIsEnvironmentReady, interval ? interval : 10 * 1000) // 10 seconds
     checkIsEnvironmentReady();
 
     return (
