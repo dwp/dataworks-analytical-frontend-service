@@ -29,8 +29,7 @@ export const Timeout = (time) => {
 };
 
 export async function apiCall(token, endpoint, body={}, timeout=300) {
-    const baseurl = `${getConfig("REACT_APP_OS_URL")}`;
-    const url = (`${baseurl}/${endpoint}`)
+    const url = (`${getConfig("REACT_APP_OS_URL")}/${endpoint}`);
 
     // We only want the token in the header
     if ('id_token' in body) {
@@ -53,6 +52,7 @@ export async function apiCall(token, endpoint, body={}, timeout=300) {
         referrerPolicy: 'no-referrer',
         signal: Timeout(timeout).signal
     }
+
     if (methodType === 'POST') {
         requestConfig.body = JSON.stringify(body);
     }
