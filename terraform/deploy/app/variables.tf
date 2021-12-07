@@ -285,9 +285,9 @@ variable "container_image_tag" {
   description = "(Optional) Override the front-end service docker image tag version in each environment"
   type        = map
   default = {
-    development = "0.0.106"
-    qa          = "0.0.106"
-    integration = "0.0.106"
+    development = "0.0.107"
+    qa          = "0.0.107"
+    integration = "0.0.107"
     preprod     = "0.0.100"
     production  = "0.0.100"
   }
