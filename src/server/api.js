@@ -71,8 +71,6 @@ export async function apiCall(token, endpoint, body={}, timeout=300) {
 
     httpRequestsTotalGauge.labels('orchestration-service', methodType, response.status).inc()
 
-    httpRequestsTotalGauge.labels('orchestration-service', methodType, response.status).inc()
-
     if (response.status === 200) {
         if (content_lookup[endpoint] === 'json') {
             return response.json();
