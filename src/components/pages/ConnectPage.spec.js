@@ -28,7 +28,7 @@ describe("<ConnectPage/>", () => {
     });
 
     it("Dispatches error toast and navigates to Main Page when timeout reached", async (done) => {
-        mockFetch(500);
+        mockFetch(504);
         const desktopUrl = "http://test.url?token=token"
         const wrapper = mount(
             <MockAuthProvider>

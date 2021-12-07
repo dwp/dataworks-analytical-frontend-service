@@ -66,8 +66,7 @@ app.get('/verify-user', async (req, res) => {
         if (e.status >= 500) {
             res.status(500).send("Error occurred, cannot connect to Orchestration Service to verify user");
             logger.error(e.message);
-        }
-        else {
+        } else {
             res.status(e.status).send(`Connection established - ${e.status} response`);
             logger.info(`Connection established - ${e.status} response`);
         }
