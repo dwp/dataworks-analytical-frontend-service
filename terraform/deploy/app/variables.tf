@@ -287,8 +287,8 @@ variable "container_image_tag" {
   default = {
     development = "0.0.113"
     qa          = "0.0.113"
-    integration = "0.0.109"
-    preprod     = "0.0.100"
-    production  = "0.0.100"
+    integration = "0.0.113"
+    preprod     = "0.0.113"
+    production  = "0.0.113"
   }
 }
