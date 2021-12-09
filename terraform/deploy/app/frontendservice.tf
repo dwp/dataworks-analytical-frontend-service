@@ -83,6 +83,11 @@ module "ecs-fargate-service" {
   platform_version        = var.platform_version
   security_groups         = var.security_groups
   enable_ecs_managed_tags = var.enable_ecs_managed_tags
+  service_registries      = {
+    registry_arn = aws_service_discovery_service.analytical_frontend_service.arn
+    container_name = var.container_name
+    container_port = var.container_port
+  }
 
   interface_vpce_sg_id = data.terraform_remote_state.aws_analytical_env_infra.outputs.interface_vpce_sg_id
   s3_prefixlist_id     = data.terraform_remote_state.aws_analytical_env_infra.outputs.s3_prefix_list_id
