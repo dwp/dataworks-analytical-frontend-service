@@ -4,7 +4,7 @@ data "aws_secretsmanager_secret_version" "terraform_secrets" {
 }
 
 resource "aws_service_discovery_private_dns_namespace" "analytical_frontend_service" {
-  name = "${local.environment}.azkaban.services.${jsondecode(data.aws_secretsmanager_secret_version.terraform_secrets.secret_binary)["dataworks_domain_name"]}"
+  name = "${local.environment}.analytical-frontend.services.${jsondecode(data.aws_secretsmanager_secret_version.terraform_secrets.secret_binary)["dataworks_domain_name"]}"
   vpc  = data.terraform_remote_state.aws_analytical_env_infra.outputs.vpc.aws_vpc.id
   tags = merge(local.common_tags, { Name = "analytical_frontend_service" })
 }
