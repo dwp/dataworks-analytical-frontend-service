@@ -62,6 +62,17 @@ provider "aws" {
   }
 }
 
+provider "aws" {
+  version = "~> 3.45.0"
+  region  = "{{terraform.provider_region}}"
+  alias   = "management_dns"
+
+  assume_role {
+    role_arn = "arn:aws:iam::${local.account["management"]}:role/${var.assume_role}"
+  }
+}
+
+
 locals {
   name = "analytical-frontend-service"
   environment = terraform.workspace == "default" ? "development" : terraform.workspace
