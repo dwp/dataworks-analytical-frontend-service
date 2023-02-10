@@ -63,8 +63,8 @@ resource "aws_ecs_task_definition" "td" {
       type           = lookup(proxy_configuration.value, "type", null)
     }
   }
+
   tags = merge(local.common.tags, { Name = "${var.name_prefix}-td" })
-}
 
 resource "aws_cloudwatch_log_group" "ecs_logs" {
   name              = var.log_configuration.options["awslogs-group"]
