@@ -21,5 +21,5 @@ resource "aws_service_discovery_service" "analytical_frontend_service" {
     }
   }
 
-  tags = merge(local.common_tags, { Name = "analytical_frontend_service" })
+  tags = { Name = "analytical_frontend_service" }
 }
