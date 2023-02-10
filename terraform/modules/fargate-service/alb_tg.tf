@@ -25,5 +25,5 @@ resource "aws_lb_target_group" "lb_tg" {
     port     = var.container_port
     protocol = "HTTPS"
   }
-  tags = merge(var.common_tags, { Name = "${var.name_prefix}-tg" })
+  tags = { Name = "${var.name_prefix}-tg" }
 }

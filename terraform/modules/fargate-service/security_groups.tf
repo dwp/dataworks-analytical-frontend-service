@@ -3,7 +3,7 @@ resource "aws_security_group" "ecs_tasks_sg" {
   name        = "${var.name_prefix}-ecs-tasks-sg"
   description = "${var.name_prefix}-ecs-tasks-sg"
   vpc_id      = var.vpc_id
-  tags        = merge(var.common_tags, { Name = "${var.name_prefix}-ecs-tasks-sg" })
+  tags        = { Name = "${var.name_prefix}-ecs-tasks-sg" }
 }
 
 resource aws_security_group_rule ingress_to_os_alb {
