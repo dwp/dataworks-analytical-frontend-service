@@ -148,6 +148,7 @@ variable "instance_max_count" {
 variable "common_tags" {
   type        = map(string)
   description = "(Required) common tags to apply to aws resources"
+  default     = {}
 }
 
 variable "os_alb_sg" {
