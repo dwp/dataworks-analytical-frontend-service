@@ -12,6 +12,7 @@ provider "aws" {
       Persistence      = "True"
       Costcode         = "PRJ0022507"
     }
+  }
   assume_role {
     role_arn = var.management_role_arn
   }
