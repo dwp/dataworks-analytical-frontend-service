@@ -12,7 +12,7 @@ terraform {
 
   required_providers {
     aws = {
-      version = "~> 3.45.0"
+      version = "3.76.1"
     }
   }
 }
@@ -61,6 +61,17 @@ data "terraform_remote_state" "orchestration-service" {
 
 provider "aws" {
   region = "{{terraform.provider_region}}"
+  default_tags {
+    tags = merge(
+      local.common_tags,
+      {
+      Application      = "DataWorks"                              # As per our definition on ServiceNow
+      Function         = "Data and Analytics"                     # As per our definition on ServiceNow
+      Environment      = local.hcs_environment[local.environment] # Set up locals as per Tagging doc requirements https://engineering.dwp.gov.uk/policies/hcs-cloud-hosting-policies/resource-identification-tagging/
+      Business-Project = "PRJ0022507"                             # This seems to replace costcode as per the doc https://engineering.dwp.gov.uk/policies/hcs-cloud-hosting-policies/resource-identification-tagging/
+    },
+    )
+  }
 
   assume_role {
     role_arn = "arn:aws:iam::${lookup(local.account, local.environment)}:role/${var.assume_role}"
@@ -70,6 +81,17 @@ provider "aws" {
 provider "aws" {
   region  = "{{terraform.provider_region}}"
   alias   = "management_dns"
+  default_tags {
+    tags = merge(
+      local.common_tags,
+      {
+      Application      = "DataWorks"                              # As per our definition on ServiceNow
+      Function         = "Data and Analytics"                     # As per our definition on ServiceNow
+      Environment      = local.hcs_environment[local.environment] # Set up locals as per Tagging doc requirements https://engineering.dwp.gov.uk/policies/hcs-cloud-hosting-policies/resource-identification-tagging/
+      Business-Project = "PRJ0022507"                             # This seems to replace costcode as per the doc https://engineering.dwp.gov.uk/policies/hcs-cloud-hosting-policies/resource-identification-tagging/
+    },
+    )
+  }
 
   assume_role {
     role_arn = "arn:aws:iam::${local.account["management"]}:role/${var.assume_role}"
@@ -130,12 +152,11 @@ locals {
     {% for key, value in common_tags.items() %}
       {{key}} = "{{value}}"
     {% endfor %}
-    Name         = local.name
-    Environment  = local.environment
-    Application  = local.name
-    Persistence  = "True"
-    AutoShutdown = "False"
-    Costcode     = var.costcode
-    Team         = "DataWorks"
+    Name             = local.name
+    DWX_Environment  = local.environment
+    DWX_Application  = local.name
+    Persistence      = "True"
+    AutoShutdown     = "False"
+    Costcode         = var.costcode
   }
 }
