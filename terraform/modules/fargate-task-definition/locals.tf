@@ -7,6 +7,7 @@ locals {
     },
   ]
 
+  environment = terraform.workspace == "default" ? "management-dev" : terraform.workspace
   # Configured as per Tagging doc requirements https://engineering.dwp.gov.uk/policies/hcs-cloud-hosting-policies/resource-identification-tagging/
   # Also required as per Tenable documentation https://engineering.dwp.gov.uk/products/gold-images/agents/tenable/
   hcs_environment = {
