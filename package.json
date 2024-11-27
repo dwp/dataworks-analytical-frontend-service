@@ -3,10 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@aws-amplify/ui-react": "0.2.34",
+    "@aws-amplify/ui-react": "1.0.1",
     "@pact-foundation/pact-node": "^10.12.1",
     "abort-controller": "^3.0.0",
-    "aws-amplify": "3.3.14",
+    "aws-amplify": "5.0.24",
     "aws-sdk": "^2.771.0",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
